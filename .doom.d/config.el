@@ -56,7 +56,10 @@
 
 (setq confirm-kill-emacs nil)
 
-(setq tree-sitter-load-path '("/Users/stoffel/.tree-sitter/bin/" "/Users/stoffel/Documents/projects/tree-sitter-zig/"))
+(setq tree-sitter-load-path '(
+                             (format  "/Users/%s/.tree-sitter/bin/" user-login-name) 
+                             (format  "/Users/%s/Documents/projects/tree-sitter-zig/" user-login-name) 
+                             ))
 
 ;; (add-to-list 'tree-sitter-major-mode-language-alist '(csharp-tree-sitter-mode . c-sharp))
 ;; (add-to-list 'tree-sitter-major-mode-language-alist '(zig-mode . (tree-sitter-require 'zig)))
