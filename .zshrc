@@ -1,1 +1,0 @@
-/Users/stoffel/.zprezto/runcoms/zshrc
