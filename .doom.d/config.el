@@ -56,10 +56,11 @@
 
 (setq confirm-kill-emacs nil)
 
-(setq tree-sitter-load-path '(
-                             (format  "/Users/%s/.tree-sitter/bin/" user-login-name) 
-                             (format  "/Users/%s/Documents/projects/tree-sitter-zig/" user-login-name) 
+(setq tree-sitter-load-path `(
+                             ,(format  "/Users/%s/.tree-sitter/bin/" user-login-name)
+                             ,(format  "/Users/%s/Documents/projects/tree-sitter-zig/" user-login-name)
                              ))
+
 
 ;; (add-to-list 'tree-sitter-major-mode-language-alist '(csharp-tree-sitter-mode . c-sharp))
 ;; (add-to-list 'tree-sitter-major-mode-language-alist '(zig-mode . (tree-sitter-require 'zig)))
@@ -84,3 +85,9 @@
         :new-connection (lsp-stdio-connection "zls")
         :major-modes '(zig-mode)
         :server-id 'zls))))
+
+(use-package elpy
+  :ensure t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable))
