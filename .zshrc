@@ -40,3 +40,12 @@ source /Users/$USERNAME/Library/Preferences/org.dystroy.broot/launcher/bash/br
 # Please make sure this block is at the end of this file.
 #[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
 #### END FIG ENV VARIABLES ####
+if [[ ${INSIDE_EMACS:-no_emacs_here} != 'no_emacs_here' ]]; then
+    export EDITOR=emacsclient
+    export VISUAL=emacsclient
+    export PAGER=less
+
+    alias magit="emacsclient -ne '(magit-status)'"
+
+    function man() { emacsclient -ne "(man \"$1\")"; }
+fi
