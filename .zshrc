@@ -21,6 +21,7 @@ source $ZPLUG_HOME/init.zsh
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "rupa/z", use:z.sh
 zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-autosuggestions"
 zplug "djui/alias-tips"
 
 if ! zplug check; then

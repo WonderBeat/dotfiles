@@ -1,0 +1,29 @@
+nnoremap <Space> :action LeaderAction<cr>
+vnoremap <Space> :action LeaderAction<cr>
+set easymotion
+set surround
+set multiple-cursors
+set nu
+set hlsearch
+set incsearch
+set scrolloff=5
+set ignorecase
+set smartcase
+
+
+nnoremap [[ :action MethodUp<cr>
+nnoremap ]] :action MethodDown<cr>
+
+
+nnoremap gs :<C-u>action AceAction<CR>
+nnoremap Gs :<C-u>action AceTargetAction<CR>
+nnoremap <C-o> :action Back<CR>
+nmap gh <Action>(Back)
+nmap gl <Action>(Forward)
+
+" Run and debug
+nnoremap \r :action RunClass<cr>
+nnoremap \R :action Run<cr>
+nnoremap \d :action DebugClass<cr>
+nnoremap \D :action Debug<cr>
+nnoremap \c :action CheckStyleCurrentFileAction<cr>
