@@ -51,4 +51,3 @@
 (package! tree-sitter)
 (package! tree-sitter-langs)
 (package! elpy)
-(package! evil-snipe)
