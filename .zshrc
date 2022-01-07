@@ -19,6 +19,15 @@ export PATH=$PATH:$GOROOT/bin
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 zplug "b4b4r07/enhancd", use:init.sh
+zplug "rupa/z", use:z.sh
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "djui/alias-tips"
+
+if ! zplug check; then
+   zplug install
+fi
+#zplug "changyuheng/fz", defer:1
 zplug load
 export PATH="/usr/local/opt/qt/bin:$PATH"
 export PATH="$HOME/.fastlane/bin:$PATH"
@@ -29,6 +38,32 @@ export EDITOR="$VISUAL"
 
 source /Users/$USERNAME/Library/Preferences/org.dystroy.broot/launcher/bash/br
 [ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
+
+
+alias mvn=mvn -T4
+
+alias paste=curl -d private=1 -d name=Sumshit --data-urlencode text@/dev/stdin https://paste.corp.mail.ru/api/create
+
+alias cmdb='ssh srve2855 cmdb'
+alias cqm='ssh srve2855 cmdb -m -A'
+alias cqn='ssh srve2855 cmdb -msf1'
+alias hdfs='ssh srve2855 hdfs'
+alias vim='nvim'
+alias dpmeet="open 'zoommtg://mailru.zoom.us/join?action=join&confno=92369283334&pwd=TVlIOC9DRlZDcU5KYkR3SVFaWmk3QT09&confid=dXRpZD1VVElEX2UzYTZiOWMzMjk3OTQwODNiZjljY2'"
+
+mcc() {
+ source /Users/denis.golovachev/Documents/projects/one-cloud/venv/bin/activate
+ /Users/denis.golovachev/Documents/projects/one-cloud/bin/mcc3 $@
+}
+
+s() {
+ if [[ $1 == *.odkl.ru ]]
+ then
+  mcc ssh $@
+ else
+  ssh $@
+ fi
+}
 
 
 #### FIG ENV VARIABLES ####

@@ -91,3 +91,5 @@
   :defer t
   :init
   (advice-add 'python-mode :before 'elpy-enable))
+
+(evil-snipe-mode +1)
