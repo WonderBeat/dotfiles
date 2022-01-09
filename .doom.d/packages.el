@@ -52,3 +52,4 @@
 (package! tree-sitter-langs)
 (package! elpy)
 (package! realgud)
+(package! disk-usage)
