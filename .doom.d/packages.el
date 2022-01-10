@@ -52,3 +52,5 @@
 (package! tree-sitter-langs)
 (package! elpy)
 (package! logview)
+(package! realgud)
+(package! disk-usage)
