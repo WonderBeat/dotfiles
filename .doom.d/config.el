@@ -19,8 +19,8 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+(setq doom-font (font-spec :family "Source Code Pro" :size 13 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font" :size 14))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -94,3 +94,85 @@
   (advice-add 'python-mode :before 'elpy-enable))
 
 (evil-snipe-mode +1)
+
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e/")
+
+
+(after! mu4e
+  (setq! mu4e-maildir (expand-file-name "~/.mail/vk") ; the rest of the mu4e folders are RELATIVE to this one
+         mu4e-get-mail-command "mbsync -a"
+         mu4e-index-update-in-background t
+         mu4e-compose-signature-auto-include t
+         mu4e-use-fancy-chars t
+         mu4e-view-show-addresses t
+         mu4e-view-show-images t
+         mu4e-compose-format-flowed t
+         ;mu4e-compose-in-new-frame t
+         mu4e-change-filenames-when-moving t ;; http://pragmaticemacs.com/emacs/fixing-duplicate-uid-errors-when-using-mbsync-and-mu4e/
+         mu4e-maildir-shortcuts
+         '( ("/vk/Inbox" . ?i)
+            ("/vk/monitoring/Hashek Log" . ?l)
+            ("/vk/huntflow" . ?h)
+            ("/vk/Deleted Items" . ?t)
+            ("/vk/Sent Items" . ?s))
+
+         ;; Message Formatting and sending
+         message-send-mail-function 'smtpmail-send-it
+         ;; message-signature-file "~/Documents/dotfiles/Emacs/.doom.d/.mailsignature"
+         message-citation-line-format "On %a %d %b %Y at %R, %f wrote:\n"
+         message-citation-line-function 'message-insert-formatted-citation-line
+         message-kill-buffer-on-exit t
+
+         ;; Org mu4e
+         org-mu4e-convert-to-html t
+         ))
+
+(add-hook 'mu4e-update-pre-hook 'etc/imapfilter)
+(defun etc/imapfilter ()
+  (message "Running imapfilter...")
+  (with-current-buffer (get-buffer-create " *imapfilter*")
+    (goto-char (point-max))
+    (insert "---\n")
+    (call-process "/usr/local/bin/imapfilter" nil (current-buffer) nil "-c"
+                  (format  "/Users/%s/.imapfilter.lua" user-login-name) "-v"))
+  (message "Running imapfilter...done"))
+
+(set-email-account! "denis.golovachev@vk.team"
+                    '((user-mail-address      . "denis.golovachev@vk.team")
+                      (user-full-name         . "Denis Golovachev")
+                      (smtpmail-smtp-server   . "es.vkcorporate.com")
+                      (smtpmail-smtp-service  . 587)
+                      (smtpmail-stream-type   . starttls)
+                      (smtpmail-debug-info    . t)
+                      (mu4e-drafts-folder     . "/vk/Drafts")
+                      (mu4e-refile-folder     . "/vk/Archive")
+                      (mu4e-sent-folder       . "/vk/Sent Items")
+                      (mu4e-trash-folder      . "/vk/Deleted Items")
+                      (mu4e-update-interval   . 1800)
+                      ;(mu4e-sent-messages-behavior . 'delete)
+                      )
+                    nil)
+
+(setenv "TZ" "Europe/Moscow")
+(setq datetime-timezone 'Europe/Moscow)
+
+
+(setq-default
+ delete-by-moving-to-trash t                      ; Delete files to trash
+ window-combination-resize t                      ; take new window space from all other windows (not just current)
+ x-stretch-cursor t)                              ; Stretch cursor to the glyph width
+
+(setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
+      evil-want-fine-undo t                       ; By default while in insert all changes are one big blob. Be more granular
+      auto-save-default t                         ; Nobody likes to loose work, I certainly don't
+      truncate-string-ellipsis "…"                ; Unicode ellispis are nicer than "...", and also save /precious/ space
+      password-cache-expiry nil                   ; I can trust my computers ... can't I?
+      ;; scroll-preserve-screen-position 'always     ; Don't have `point' jump around
+      scroll-margin 2)                            ; It's nice to maintain a little margin
+
+(display-time-mode 1)                             ; Enable time in the mode-line
+
+(unless (string-match-p "^Power N/A" (battery))   ; On laptops...
+  (display-battery-mode 1))                       ; it's nice to know how much power you have
+
+(global-subword-mode 1)
