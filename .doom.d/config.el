@@ -82,10 +82,15 @@
   (after! lsp-mode
     (add-to-list 'lsp-language-id-configuration '(zig-mode . "zig"))
     (lsp-register-client
-      (make-lsp-client
-        :new-connection (lsp-stdio-connection "zls")
-        :major-modes '(zig-mode)
-        :server-id 'zls))))
+     (make-lsp-client :new-connection (lsp-tramp-connection "zls")
+                      :major-modes '(zig-mode)
+                      :remote? t
+                      :server-id 'zls-remote))
+    (lsp-register-client
+     (make-lsp-client
+      :new-connection (lsp-stdio-connection "zls")
+      :major-modes '(zig-mode)
+      :server-id 'zls))))
 
 (use-package elpy
   :ensure t
@@ -176,3 +181,20 @@
   (display-battery-mode 1))                       ; it's nice to know how much power you have
 
 (global-subword-mode 1)
+
+(use-package geiser
+  :ensure t
+  :defer t
+ ;; :defines geiser-guile-binary
+ ;; :functions geiser-impl--set-buffer-implementation
+ ;; :commands (geiser run-geiser)
+  :config
+  (setq geiser-default-implementation 'chicken)
+  )
+
+
+(with-eval-after-load 'geiser
+  ;; chicken-install -s srfi-18 apropos chicken-doc
+  (setq-default geiser-chicken-binary "/usr/local/Cellar/chicken/5.3.0/bin/csi")
+  (setq-default geiser-active-implementations
+                '(chicken racket guile chez mit chibi)))

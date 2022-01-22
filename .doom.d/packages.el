@@ -54,3 +54,4 @@
 (package! logview)
 (package! realgud)
 (package! disk-usage)
+;; (package! lsp-docker)
