@@ -8,15 +8,15 @@ fi
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+BREW_PREFIX="$(brew --prefix)"
+export PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
+export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
 
 export GOPATH=$HOME/golang
-export GOROOT=/usr/local/opt/go/libexec
+export GOROOT=$BREW_PREFIX/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
-
-export ZPLUG_HOME=/usr/local/opt/zplug
+export ZPLUG_HOME=$BREW_PREFIX/opt/zplug
 source $ZPLUG_HOME/init.zsh
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "rupa/z", use:z.sh
@@ -29,14 +29,13 @@ if ! zplug check; then
 fi
 #zplug "changyuheng/fz", defer:1
 zplug load
-export PATH="/usr/local/opt/qt/bin:$PATH"
+export PATH="$BREW_PREFIX/opt/qt/bin:$PATH"
 export PATH="$HOME/.fastlane/bin:$PATH"
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
 [ -s "/Users/$USERNAME/.jabba/jabba.sh" ] && source "/Users/$USERNAME/.jabba/jabba.sh"
 
-source /Users/$USERNAME/Library/Preferences/org.dystroy.broot/launcher/bash/br
 [ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
 
 
@@ -101,4 +100,8 @@ vterm_printf(){
 
 if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
     alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
+fi
+
+if [[ -s "/Users/$HOME/.config/broot/launcher/bash/br" ]]; then
+  source "/Users/$HOME/.config/broot/launcher/bash/br"
 fi
