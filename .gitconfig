@@ -13,10 +13,6 @@
 	merge = true
 [gpg]
 	format = ssh
-[commit]
-	gpgsign = true
-[tag]
-	gpgsign = true
 [merge]
 	log = true
 [includeIf "gitdir:/Users/denis.golovachev/"]
