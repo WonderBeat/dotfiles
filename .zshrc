@@ -95,3 +95,5 @@ fi
 if [[ -s "/Users/$HOME/.config/broot/launcher/bash/br" ]]; then
   source "/Users/$HOME/.config/broot/launcher/bash/br"
 fi
+
+test -e  "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br" && source "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br"

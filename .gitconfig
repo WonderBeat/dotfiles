@@ -1,0 +1,23 @@
+[user]
+	name = dgolovachev
+[diff]
+	tool = vimdiff
+	algorithm = histogram
+[core]
+	editor = emacsclient
+	autocrlf = input
+[rerere]
+	enabled = 1
+[pull]
+	rebase = false
+	merge = true
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
+[merge]
+	log = true
+[includeIf "gitdir:/Users/denis.golovachev/"]
+	path = ~/.gitconfig-work
