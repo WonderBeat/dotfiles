@@ -182,6 +182,7 @@
 
 (global-subword-mode 1)
 
+<<<<<<< HEAD
 (use-package geiser
   :ensure t
   :defer t
@@ -198,3 +199,12 @@
   (setq-default geiser-chicken-binary "/usr/local/Cellar/chicken/5.3.0/bin/csi")
   (setq-default geiser-active-implementations
                 '(chicken racket guile chez mit chibi)))
+=======
+; (add-hook 'java-mode-hook #'lsp)
+
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]gradle\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]tmp\\'"))
+>>>>>>> 37a1ae3 (JOB)
