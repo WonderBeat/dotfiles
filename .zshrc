@@ -39,6 +39,14 @@ export EDITOR="$VISUAL"
 
 [ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
 
+# encrypt using ssh key
+sage() {
+ age -a -R ~/.ssh/id_ed25519.pub <<<"$1"
+}
+# age decrypt using ssh key
+saged() {
+ age -d -i ~/.ssh/id_ed25519 <<<"$1"
+}
 
 alias mvn=mvn -T4
 
@@ -49,7 +57,25 @@ alias cqm='ssh srve2855 cmdb -m -A'
 alias cqn='ssh srve2855 cmdb -msf1'
 alias hdfs='ssh srve2855 hdfs'
 alias vim='nvim'
-alias dpmeet="open 'zoommtg://mailru.zoom.us/join?action=join&confno=92369283334&pwd=TVlIOC9DRlZDcU5KYkR3SVFaWmk3QT09&confid=dXRpZD1VVElEX2UzYTZiOWMzMjk3OTQwODNiZjljY2'"
+#alias dpmeet="open 'zoommtg://mailru.zoom.us/join?action=join&confno=92369283334&pwd=TVlIOC9DRlZDcU5KYkR3SVFaWmk3QT09&confid=dXRpZD1VVElEX2UzYTZiOWMzMjk3OTQwODNiZjljY2'"
+
+#Daily team zoom Meeting
+dpmeet() {
+ local LINK=$(cat <<-EOF
+		-----BEGIN AGE ENCRYPTED FILE-----
+		YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IHNzaC1lZDI1NTE5IFZ1YW4yZyBsZTlS
+		YTVSdVI0alhZQjRtb2oza1NuUFJFQ3FhcjY1VWwwRHJQa2NrQjA0CnZrSkYybldN
+		ZnVsUFFPTlZwTTZzdWsxS3NNVCsrT3ZjYXVqYkVKZjk0N1UKLS0tIHpLSExiQmRU
+		YUNxL2pxdEtEL3Njd0dXU21uS1lHNTdqeS9MZmE3aUFJd0EKg6bmLgtpyVJY/xa9
+		Uun2zMCugYZC4fhHuwyS7cSjFiHdBfCyOtzE/L0X70uI4+n1ON6G2ROw7eW09Rr0
+		d7lXwRolO6GDNaejy9g7Y+RAVI3dGqGKHfv6WPFYLfnYJ8cn1KzXda7G5fBEsEeL
+		TeZ9Yee9klZSZxKsK/o9w/TvCMwtg0FqMXmZ1q/RMlJEXyW5dtAaDSz/cv7jNc6X
+		LYYdPvwWgIkwmXO0jjuBu8S4OVsdpGj3
+		-----END AGE ENCRYPTED FILE-----
+EOF
+ )
+ open $(saged "$LINK")
+}
 
 mcc() {
  source /Users/denis.golovachev/Documents/projects/one-cloud/venv/bin/activate
@@ -87,6 +113,8 @@ vterm_printf(){
         printf "\e]%s\e\\" "$1"
     fi
 }
+
+
 
 if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
     alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
