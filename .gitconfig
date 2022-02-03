@@ -16,4 +16,11 @@
 [merge]
 	log = true
 [includeIf "gitdir:/Users/denis.golovachev/"]
-	path = ~/.gitconfig-work
+	path = ~ /.gitconfig-work
+[includeIf "gitdir:/Users/stoffel/"]
+	path = ~/.gitconfig-home
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
