@@ -57,9 +57,7 @@
 (setq confirm-kill-emacs nil)
 
 (setq tree-sitter-load-path `(
-                             ,(format  "/Users/%s/.tree-sitter/bin/" user-login-name)
-                             ,(format  "/Users/%s/Documents/projects/tree-sitter-zig/" user-login-name)
-                             , "~/tree-sitter-zig/"
+                             ,(format  "/Users/%s/.bin/" user-login-name)
                              ))
 
 

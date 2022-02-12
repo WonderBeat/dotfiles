@@ -15,6 +15,7 @@ export GOPATH=$HOME/golang
 export GOROOT=$BREW_PREFIX/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$HOME/.bin
 
 export ZPLUG_HOME=$BREW_PREFIX/opt/zplug
 source $ZPLUG_HOME/init.zsh
