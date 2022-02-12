@@ -57,8 +57,7 @@
 (setq confirm-kill-emacs nil)
 
 (setq tree-sitter-load-path `(
-                             ,(format  "/Users/%s/.bin/" user-login-name)
-                             ))
+                             ,"~/.bin"))
 
 
 ;; (add-to-list 'tree-sitter-major-mode-language-alist '(csharp-tree-sitter-mode . c-sharp))
