@@ -57,7 +57,6 @@ alias cqm='ssh srve2855 cmdb -m -A'
 alias cqn='ssh srve2855 cmdb -msf1'
 alias hdfs='ssh srve2855 hdfs'
 alias vim='nvim'
-#alias dpmeet="open 'zoommtg://mailru.zoom.us/join?action=join&confno=92369283334&pwd=TVlIOC9DRlZDcU5KYkR3SVFaWmk3QT09&confid=dXRpZD1VVElEX2UzYTZiOWMzMjk3OTQwODNiZjljY2'"
 
 #config clone --bare git@github.com:WonderBeat/dotfiles.git ~/.myconf
 #config checkout
