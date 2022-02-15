@@ -50,6 +50,7 @@ saged() {
 
 alias mvn=mvn -T4
 
+alias python=python3
 alias paste=curl -d private=1 -d name=Sumshit --data-urlencode text@/dev/stdin https://paste.corp.mail.ru/api/create
 
 alias cmdb='ssh srve2855 cmdb'
@@ -128,3 +129,5 @@ if [[ -s "/Users/$HOME/.config/broot/launcher/bash/br" ]]; then
 fi
 
 test -e  "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br" && source "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br"
+export PATH="/usr/local/opt/python@3.10/bin:$PATH"
+export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
