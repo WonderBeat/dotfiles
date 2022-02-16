@@ -97,19 +97,22 @@
 
 (evil-snipe-mode +1)
 
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e/")
-
-
-(after! mu4e
+(use-package mu4e
+  :ensure t
+  :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e/"
+  :init
   (setq! mu4e-maildir (expand-file-name "~/.mail/vk") ; the rest of the mu4e folders are RELATIVE to this one
+         mu4e-view-prefer-html t
          mu4e-get-mail-command "mbsync -a"
          mu4e-index-update-in-background t
+         shr-color-visible-luminance-min 60
+         shr-color-visible-distance-min 5
+         shr-use-colors nil
          mu4e-compose-signature-auto-include t
          mu4e-use-fancy-chars t
          mu4e-view-show-addresses t
          mu4e-view-show-images t
          mu4e-compose-format-flowed t
-         ;mu4e-compose-in-new-frame t
          mu4e-change-filenames-when-moving t ;; http://pragmaticemacs.com/emacs/fixing-duplicate-uid-errors-when-using-mbsync-and-mu4e/
          mu4e-maildir-shortcuts
          '( ("/vk/Inbox" . ?i)
@@ -117,14 +120,12 @@
             ("/vk/huntflow" . ?h)
             ("/vk/Deleted Items" . ?t)
             ("/vk/Sent Items" . ?s))
-
          ;; Message Formatting and sending
          message-send-mail-function 'smtpmail-send-it
          ;; message-signature-file "~/Documents/dotfiles/Emacs/.doom.d/.mailsignature"
          message-citation-line-format "On %a %d %b %Y at %R, %f wrote:\n"
          message-citation-line-function 'message-insert-formatted-citation-line
          message-kill-buffer-on-exit t
-
          ;; Org mu4e
          org-mu4e-convert-to-html t
          ))
