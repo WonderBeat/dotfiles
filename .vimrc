@@ -1,9 +1,7 @@
-colorscheme adrian
 set background=dark
 syntax on
 set nocompatible
 set nowrap
-filetype on
 filetype plugin on
 
 set switchbuf=usetab,newtab
@@ -13,76 +11,52 @@ set expandtab
 set shiftwidth=4
 set foldenable  
 set foldmethod=indent
-" numeration
 set nu
 set laststatus=2
 
-
-" 256 цыетов
 set t_Co=256
 
-" Сделать строку команд высотой в одну строку
- set ch=1
-"
-" " Скрывать указатель мыши, когда печатаем
- set mousehide
-
 setlocal spell spelllang=en_us,ru_ru
+filetype off                  " required
 
-"NeoBundle Scripts-----------------------------
-if has('vim_starting')
-  if &compatible
-    set nocompatible               " Be iMproved
-  endif
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-  " Required:
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
+Plugin 'VundleVim/Vundle.vim'
 
-" Required:
-call neobundle#begin(expand('~/.vim/bundle'))
+Plugin 'preservim/nerdtree'
+Plugin 'itchyny/lightline.vim'
+Plugin 'junegunn/fzf.vim'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'majutsushi/tagbar'
+Plugin 'w0rp/ale'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'elzr/vim-json'
+Plugin 'nvie/vim-flake8'
+Plugin 'rust-lang/rust.vim'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'frazrepo/vim-rainbow'
+Bundle 'sonph/onehalf', {'rtp': 'vim/'}
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+call vundle#end()
 
-" Let NeoBundle manage NeoBundle
-" Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" Add or remove your Bundles here:
-NeoBundle 'Shougo/neosnippet.vim'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'jiangmiao/auto-pairs'
-NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'bling/vim-airline'
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'rust-lang/rust.vim'
-NeoBundle 'eagletmt/neco-ghc'
-NeoBundle 'racer-rust/vim-racer'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'Xuyuanp/nerdtree-git-plugin'
-NeoBundle 'easymotion/vim-easymotion'
-NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
-
-" Required:
-call neobundle#end()
-
-" Required:
 filetype plugin indent on
 
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
-"End NeoBundle Scripts-------------------------
-let g:haskellmode_completion_ghc = 0
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-" NerdTree close
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+colorscheme onehalfdark
+let g:airline_theme='onehalfdark'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#tabline#formatter = 'default'
 
-" Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
-" " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 
 let g:indent_guides_enable_on_vim_startup = 1
