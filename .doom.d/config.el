@@ -98,6 +98,7 @@
 (evil-snipe-mode +1)
 
 (use-package mu4e
+  :if (memq window-system '(mac ns))
   :ensure t
   :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e/"
   :init
