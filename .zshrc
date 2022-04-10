@@ -131,3 +131,6 @@ fi
 test -e  "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br" && source "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br"
 export PATH="/usr/local/opt/python@3.10/bin:$PATH"
 export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
+export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
+
+eval $(thefuck --alias)
