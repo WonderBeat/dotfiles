@@ -11,6 +11,8 @@
 [pull]
 	rebase = false
 	merge = true
+#[gpg]
+	#format = ssh
 [merge]
 	log = true
 [includeIf "gitdir:/Users/denis.golovachev/"]
