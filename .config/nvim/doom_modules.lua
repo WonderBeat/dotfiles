@@ -18,20 +18,20 @@ M.source = debug.getinfo(1, "S").source:sub(2)
 M.modules = {
   ui = {
     "dashboard",          -- Start screen
-    -- "doom-themes",     -- Additional doom emacs' colorschemes
+    "doom-themes",     -- Additional doom emacs' colorschemes
     -- "indentlines",     -- Show indent lines
-    -- "show_registers",  -- popup that shows register contents
+    "show_registers",  -- popup that shows register contents
     "statusline",         -- Statusline
     "tabline",            -- Tabline, shows your buffers list at top
     "which-key",          -- Keybindings popup menu like Emacs' guide-key
     -- "zen",             -- Distraction free environment
-    -- "illuminated",     -- Highlight other uses of the word under the cursor like VSC
+    "illuminated",     -- Highlight other uses of the word under the cursor like VSC
   },
   doom = {
     -- "compiler",        -- Compile (and run) your code with just pressing three keys!
     -- "contrib",         -- Special plugins intended for Doom Nvim contributors (lua docs, etc)
     "neorg",              -- Life Organization Tool, used by Doom Nvim user manual
-    -- "runner",          -- Open a REPL for the current language or run the current file
+    "runner",          -- Open a REPL for the current language or run the current file
   },
   editor = {
     "autopairs",          -- Autopairs
@@ -47,9 +47,9 @@ M.modules = {
     -- "minimap",         -- Code minimap, requires github.com/wfxr/code-minimap
     -- "ranger",          -- Ranger File Browser, requires ranger file browser
     "snippets",           -- Code snippets
-    -- "symbols",         -- LSP symbols and tags
+    "symbols",         -- LSP symbols and tags
     "telescope",          -- Highly extendable fuzzy finder over lists
-    -- "terminal",        -- Terminal for Neovim (NOTE: needed for runner and compiler)
+    "terminal",        -- Terminal for Neovim (NOTE: needed for runner and compiler)
     -- "trouble",         -- A pretty list to help you solve all the trouble your code is causing.
   },
   langs = {
@@ -77,8 +77,8 @@ M.modules = {
     -- "scala",           -- Java, but good
 
     -- "comment",         -- Better annotations and comments
-    -- "config",          -- Configuration files (JSON, YAML, TOML)
-    -- "dockerfile",      -- Do you like containers, right?
+    "config",          -- Configuration files (JSON, YAML, TOML)
+    "dockerfile",      -- Do you like containers, right?
   },
   utilities = {
     -- "lazygit",         -- LazyGit integration for Neovim, requires LazyGit
@@ -89,7 +89,7 @@ M.modules = {
     -- "todo_comments",   -- Highlight, list and search todo comments in your projects
   },
   web = {
-    -- "colorizer",       -- Fastest colorizer for Neovim
+    "colorizer",       -- Fastest colorizer for Neovim
     -- "firenvim",        -- Requires firenvim browser extension; change fontsize by increasing guifontsize in doom_config
     -- "restclient",      -- A fast Neovim http client
   },

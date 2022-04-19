@@ -6,7 +6,7 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "wombat"
+(setq user-full-name "wonderbeat"
       user-mail-address "wombat@gmail.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
@@ -25,7 +25,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'wombat)
+(setq doom-theme 'tsdh-dark)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -98,7 +98,7 @@
 (evil-snipe-mode +1)
 
 (use-package mu4e
-  :if (memq window-system '(mac ns))
+  :if (and (memq window-system '(mac ns)) (file-directory-p "~/.mail"))
   :ensure t
   :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e/"
   :init
@@ -111,6 +111,7 @@
          shr-use-colors nil
          mu4e-compose-signature-auto-include t
          mu4e-use-fancy-chars t
+         mu4e-update-interval nil
          mu4e-view-show-addresses t
          mu4e-view-show-images t
          mu4e-compose-format-flowed t
@@ -152,7 +153,7 @@
                       (mu4e-refile-folder     . "/vk/Archive")
                       (mu4e-sent-folder       . "/vk/Sent Items")
                       (mu4e-trash-folder      . "/vk/Deleted Items")
-                      (mu4e-update-interval   . 1800)
+                      (mu4e-update-interval   . nil)
                       ;(mu4e-sent-messages-behavior . 'delete)
                       )
                     nil)
@@ -191,3 +192,6 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]gradle\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]tmp\\'"))
+
+
+;; (setq shell-command-switch "-ic")
