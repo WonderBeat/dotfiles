@@ -98,7 +98,7 @@
 (evil-snipe-mode +1)
 
 (use-package mu4e
-  :if (memq window-system '(mac ns))
+  :if (and (memq window-system '(mac ns)) (file-directory-p "~/.mail"))
   :ensure t
   :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e/"
   :init
@@ -192,3 +192,6 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]gradle\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]tmp\\'"))
+
+
+;; (setq shell-command-switch "-ic")
