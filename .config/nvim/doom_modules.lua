@@ -58,23 +58,23 @@ M.modules = {
     -- parser and rust-analyzer
     --
     -- "css",             -- CSS support
-    "html",            -- HTML support
+    -- "html",            -- HTML support
     -- "javascript",      -- JavaScript support
     -- "typescript",      -- TypeScript support
 
-    "bash",            -- The terminal gods language
+    -- "bash",            -- The terminal gods language
     -- "elixir",          -- Build scalable and maintainable software
     "lua",                -- Support for our gods language
-    "python +lsp",     -- Python support + lsp
+    -- "python +lsp",     -- Python support + lsp
     -- "ruby",            -- Look ma, I love the gems!
 
-    "c",               -- Core dumped: segmentation fault
-    "cpp",             -- C++ support
-    "go",              -- Hello, gopher
+    -- "c",               -- Core dumped: segmentation fault
+    -- "cpp",             -- C++ support
+    -- "go",              -- Hello, gopher
     -- "haskell",         -- Because Functional programming is fun, isn't it?
-    "java",            -- Java support
-    "rust +lsp",       -- Let's get rusty!
-    "scala",           -- Java, but good
+    -- "java",            -- Java support
+    -- "rust +lsp",       -- Let's get rusty!
+    -- "scala",           -- Java, but good
 
     -- "comment",         -- Better annotations and comments
     "config",          -- Configuration files (JSON, YAML, TOML)
