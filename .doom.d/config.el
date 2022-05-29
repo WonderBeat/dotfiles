@@ -208,3 +208,15 @@
   (setq languagetool-java-arguments '("-Dfile.encoding=UTF-8")
         languagetool-console-command "~/.bin/langtool/languagetool-commandline.jar"
         languagetool-server-command "~/.bin/langtool/languagetool-server.jar"))
+
+(use-package kubernetes
+  :ensure t
+  :commands (kubernetes-overview)
+  :config
+  (setq kubernetes-poll-frequency 3600
+        kubernetes-redraw-frequency 3600))
+
+(use-package direnv
+  :config
+  (direnv-mode))
+

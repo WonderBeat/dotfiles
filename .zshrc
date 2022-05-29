@@ -134,3 +134,4 @@ export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
 export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
 
 eval $(thefuck --alias)
+eval "$(direnv hook zsh)"

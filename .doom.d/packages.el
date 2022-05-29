@@ -55,4 +55,6 @@
 (package! realgud)
 (package! disk-usage)
 (package! languagetool)
+(package! kubernetes)
+(package! direnv)
 ;; (package! lsp-docker)
