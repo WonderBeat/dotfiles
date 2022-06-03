@@ -5,7 +5,11 @@
 # in {
 let
   inherit (pkgs) lorri;
-
+  tex = (pkgs.texlive.combine {
+    inherit (pkgs.texlive) scheme-medium
+      wrapfig amsmath ulem hyperref capt-of;
+      #(setq org-latex-compiler "lualatex")
+  });
 in {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -14,6 +18,11 @@ in {
       pkgs.direnv 
       pkgs.rustup
       pkgs.glances
+      pkgs.pipenv
+      pkgs.shellcheck
+      pkgs.mu
+      pkgs.pandoc
+      tex
       ];
 
   environment.variables = rec {

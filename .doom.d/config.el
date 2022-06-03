@@ -177,8 +177,8 @@
 
 (display-time-mode 1)                             ; Enable time in the mode-line
 
-(unless (string-match-p "^Power N/A" (battery))   ; On laptops...
-  (display-battery-mode 1))                       ; it's nice to know how much power you have
+;; (unless (string-match-p "^Power N/A" (battery))   ; On laptops...
+;;   (display-battery-mode 1))                       ; it's nice to know how much power you have
 
 (global-subword-mode 1)
 
@@ -192,6 +192,19 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]gradle\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]tmp\\'"))
+
+(use-package treemacs
+  :ensure t
+  :defer t
+  :config
+  (add-hook 'treemacs-mode-hook
+          (lambda ()
+            (treemacs-resize-icons 15) ;; smaller icons than default
+            (text-scale-adjust -2) ;; smaller font size than default
+            (treemacs-toggle-fixed-width) ;; able to resize buffer width
+            (treemacs-decrease-width 5)
+            ))
+)
 
 (use-package languagetool
   :ensure t
