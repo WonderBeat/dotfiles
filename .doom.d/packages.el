@@ -48,13 +48,15 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
-(package! tree-sitter)
-(package! tree-sitter-langs)
 (package! elpy)
 (package! logview)
 (package! realgud)
 (package! disk-usage)
 (package! languagetool)
 (package! kubernetes)
-(package! direnv)
+(package! kubel-evil)
 ;; (package! lsp-docker)
+(package! earthfile-mode)
+
+;; (package! kubectl
+;;  :recipe (:host github :repo "jypma/kubect"))

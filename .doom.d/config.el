@@ -226,10 +226,22 @@
   :ensure t
   :commands (kubernetes-overview)
   :config
-  (setq kubernetes-poll-frequency 3600
-        kubernetes-redraw-frequency 3600))
+  (setq kubernetes-poll-frequency 17000
+        kubernetes-redraw-frequency 17000))
 
-(use-package direnv
-  :config
-  (direnv-mode))
+(use-package kubel-evil)
+(use-package earthfile-mode
+  :ensure t)
 
+(use-package! lsp
+  :init
+  (setq lsp-pyls-plugins-pylint-enabled t
+        lsp-pyls-plugins-autopep8-enabled nil
+        lsp-pyls-plugins-pyflakes-enabled t
+        lsp-pyls-plugins-pycodestyle-enabled nil
+        lsp-pyls-plugins-jedi-completion-enabled t
+        lsp-pyls-plugins-jedi-completion-include-params t
+        lsp-pyls-plugins-yapf-enabled t)
+  )
+
+(setq code-review-auth-login-marker 'forge)

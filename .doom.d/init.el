@@ -80,13 +80,14 @@
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
-       ;;(spell +flyspell) ; tasing you for misspelling mispelling
+       (spell +hunspell) ; tasing you for misspelling mispelling
        grammar           ; tasing grammar mistake every you make
 
        :tools
+       tree-sitter
        ;;ansible
        debugger          ; FIXME stepping through code, to help you add bugs
-       ;;direnv
+       direnv
        docker
        ;;editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
@@ -94,12 +95,12 @@
        ;;gist              ; interacting with github gists
        lookup              ; navigate your code and its documentation
        (lsp +eglot)               ; M-x vscode
-       magit             ; a git porcelain for Emacs
-       ;;make              ; run make tasks from Emacs
+       (magit +forge)             ; a git porcelain for Emacs
+       make              ; run make tasks from Emacs
        pass              ; password manager for nerds
        ;;pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
-       ;;rgb               ; creating color strings
+       rgb               ; creating color strings
        taskrunner        ; taskrunner for all your projects
        ;;terraform         ; infrastructure as code
        tmux              ; an API for interacting with tmux
@@ -132,7 +133,7 @@
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
        ;;(go +lsp)         ; the hipster dialect
-       (haskell +lsp)    ; a language that's lazier than I am
+       (haskell)    ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
        json              ; At least it ain't XML
@@ -152,7 +153,7 @@
        ;;php               ; perl's insecure younger brother
        plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       (python +lsp)            ; beautiful is better than ugly
+       (python +lsp +pyright)            ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
        (racket +lsp +xp)            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
