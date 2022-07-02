@@ -245,3 +245,14 @@
   )
 
 (setq code-review-auth-login-marker 'forge)
+
+(use-package vterm
+  :commands vterm-mode
+  :config
+  (setq vterm-kill-buffer-on-exit t)
+  (setq vterm-max-scrollback 10000))
+
+(use-package kubel
+  :ensure t
+  :cofig
+  (setq kubel-log-tail-n 10000))
