@@ -66,4 +66,6 @@ set -x EDITOR "$VISUAL"
 set -x GOPATH $HOME/golang
 set -x GOROOT $BREW_PREFIX/opt/go/libexec
 set -x MANPATH "$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
+
+source ~/.iterm2_shell_integration.fish
 end

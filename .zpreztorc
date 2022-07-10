@@ -24,6 +24,7 @@ zstyle ':prezto:*:*' color 'yes'
 # Set the Prezto modules to load (browse modules).
 # The order matters.
 zstyle ':prezto:load' pmodule \
+  'syntax-highlighting' \
   'environment' \
   'terminal' \
   'editor' \
@@ -33,7 +34,8 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
-  'prompt' 'git' 'python' 'emacs' 'ssh'
+  'prompt' 'git' 'python' 'ssh' \
+  'autosuggestions'
 
 #
 # Autosuggestions

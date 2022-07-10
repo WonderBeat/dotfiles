@@ -22,6 +22,8 @@ in {
       pkgs.shellcheck
       pkgs.mu
       pkgs.pandoc
+      pkgs.rsync
+      pkgs.shfmt
       tex
       ];
 

@@ -41,22 +41,16 @@ export EDITOR="$VISUAL"
 
 # encrypt using ssh key
 sage() {
- age -a -R ~/.ssh/id_ed25519.pub <<<"$1"
+ age -a -R ~/.ssh/id_ed25519.pub <<< "$1"
 }
 # age decrypt using ssh key
 saged() {
- age -d -i ~/.ssh/id_ed25519 <<<"$1"
+ age -d -i ~/.ssh/id_ed25519 <<< "$1"
 }
 
 alias mvn=mvn -T4
 
 alias python=python3
-alias paste=curl -d private=1 -d name=Sumshit --data-urlencode text@/dev/stdin https://paste.corp.mail.ru/api/create
-
-alias cmdb='ssh srve2855 cmdb'
-alias cqm='ssh srve2855 cmdb -m -A'
-alias cqn='ssh srve2855 cmdb -msf1'
-alias hdfs='ssh srve2855 hdfs'
 alias vim='nvim'
 
 #config clone --bare git@github.com:WonderBeat/dotfiles.git ~/.myconf
@@ -79,20 +73,6 @@ dpmeet() {
 EOF
  )
  open $(saged "$LINK")
-}
-
-mcc() {
- source /Users/denis.golovachev/Documents/projects/one-cloud/venv/bin/activate
- /Users/denis.golovachev/Documents/projects/one-cloud/bin/mcc3 $@
-}
-
-s() {
- if [[ $1 == *.odkl.ru ]]
- then
-  mcc ssh $@
- else
-  ssh $@
- fi
 }
 
 if [[ ${INSIDE_EMACS:-no_emacs_here} != 'no_emacs_here' ]]; then
@@ -151,5 +131,22 @@ export PATH="/usr/local/opt/python@3.10/bin:$PATH"
 export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
 export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
 
-eval $(thefuck --alias)
+eval "$(thefuck --alias)"
 eval "$(direnv hook zsh)"
+
+change() {
+    images=()
+    while IFS=  read -r -d $'\0'; do
+        images+=("$REPLY")
+    done < <(fd ".*.jpg" ~/Dropbox/Pokemon-Terminal/pokemonterminal/Images/ --print0)
+    num_images=${#images[*]}
+    myfilename="`echo ${images[$((RANDOM%$num_images + 1))]}`"
+    rand_img="/tmp/wppr$(($RANDOM%10)).jpg"
+    rm -f "$rand_img" &> /dev/null
+    ln -s "$myfilename" "$rand_img"
+    base64filename=`echo "$rand_img"| base64`;
+    echo "\033]1337;SetBackgroundImageFile=${base64filename}\a";
+    unset $RANDOM
+}
+
+change
