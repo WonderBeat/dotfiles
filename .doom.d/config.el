@@ -19,7 +19,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "Source Code Pro" :size 13 :weight 'semi-light)
+(setq doom-font (font-spec :family "SauceCodePro Nerd Font Mono" :size 13 :weight 'normal)
       doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font" :size 14))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -256,3 +256,22 @@
   :ensure t
   :config
   (setq kubel-log-tail-n 10000))
+
+;; (use-package ispell
+;;   :config
+;;   (setq ispell-dictoinary "en")
+;;   (setq ispell-personal-dictionary "~/.config/dictionaries"))
+
+;; (use-package spell-fu
+;;   :defer t
+;;   :config
+;;   (setq spell-fu-directory "~/Library/Spelling/")
+;;     (add-hook 'spell-fu-mode-hook
+;;             (lambda ()
+;;                 (spell-fu-dictionary-add (spell-fu-g"en_US"))
+;;                 (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "russian"))))
+;; )
+
+(org-babel-do-load-languages
+    'org-babel-load-languages
+    '((mermaid . t)))

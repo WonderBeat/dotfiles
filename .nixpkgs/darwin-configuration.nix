@@ -1,20 +1,32 @@
 { config, pkgs, stdenv, ... }:
 
-# let
-#{   lorri = (import (fetchGit "https://github.com/target/lorri.git") { inherit pkgs; });
-# in {
 let
   inherit (pkgs) lorri;
+  unstable = import <unstable> {};
+  unison = import <unison-ucm> {};
+  # unison-ucm = import (fetchTarball "https://github.com/ceedubs/unison-nix/archive/trunk.tar.gz") {};
   tex = (pkgs.texlive.combine {
-    inherit (pkgs.texlive) scheme-medium
-      wrapfig amsmath ulem hyperref capt-of;
-      #(setq org-latex-compiler "lualatex")
+    inherit (pkgs.texlive) scheme-medium sansmathfonts sansmath
+      fontspec
+      wrapfig amsmath ulem hyperref capt-of
+      collection-pstricks
+      collection-fontsrecommended
+      beamer
+      sourcecodepro
+      l3packages
+      mathastext
+      pgf
+      cancel
+      cprotect
+      bigfoot
+      environ
+      cbfonts-fd
+      xcolor;
   });
 in {
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
   environment.systemPackages =
-    [ lorri 
+    [ lorri
+      pkgs.nixFlakes
       pkgs.direnv 
       pkgs.rustup
       pkgs.glances
@@ -24,12 +36,31 @@ in {
       pkgs.pandoc
       pkgs.rsync
       pkgs.shfmt
+      pkgs.hunspell
       tex
+      unstable.nmap
+      unstable.jujutsu
+      unstable.git-branchless
+      unstable.stgit
+      unison.unison-ucm
+      unstable.earthly
       ];
+
+  fonts.fontDir.enable = true;
+
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
+
+  fonts.fonts = with pkgs; [
+    proggyfonts
+    fira-code
+    fira-code-symbols
+    (nerdfonts.override { fonts = [ "SourceCodePro" "Monoid" "FiraCode" "DroidSansMono" ]; })
+  ];
 
   environment.variables = rec {
      RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
-
   };
 
   # Use a custom configuration.nix location.

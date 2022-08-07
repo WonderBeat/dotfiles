@@ -59,6 +59,7 @@ alias mvn=mvn -T4
 
 alias python=python3
 alias vim='nvim'
+alias make='make -s --no-print-directory'
 
 #config clone --bare git@github.com:WonderBeat/dotfiles.git ~/.myconf
 #config checkout
@@ -160,3 +161,4 @@ change
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+source <(jj debug completion --zsh | sed '$d')

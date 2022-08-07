@@ -57,6 +57,9 @@
 (package! kubel-evil)
 ;; (package! lsp-docker)
 (package! earthfile-mode)
+(package! mermaid-mode)
+(package! ob-mermaid)
+(package! unisonlang-mode)
 
 ;; (package! kubectl
 ;;  :recipe (:host github :repo "jypma/kubect"))

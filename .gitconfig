@@ -7,6 +7,7 @@
 [core]
 	editor = emacsclient
 	autocrlf = input
+	excludesFile = ~/.gitignore
 [rerere]
 	enabled = 1
 [pull]

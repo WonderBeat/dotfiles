@@ -1,3 +1,5 @@
+.envrc
+shell.nix
 # Compiled class file
 *.class
 
