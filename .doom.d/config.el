@@ -229,6 +229,10 @@
   (setq kubernetes-poll-frequency 17000
         kubernetes-redraw-frequency 17000))
 
+(use-package kubernetes-evil
+  :ensure t
+  :after kubernetes)
+
 (use-package kubel-evil)
 (use-package earthfile-mode
   :ensure t)
@@ -275,3 +279,15 @@
 (org-babel-do-load-languages
     'org-babel-load-languages
     '((mermaid . t)))
+
+
+(custom-set-faces!
+  `(org-date :foreground ,(doom-color 'violet))
+  '(org-document-title :height 1.75 :weight bold)
+  ;; `(org-level-1 :foreground ,(doom-color 'blue) :height 1.4 :weight bold :background ,(doom-color 'grey))
+  `(org-level-1 :foreground ,(doom-color 'blue) :height 1.5 :weight bold)
+  `(org-level-2 :foreground ,(doom-color 'magenta) :height 1.3 :weight bold)
+  `(org-level-3 :foreground ,(doom-color 'violet) :height 1.1 :weight normal)
+  `(org-level-4 :foreground ,(doom-color 'cyan)   :height 1.0 :weight normal)
+  `(org-level-5 :foreground ,(doom-color 'grey) :weight normal)
+  `(org-level-6 :foreground ,(doom-color 'blue) :weight normal))

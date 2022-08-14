@@ -54,6 +54,7 @@
 (package! disk-usage)
 (package! languagetool)
 (package! kubernetes)
+(package! kubernetes-evil)
 (package! kubel-evil)
 ;; (package! lsp-docker)
 (package! earthfile-mode)
