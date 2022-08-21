@@ -63,7 +63,7 @@ alias make='make -s --no-print-directory'
 
 #config clone --bare git@github.com:WonderBeat/dotfiles.git ~/.myconf
 #config checkout
-alias config='/usr/bin/git --git-dir=$HOME/.myconf/ --work-tree=$HOME'
+alias config="$(which git) --git-dir=$HOME/.myconf/ --work-tree=$HOME"
 
 #Daily team zoom Meeting
 dpmeet() {
