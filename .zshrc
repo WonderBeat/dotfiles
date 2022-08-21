@@ -172,4 +172,8 @@ eval "$(direnv hook zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-source <(jj debug completion --zsh | sed '$d')
+
+if command -v jj &> /dev/null
+then
+    source <(jj debug completion --zsh | sed '$d')
+fi
