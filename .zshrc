@@ -1,3 +1,31 @@
+change() {
+    images=()
+    while IFS=  read -r -d $'\0'; do
+        images+=("$REPLY")
+    done < <(fd ".*.jpg" ~/Dropbox/Pokemon-Terminal/pokemonterminal/Images/ --print0)
+    num_images=${#images[*]}
+    myfilename="`echo ${images[$((RANDOM%$num_images + 1))]}`"
+    rand_img="/tmp/wppr$(($RANDOM%10)).jpg"
+    rm -f "$rand_img" &> /dev/null
+    ln -s "$myfilename" "$rand_img"
+    base64filename=`echo "$rand_img"| base64`;
+    echo "\033]1337;SetBackgroundImageFile=${base64filename}\a";
+    unset $RANDOM
+}
+
+
+case `uname` in
+  Darwin)
+    change
+  ;;
+  Linux)
+    # commands for Linux go here
+  ;;
+  FreeBSD)
+    # commands for FreeBSD go here
+  ;;
+esac
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -141,23 +169,6 @@ export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
 
 eval "$(thefuck --alias)"
 eval "$(direnv hook zsh)"
-
-change() {
-    images=()
-    while IFS=  read -r -d $'\0'; do
-        images+=("$REPLY")
-    done < <(fd ".*.jpg" ~/Dropbox/Pokemon-Terminal/pokemonterminal/Images/ --print0)
-    num_images=${#images[*]}
-    myfilename="`echo ${images[$((RANDOM%$num_images + 1))]}`"
-    rand_img="/tmp/wppr$(($RANDOM%10)).jpg"
-    rm -f "$rand_img" &> /dev/null
-    ln -s "$myfilename" "$rand_img"
-    base64filename=`echo "$rand_img"| base64`;
-    echo "\033]1337;SetBackgroundImageFile=${base64filename}\a";
-    unset $RANDOM
-}
-
-change
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
