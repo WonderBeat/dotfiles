@@ -93,6 +93,9 @@ alias make='make -s --no-print-directory'
 #config checkout
 alias config="$(which git) --git-dir=$HOME/.myconf/ --work-tree=$HOME"
 
+
+alias wakeup='ssh router ether-wake -i br0 -b 00:11:32:CA:FE:69'
+
 #Daily team zoom Meeting
 dpmeet() {
  local LINK=$(cat <<-EOF
@@ -176,4 +179,9 @@ eval "$(direnv hook zsh)"
 if command -v jj &> /dev/null
 then
     source <(jj debug completion --zsh | sed '$d')
+fi
+
+if [[ -s "/home/linuxbrew/.linuxbrew/opt/zplug" ]]; then
+  export ZPLUG_HOME="/Users/$HOME/.config/broot/launcher/bash/br"
+  source $ZPLUG_HOME/init.zsh
 fi
