@@ -180,8 +180,3 @@ if command -v jj &> /dev/null
 then
     source <(jj debug completion --zsh | sed '$d')
 fi
-
-if [[ -s "/home/linuxbrew/.linuxbrew/opt/zplug" ]]; then
-  export ZPLUG_HOME="/Users/$HOME/.config/broot/launcher/bash/br"
-  source $ZPLUG_HOME/init.zsh
-fi
