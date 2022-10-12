@@ -5,6 +5,7 @@
 	tool = vimdiff
 	algorithm = histogram
 [core]
+#	editor = vim
 	editor = emacsclient
 	autocrlf = input
 	excludesFile = ~/.gitignore

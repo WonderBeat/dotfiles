@@ -180,3 +180,20 @@ if command -v jj &> /dev/null
 then
     source <(jj debug completion --zsh | sed '$d')
 fi
+
+
+# An emacs 'alias' with the ability to read from stdin
+function em
+{
+    # If the argument is - then write stdin to a tempfile and open the
+    # tempfile.
+    if [[ $# -ge 1 ]] && [[ "$1" == - ]]; then
+        tempfile="$(mktemp emacs-stdin-$USER.XXXXXXX --tmpdir)"
+        cat - >! "$tempfile"
+        emacsclient -n --eval "(find-file \"$tempfile\")" \
+            --eval '(set-visited-file-name nil)' \
+            --eval '(rename-buffer "*stdin*" t))'
+    else
+        emacsclient -n "$@"
+    fi
+}
