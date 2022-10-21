@@ -57,7 +57,7 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$HOME/.bin
 
-readonly ZPLUG_HOME=${ZPLUG_HOME:-"$HOME/.zplug"}
+export ZPLUG_HOME=${ZPLUG_HOME:-"$HOME/.zplug"}
 source $ZPLUG_HOME/init.zsh
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "rupa/z", use:z.sh
