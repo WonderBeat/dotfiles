@@ -41,18 +41,22 @@ fi
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 test -e "${HOME}/.linuxbrew/bin/brew" && eval "$(${HOME}/.linuxbrew/bin/brew shellenv)"
 
+if command -v brew &>/dev/null; then
+    BREW_PREFIX="$(brew --prefix)"
+    export PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
+    export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
+    export GOROOT=$BREW_PREFIX/opt/go/libexec
+    export ZPLUG_HOME=$BREW_PREFIX/opt/zplug
+    export PATH="$BREW_PREFIX/opt/qt/bin:$PATH"
+fi
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-BREW_PREFIX="$(brew --prefix)"
-export PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
-export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
 
 export GOPATH=$HOME/golang
-export GOROOT=$BREW_PREFIX/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$HOME/.bin
 
-export ZPLUG_HOME=$BREW_PREFIX/opt/zplug
 source $ZPLUG_HOME/init.zsh
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "rupa/z", use:z.sh
@@ -65,7 +69,6 @@ if ! zplug check; then
 fi
 #zplug "changyuheng/fz", defer:1
 zplug load
-export PATH="$BREW_PREFIX/opt/qt/bin:$PATH"
 export PATH="$HOME/.fastlane/bin:$PATH"
 export VISUAL=vim
 export EDITOR="$VISUAL"
@@ -83,18 +86,18 @@ saged() {
  age -d -i ~/.ssh/id_ed25519 <<< "$1"
 }
 
-alias mvn=mvn -T4
-
-alias python=python3
-alias vim='nvim'
-alias make='make -s --no-print-directory'
-
 #config clone --bare git@github.com:WonderBeat/dotfiles.git ~/.myconf
 #config checkout
 alias config="$(which git) --git-dir=$HOME/.myconf/ --work-tree=$HOME"
-
-
+alias mvn=mvn -T4
+alias python=python3
+alias vim='nvim'
+alias make='make -s --no-print-directory'
 alias wakeup='ssh router ether-wake -i br0 -b 00:11:32:CA:FE:69'
+alias nix-shell="nix-shell --command zsh"
+eval "$(thefuck --alias)"
+eval "$(direnv hook zsh)"
+
 
 #Daily team zoom Meeting
 dpmeet() {
@@ -170,9 +173,6 @@ export PATH="/usr/local/opt/python@3.10/bin:$PATH"
 export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
 export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
 
-eval "$(thefuck --alias)"
-eval "$(direnv hook zsh)"
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -197,3 +197,4 @@ function em
         emacsclient -n "$@"
     fi
 }
+
