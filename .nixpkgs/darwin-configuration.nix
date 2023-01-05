@@ -38,6 +38,7 @@ in {
       pkgs.shfmt
       pkgs.hunspell
       tex
+      unstable.devbox
       unstable.nmap
       unstable.jujutsu
       unstable.git-branchless
