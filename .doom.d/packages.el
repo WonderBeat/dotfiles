@@ -61,6 +61,7 @@
 (package! mermaid-mode)
 (package! ob-mermaid)
 (package! unisonlang-mode)
+(package! yaml-pro :recipe (:host github :repo "zkry/yaml-pro"))
 
 ;; (package! kubectl
 ;;  :recipe (:host github :repo "jypma/kubect"))

@@ -70,7 +70,7 @@
   (require 'tree-sitter-langs)
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-  (pushnew! tree-sitter-major-mode-language-alist '(zig-mode . zig)))
+  (pushnew! tree-sitter-major-mode-language-alist '(zig-mode . zig) '(yaml-mode . yaml)))
 
 (use-package! zig-mode
   :hook ((zig-mode . lsp-deferred))
@@ -291,3 +291,17 @@
   `(org-level-4 :foreground ,(doom-color 'cyan)   :height 1.0 :weight normal)
   `(org-level-5 :foreground ,(doom-color 'grey) :weight normal)
   `(org-level-6 :foreground ,(doom-color 'blue) :weight normal))
+
+(use-package! yaml-pro
+  :after yaml-mode
+  :hook (yaml-mode . yaml-pro-mode)
+  :config
+  (map! :map yaml-pro-mode-map
+       [remap imenu] #'yaml-pro-jump
+        :n "zc" #'yaml-pro-fold-at-point
+        :n "zo" #'yaml-pro-unfold-at-point
+        :n "gk" #'yaml-pro-prev-subtree
+        :n "gj" #'yaml-pro-next-subtree
+        :n "gK" #'yaml-pro-up-level
+        :n "M-k" #'yaml-pro-move-subtree-up
+        :n "M-j" #'yaml-pro-move-subtree-down))

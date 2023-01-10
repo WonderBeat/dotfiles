@@ -26,6 +26,8 @@ let
 in {
   environment.systemPackages =
     [ lorri
+      pkgs.up
+      pkgs.yaml-language-server
       pkgs.nixFlakes
       pkgs.direnv 
       pkgs.rustup
@@ -96,4 +98,41 @@ in {
       '';
     };
   };
+
+  homebrew = {
+  enable = true;
+  onActivation.upgrade = true;
+  # updates homebrew packages on activation,
+  # can make darwin-rebuild much slower (otherwise i'd forget to do it ever though)
+  brews = [
+    {
+      name = "emacs-plus@29";
+      args = ["--with-modern-doom-icon"];
+    }
+  ];
+  casks = [
+    "macfuse"
+    "gimp"
+    "mat"
+    "steam"
+    "vlc"
+    "android-file-transfer"
+    "fuse"
+    "tor-browser"
+    "xnviewmp"
+    "ghidra"
+    "qmk-toolbox"
+    "trezor-suite"
+    "xpra"
+    "cool-retro-term"
+    "gimp"
+    "veracrypt"
+    "virtualbox"
+    "soundflower"
+    "virtualbox-extension-pack"
+    "soundflowerbed"
+  ];
+  };
+
 }
+
