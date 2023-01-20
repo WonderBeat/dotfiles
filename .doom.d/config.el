@@ -182,10 +182,10 @@
 
 (global-subword-mode 1)
 
-(with-eval-after-load 'geiser
-  (setq-default geiser-chicken-binary "/usr/local/Cellar/chicken/5.3.0/bin/csi")
-  (setq-default geiser-active-implementations
-                '(chicken racket guile chez mit chibi)))
+;(with-eval-after-load 'geiser
+;  (setq-default geiser-chicken-binary "/usr/local/Cellar/chicken/5.3.0/bin/csi")
+;  (setq-default geiser-active-implementations
+;                '(chicken racket guile chez mit chibi)))
 
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
