@@ -27,6 +27,7 @@ in {
     [ lorri
       pkgs.watch
       pkgs.up
+      pkgs.fd
       pkgs.mosh
       pkgs.zplug
       pkgs.ncdu
@@ -117,10 +118,14 @@ in {
   onActivation.upgrade = true;
   # updates homebrew packages on activation,
   # can make darwin-rebuild much slower (otherwise i'd forget to do it ever though)
+  taps = [
+    "koekeishiya/formulae/yabai"
+    "d12frosted/emacs-plus"
+  ];
   brews = [
     {
       name = "emacs-plus@29";
-      args = ["--with-modern-doom-icon"];
+      args = ["with-modern-doom-icon"];
     }
     "mermaid-cli"
     "spoof-mac"
@@ -129,20 +134,24 @@ in {
     "yabai"
   ];
   casks = [
+    "telegram"
+    "discord"
+    "iterm2"
+    "little-snitch"
     "macfuse"
     "gimp"
     "mat"
     "steam"
     "vlc"
-    "android-file-transfer"
+    # "android-file-transfer"
     "fuse"
     "tor-browser"
     "xnviewmp"
-    "ghidra"
+    # "ghidra"
     "qmk-toolbox"
     "trezor-suite"
     "firefox"
-    "xpra"
+    # "xpra"
     "cool-retro-term"
     "gimp"
     "veracrypt"
