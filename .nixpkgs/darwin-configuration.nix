@@ -25,6 +25,7 @@ let
 in {
   environment.systemPackages =
     [ lorri
+      pkgs.fzf
       pkgs.watch
       pkgs.up
       pkgs.fd
