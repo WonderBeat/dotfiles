@@ -147,7 +147,6 @@ in {
     "tor-browser"
     "xnviewmp"
     # "ghidra"
-    "qmk-toolbox"
     "trezor-suite"
     "firefox"
     # "xpra"
@@ -155,9 +154,6 @@ in {
     "gimp"
     "veracrypt"
     "virtualbox"
-    "soundflower"
-    "virtualbox-extension-pack"
-    "soundflowerbed"
   ];
   };
 
