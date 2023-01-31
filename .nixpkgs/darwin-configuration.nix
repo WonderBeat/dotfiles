@@ -48,7 +48,7 @@ in {
       pkgs.rsync
       pkgs.shfmt
       pkgs.hunspell
-      pkgs.binutils
+      # pkgs.binutils
       pkgs.aria2
       pkgs.git-crypt
       pkgs.git-lfs
