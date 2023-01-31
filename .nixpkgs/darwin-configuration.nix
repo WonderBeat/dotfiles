@@ -132,7 +132,7 @@ in {
     "wireguard-tools"
     {
       name = "koekeishiya/formulae/yabai";
-      start_service = "yabai";
+      start_service = true;
     }
   ];
   casks = [
