@@ -2,7 +2,7 @@ change() {
     images=()
     while IFS=  read -r -d $'\0'; do
         images+=("$REPLY")
-    done < <(fd ".*.jpg" ~/Dropbox/Pokemon-Terminal/pokemonterminal/Images/ --print0)
+    done < <(find ~/Dropbox/Pokemon-Terminal/pokemonterminal/Images/ -name "*.jpg" -print0)
     num_images=${#images[*]}
     myfilename="`echo ${images[$((RANDOM%$num_images + 1))]}`"
     rand_img="/tmp/wppr$(($RANDOM%10)).jpg"
