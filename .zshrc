@@ -42,11 +42,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export GOPATH=$HOME/golang
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin
-export PATH=$PATH:$HOME/.bin
-
 export ZPLUG_HOME=${ZPLUG_HOME:-"$HOME/.zplug"}
 source $ZPLUG_HOME/init.zsh
 zplug "b4b4r07/enhancd", use:init.sh
@@ -88,7 +83,6 @@ alias wakeup='ssh router ether-wake -i br0 -b 00:11:32:CA:FE:69'
 alias nix-shell="nix-shell --command zsh"
 alias update="sudo nixos-rebuild switch"
 alias update-home="home-manager switch"
-eval "$(thefuck --alias)"
 eval "$(direnv hook zsh)"
 
 

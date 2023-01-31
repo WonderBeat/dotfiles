@@ -124,7 +124,7 @@ in {
   brews = [
     {
       name = "emacs-plus@29";
-      args = ["with-modern-doom-icon"];
+      args = ["with-modern-doom3-icon"];
     }
     "mermaid-cli"
     "spoof-mac"
