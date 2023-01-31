@@ -119,7 +119,6 @@ in {
   # updates homebrew packages on activation,
   # can make darwin-rebuild much slower (otherwise i'd forget to do it ever though)
   taps = [
-    "koekeishiya/formulae/yabai"
     "d12frosted/emacs-plus"
   ];
   brews = [
@@ -131,7 +130,7 @@ in {
     "spoof-mac"
     "wireguard-go"
     "wireguard-tools"
-    "yabai"
+    "koekeishiya/formulae/yabai"
   ];
   casks = [
     "telegram"
