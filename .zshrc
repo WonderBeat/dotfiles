@@ -87,7 +87,7 @@ saged() {
  age -d -i ~/.ssh/id_ed25519 <<< "$1"
 }
 
-#config clone --bare git@github.com:WonderBeat/dotfiles.git ~/.myconf
+#config clone --bare https://github.com/WonderBeat/dotfiles.git ~/.myconf
 #config checkout
 alias config="$(which git) --git-dir=$HOME/.myconf/ --work-tree=$HOME"
 alias mvn=mvn -T4

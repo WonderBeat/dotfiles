@@ -26,7 +26,17 @@ let
 in {
   environment.systemPackages =
     [ lorri
+      pkgs.watch
       pkgs.up
+      pkgs.mosh
+      pkgs.zplug
+      pkgs.ncdu
+      pkgs.neovim
+      pkgs.tree-sitter
+      pkgs.rg
+      pkgs.age
+      pkgs.git
+      pkgs.gnupg
       pkgs.yaml-language-server
       pkgs.nixFlakes
       pkgs.direnv 
@@ -109,6 +119,8 @@ in {
       name = "emacs-plus@29";
       args = ["--with-modern-doom-icon"];
     }
+    "mermaid-cli"
+    "spoof-mac"
   ];
   casks = [
     "macfuse"
