@@ -39,16 +39,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-test -e "${HOME}/.linuxbrew/bin/brew" && eval "$(${HOME}/.linuxbrew/bin/brew shellenv)"
-
-if command -v brew &>/dev/null; then
-    BREW_PREFIX="$(brew --prefix)"
-    export PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
-    export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
-    export GOROOT=$BREW_PREFIX/opt/go/libexec
-    export ZPLUG_HOME=$BREW_PREFIX/opt/zplug
-    export PATH="$BREW_PREFIX/opt/qt/bin:$PATH"
-fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
