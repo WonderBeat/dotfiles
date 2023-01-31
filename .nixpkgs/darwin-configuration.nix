@@ -3,7 +3,6 @@
 let
   inherit (pkgs) lorri;
   unstable = import <unstable> {};
-  unison = import <unison-ucm> {};
   # unison-ucm = import (fetchTarball "https://github.com/ceedubs/unison-nix/archive/trunk.tar.gz") {};
   tex = (pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-medium sansmathfonts sansmath
@@ -59,7 +58,6 @@ in {
       unstable.jujutsu
       unstable.git-branchless
       unstable.stgit
-      unison.unison-ucm
       unstable.earthly
       ];
 
