@@ -130,7 +130,10 @@ in {
     "spoof-mac"
     "wireguard-go"
     "wireguard-tools"
-    "koekeishiya/formulae/yabai"
+    {
+      name = "koekeishiya/formulae/yabai";
+      start_service = "yabai";
+    }
   ];
   casks = [
     "telegram"
@@ -155,6 +158,8 @@ in {
     "veracrypt"
     "virtualbox"
     "plex"
+    "jetbrains-toolbox"
+    "visual-studio-code"
   ];
   };
 
