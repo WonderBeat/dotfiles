@@ -154,6 +154,7 @@ in {
     "gimp"
     "veracrypt"
     "virtualbox"
+    "plex"
   ];
   };
 
