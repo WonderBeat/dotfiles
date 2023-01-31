@@ -33,7 +33,7 @@ in {
       pkgs.ncdu
       pkgs.neovim
       pkgs.tree-sitter
-      pkgs.rg
+      pkgs.ripgrep
       pkgs.age
       pkgs.git
       pkgs.gnupg
@@ -49,6 +49,10 @@ in {
       pkgs.rsync
       pkgs.shfmt
       pkgs.hunspell
+      pkgs.binutils
+      pkgs.aria2
+      pkgs.git-crypt
+      pkgs.git-lfs
       tex
       unstable.devbox
       unstable.nmap
@@ -121,6 +125,9 @@ in {
     }
     "mermaid-cli"
     "spoof-mac"
+    "wireguard-go"
+    "wireguard-tools"
+    "yabai"
   ];
   casks = [
     "macfuse"
@@ -135,6 +142,7 @@ in {
     "ghidra"
     "qmk-toolbox"
     "trezor-suite"
+    "firefox"
     "xpra"
     "cool-retro-term"
     "gimp"
