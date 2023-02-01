@@ -50,7 +50,6 @@ in {
       pkgs.rsync
       pkgs.shfmt
       pkgs.hunspell
-      # pkgs.binutils
       pkgs.aria2
       pkgs.git-crypt
       pkgs.git-lfs
@@ -81,7 +80,7 @@ in {
     proggyfonts
     fira-code
     fira-code-symbols
-    (nerdfonts.override { fonts = [ "SourceCodePro" "Monoid" "FiraCode" "DroidSansMono" ]; })
+    (nerdfonts.override { fonts = [ "SourceCodePro" "Monoid" "FiraCode" "DroidSansMono" "Meslo" "Overpass" "BigBlueTerminal" "Iosevka" "Gohu" ]; })
   ];
 
   environment.variables = rec {
@@ -154,14 +153,11 @@ in {
     "mat"
     "steam"
     "vlc"
-    # "android-file-transfer"
     "fuse"
     "tor-browser"
     "xnviewmp"
-    # "ghidra"
     "trezor-suite"
     "firefox"
-    # "xpra"
     "cool-retro-term"
     "gimp"
     "veracrypt"

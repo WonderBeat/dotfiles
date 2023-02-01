@@ -37,7 +37,10 @@ fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if command -v fzf-share >/dev/null; then
+  source "$(fzf-share)/key-bindings.zsh"
+  source "$(fzf-share)/completion.zsh"
+fi
 
 export ZPLUG_HOME=${ZPLUG_HOME:-"$HOME/.zplug"}
 source $ZPLUG_HOME/init.zsh
@@ -70,6 +73,7 @@ saged() {
 }
 
 #config clone --bare https://github.com/WonderBeat/dotfiles.git ~/.myconf
+# git@github.com:WonderBeat/dotfiles.git
 #config checkout
 alias config="$(which git) --git-dir=$HOME/.myconf/ --work-tree=$HOME"
 alias mvn=mvn -T4
