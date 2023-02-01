@@ -1,22 +1,19 @@
-change() {
-    images=()
-    while IFS=  read -r -d $'\0'; do
-        images+=("$REPLY")
-    done < <(find ~/Dropbox/Pokemon-Terminal/pokemonterminal/Images/ -name "*.jpg" -print0)
-    num_images=${#images[*]}
-    myfilename="`echo ${images[$((RANDOM%$num_images + 1))]}`"
-    rand_img="/tmp/wppr$(($RANDOM%10)).jpg"
-    rm -f "$rand_img" &> /dev/null
-    ln -s "$myfilename" "$rand_img"
-    base64filename=`echo "$rand_img"| base64`;
-    echo "\033]1337;SetBackgroundImageFile=${base64filename}\a";
-    unset $RANDOM
-}
-
-
 case `uname` in
   Darwin)
-    change
+    if [ "$TERM_PROGRAM" = "iTerm.app" ]
+    then
+        images=()
+        while IFS=  read -r -d $'\0'; do
+            images+=("$REPLY")
+        done < <(find ~/Dropbox/Pokemon-Terminal/pokemonterminal/Images/ -name "*.jpg" -print0)
+        num_images=${#images[*]}
+        myfilename="`echo ${images[$((RANDOM%$num_images + 1))]}`"
+        rand_img="/tmp/wppr$(($RANDOM%10)).jpg"
+        rm -f "$rand_img" &> /dev/null
+        ln -s "$myfilename" "$rand_img"
+        base64filename=`echo "$rand_img"| base64`;
+        echo "\033]1337;SetBackgroundImageFile=${base64filename}\a";
+    fi
   ;;
   Linux)
     # commands for Linux go here
@@ -85,24 +82,6 @@ alias update="sudo nixos-rebuild switch"
 alias update-home="home-manager switch"
 eval "$(direnv hook zsh)"
 
-
-#Daily team zoom Meeting
-dpmeet() {
- local LINK=$(cat <<-EOF
-		-----BEGIN AGE ENCRYPTED FILE-----
-		YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IHNzaC1lZDI1NTE5IFZ1YW4yZyBsZTlS
-		YTVSdVI0alhZQjRtb2oza1NuUFJFQ3FhcjY1VWwwRHJQa2NrQjA0CnZrSkYybldN
-		ZnVsUFFPTlZwTTZzdWsxS3NNVCsrT3ZjYXVqYkVKZjk0N1UKLS0tIHpLSExiQmRU
-		YUNxL2pxdEtEL3Njd0dXU21uS1lHNTdqeS9MZmE3aUFJd0EKg6bmLgtpyVJY/xa9
-		Uun2zMCugYZC4fhHuwyS7cSjFiHdBfCyOtzE/L0X70uI4+n1ON6G2ROw7eW09Rr0
-		d7lXwRolO6GDNaejy9g7Y+RAVI3dGqGKHfv6WPFYLfnYJ8cn1KzXda7G5fBEsEeL
-		TeZ9Yee9klZSZxKsK/o9w/TvCMwtg0FqMXmZ1q/RMlJEXyW5dtAaDSz/cv7jNc6X
-		LYYdPvwWgIkwmXO0jjuBu8S4OVsdpGj3
-		-----END AGE ENCRYPTED FILE-----
-EOF
- )
- open $(saged "$LINK")
-}
 
 if [[ ${INSIDE_EMACS:-no_emacs_here} != 'no_emacs_here' ]]; then
     export EDITOR=emacsclient

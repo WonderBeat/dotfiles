@@ -88,3 +88,8 @@ export GOPATH=$HOME/golang
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$HOME/.bin
+
+
+# Added by Toolbox App
+export PATH="$PATH:/Users/gato/Library/Application Support/JetBrains/Toolbox/scripts"
+

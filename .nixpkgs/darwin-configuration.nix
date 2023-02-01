@@ -25,6 +25,7 @@ let
 in {
   environment.systemPackages =
     [ lorri
+      pkgs.s3cmd
       pkgs.fzf
       pkgs.watch
       pkgs.up
@@ -60,14 +61,21 @@ in {
       unstable.git-branchless
       unstable.stgit
       unstable.earthly
+      unstable.k9s
       ];
 
   fonts.fontDir.enable = true;
 
   nix.extraOptions = ''
+    auto-optimise-store = true
     extra-platforms = aarch64-darwin x86_64-darwin
     experimental-features = nix-command flakes
   '';
+
+  system.keyboard.enableKeyMapping = true;
+  system.keyboard.remapCapsLockToEscape = true;
+  security.pam.enableSudoTouchIdAuth = true;
+  programs.nix-index.enable = true;
 
   fonts.fonts = with pkgs; [
     proggyfonts
@@ -157,7 +165,7 @@ in {
     "cool-retro-term"
     "gimp"
     "veracrypt"
-    "virtualbox"
+    # "virtualbox"
     "plex"
     "jetbrains-toolbox"
     "visual-studio-code"
