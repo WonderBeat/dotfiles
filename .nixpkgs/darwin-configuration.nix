@@ -53,6 +53,7 @@ in {
       pkgs.aria2
       pkgs.git-crypt
       pkgs.git-lfs
+      pkgs.kubectl
       tex
       unstable.devbox
       unstable.nmap
