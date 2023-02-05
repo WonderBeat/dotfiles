@@ -56,7 +56,7 @@ fi
 #zplug "changyuheng/fz", defer:1
 zplug load
 export PATH="$HOME/.fastlane/bin:$PATH"
-export VISUAL=vim
+export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 [ -s "/Users/$USERNAME/.jabba/jabba.sh" ] && source "/Users/$USERNAME/.jabba/jabba.sh"

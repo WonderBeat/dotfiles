@@ -54,6 +54,8 @@ in {
       pkgs.git-crypt
       pkgs.git-lfs
       pkgs.kubectl
+      pkgs.rclone
+      pkgs.syncthing
       tex
       unstable.devbox
       unstable.nmap
