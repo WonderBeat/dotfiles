@@ -1,0 +1,10 @@
+#!/bin/bash
+
+readonly action=${1:-"poweron"}
+
+echo -n Password:
+read -s pwd
+
+ssh nasduck <<EOF
+echo "$pwd" | sudo -S synowebapi --exec api=SYNO.Virtualization.API.Guest.Action version=1 method=$action runner=admin guest_name="nixk8s"
+EOF
