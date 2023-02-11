@@ -25,6 +25,7 @@ let
 in {
   environment.systemPackages =
     [ lorri
+      pkgs.broot
       pkgs.s3cmd
       pkgs.fzf
       pkgs.watch
@@ -108,19 +109,35 @@ in {
   system.stateVersion = 4;
   nix.package = pkgs.nix;
   launchd.user.agents = {
-    "lorri" = {
+    # "lorri" = {
+    #   serviceConfig = {
+    #     WorkingDirectory = (builtins.getEnv "HOME");
+    #     EnvironmentVariables = { };
+    #     KeepAlive = true;
+    #     RunAtLoad = true;
+    #     StandardOutPath = "/var/tmp/lorri.log";
+    #     StandardErrorPath = "/var/tmp/lorri.log";
+    #   };
+    #   script = ''
+    #     source ${config.system.build.setEnvironment}
+    #     exec ${lorri}/bin/lorri daemon
+    #   '';
+    # };
+    "warpd" = {
       serviceConfig = {
         WorkingDirectory = (builtins.getEnv "HOME");
         EnvironmentVariables = { };
         KeepAlive = true;
         RunAtLoad = true;
-        StandardOutPath = "/var/tmp/lorri.log";
-        StandardErrorPath = "/var/tmp/lorri.log";
+        StandardOutPath = "/var/tmp/warpd.log";
+        StandardErrorPath = "/var/tmp/warpd.log";
+        ProgramArguments = [ "/Users/$USER/.bin/warpd" "-f" ];
+        ProcessType = "Interactive";
       };
-      script = ''
-        source ${config.system.build.setEnvironment}
-        exec ${lorri}/bin/lorri daemon
-      '';
+      # command =  -f";
+      # script = ''
+      #   source ${config.system.build.setEnvironment}
+      # '';
     };
   };
 
@@ -141,10 +158,14 @@ in {
     "spoof-mac"
     "wireguard-go"
     "wireguard-tools"
-    {
-      name = "koekeishiya/formulae/yabai";
-      start_service = true;
-    }
+    # {
+    #   name = "koekeishiya/formulae/yabai";
+    #   start_service = true;
+    # }
+    # {
+    #   name = "koekeishiya/formulae/skhd";
+    #   start_service = true;
+    # }
   ];
   casks = [
     "telegram"
@@ -168,6 +189,9 @@ in {
     "plex"
     "jetbrains-toolbox"
     "visual-studio-code"
+    "cyberduck"
+    "amethyst"
+    "hyper"
   ];
   };
 

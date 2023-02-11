@@ -56,21 +56,24 @@
 
 (setq confirm-kill-emacs nil)
 
-(setq tree-sitter-load-path `(
-                             ,"~/.bin"))
+;; (setq tree-sitter-load-path `(
+;;                              ,"~/.bin"))
 
 
 ;; (add-to-list 'tree-sitter-major-mode-language-alist '(csharp-tree-sitter-mode . c-sharp))
 ;; (add-to-list 'tree-sitter-major-mode-language-alist '(zig-mode . (tree-sitter-require 'zig)))
-(tree-sitter-require 'zig)
+;; (tree-sitter-require 'zig)
 
 
-(use-package! tree-sitter
-  :config
-  (require 'tree-sitter-langs)
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-  (pushnew! tree-sitter-major-mode-language-alist '(zig-mode . zig) '(yaml-mode . yaml)))
+;; (use-package! tree-sitter
+;;   :config
+;;   (require 'tree-sitter-langs)
+;;   (global-tree-sitter-mode)
+;;   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+;;   (pushnew! tree-sitter-major-mode-language-alist '(zig-mode . zig) '(yaml-mode . yaml)))
+
+(add-hook 'yaml-mode-hook #'eldoc-mode)
+(add-hook 'yaml-mode-hook #'yaml-pro-ts-mode)
 
 (use-package! zig-mode
   :hook ((zig-mode . lsp-deferred))

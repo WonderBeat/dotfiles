@@ -1,7 +1,11 @@
-left: left h
-right: right l
-up: up k
-down: down j
+# left: left h
+# right: right l
+# up: up k
+# down: down j
 hint_chars: /abcdefghijklmnopqrstuvwxyz_
 hint2_activation_key: A-M-z
-cursor_size: 8
+cursor_size:8
+left: leftarrow h
+right: rightarrow l
+up: uparrow k
+down: downarrow j

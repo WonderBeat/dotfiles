@@ -168,3 +168,5 @@ function em
     fi
 }
 
+
+source /Users/gato/.config/broot/launcher/bash/br
