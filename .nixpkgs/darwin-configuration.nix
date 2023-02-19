@@ -54,7 +54,6 @@ in {
       pkgs.aria2
       pkgs.git-crypt
       pkgs.git-lfs
-      pkgs.kubectl
       pkgs.rclone
       pkgs.syncthing
       tex
@@ -192,6 +191,8 @@ in {
     "cyberduck"
     "amethyst"
     "hyper"
+    "owasp-zap"
+    "soundflower"
   ];
   };
 
