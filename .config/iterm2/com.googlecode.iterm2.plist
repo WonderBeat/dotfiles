@@ -2,8 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AdjustWindowForFontSizeChange</key>
+	<false/>
 	<key>AlternateMouseScroll</key>
-	<true/>
+	<false/>
 	<key>AlwaysAllowBackgroundImage</key>
 	<array>
 		<string>/Users/stoffel/Dropbox/Pokemon-Terminal/pokemonterminal/Images/Generation I - Kanto/004.jpg</string>
@@ -35594,6 +35596,8 @@
 	<true/>
 	<key>HideFromDockAndAppSwitcher</key>
 	<true/>
+	<key>HideScrollbar</key>
+	<true/>
 	<key>HideTab</key>
 	<true/>
 	<key>HotKeyBookmark</key>
@@ -37755,10 +37759,18 @@
 	<false/>
 	<key>StatusBarIcon</key>
 	<false/>
+	<key>StatusBarPosition</key>
+	<integer>0</integer>
 	<key>StretchTabsToFillBar</key>
 	<true/>
 	<key>TabStyle</key>
 	<integer>1</integer>
+	<key>TabStyleWithAutomaticOption</key>
+	<integer>5</integer>
+	<key>TabViewType</key>
+	<integer>1</integer>
+	<key>UseBorder</key>
+	<false/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>WordCharacters</key>

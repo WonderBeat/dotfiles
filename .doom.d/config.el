@@ -196,18 +196,6 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]tmp\\'"))
 
-(use-package treemacs
-  :ensure t
-  :defer t
-  :config
-  (add-hook 'treemacs-mode-hook
-          (lambda ()
-            (treemacs-resize-icons 15) ;; smaller icons than default
-            (text-scale-adjust -2) ;; smaller font size than default
-            (treemacs-toggle-fixed-width) ;; able to resize buffer width
-            (treemacs-decrease-width 5)
-            ))
-)
 
 (use-package languagetool
   :ensure t

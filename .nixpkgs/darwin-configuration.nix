@@ -192,7 +192,9 @@ in {
     "amethyst"
     "hyper"
     "owasp-zap"
+    "wireshark"
     "soundflower"
+    "openmtp"
   ];
   };
 
