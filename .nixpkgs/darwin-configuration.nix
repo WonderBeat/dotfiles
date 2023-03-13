@@ -147,12 +147,14 @@ in {
   # can make darwin-rebuild much slower (otherwise i'd forget to do it ever though)
   taps = [
     "d12frosted/emacs-plus"
+    "uptech/homebrew-oss"
   ];
   brews = [
     {
       name = "emacs-plus@29";
       args = ["with-modern-doom3-icon"];
     }
+    "git-ps-rs"
     "mermaid-cli"
     "spoof-mac"
     "wireguard-go"
@@ -193,7 +195,7 @@ in {
     "hyper"
     "owasp-zap"
     "wireshark"
-    "soundflower"
+    # "soundflower"
     "openmtp"
   ];
   };
