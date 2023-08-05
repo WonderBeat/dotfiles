@@ -25,6 +25,7 @@ let
 in {
   environment.systemPackages =
     [ lorri
+      pkgs.gh
       pkgs.broot
       pkgs.s3cmd
       pkgs.fzf
@@ -57,6 +58,7 @@ in {
       pkgs.rclone
       pkgs.syncthing
       tex
+      unstable.micromamba
       unstable.devbox
       unstable.nmap
       unstable.jujutsu
@@ -159,6 +161,7 @@ in {
     "spoof-mac"
     "wireguard-go"
     "wireguard-tools"
+    "lima"
     # {
     #   name = "koekeishiya/formulae/yabai";
     #   start_service = true;
@@ -197,6 +200,9 @@ in {
     "wireshark"
     # "soundflower"
     "openmtp"
+    "imhex"
+    "rectangle"
+    "warp"
   ];
   };
 

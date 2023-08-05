@@ -53,14 +53,15 @@
 (package! realgud)
 (package! disk-usage)
 (package! languagetool)
-(package! kubernetes)
-(package! kubernetes-evil)
-(package! kubel-evil)
+;(package! kubernetes)
+;(package! kubernetes-evil)
+;(package! kubel-evil)
 ;; (package! lsp-docker)
 (package! earthfile-mode)
 (package! mermaid-mode)
 (package! ob-mermaid)
 (package! unisonlang-mode)
+(package! company-tabnine)
 (package! yaml-pro :recipe (:host github :repo "zkry/yaml-pro"))
 
 ;; (package! kubectl
