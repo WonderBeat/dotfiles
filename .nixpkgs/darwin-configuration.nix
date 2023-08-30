@@ -25,6 +25,9 @@ let
 in {
   environment.systemPackages =
     [ lorri
+      pkgs.cmake
+      pkgs.clang-tools
+      pkgs.ktlint
       pkgs.gh
       pkgs.broot
       pkgs.s3cmd
@@ -57,6 +60,7 @@ in {
       pkgs.git-lfs
       pkgs.rclone
       pkgs.syncthing
+      pkgs.aws-sam-cli
       tex
       unstable.micromamba
       unstable.devbox
@@ -66,6 +70,8 @@ in {
       unstable.stgit
       unstable.earthly
       unstable.k9s
+      unstable.fzy
+      unstable.exa
       ];
 
   fonts.fontDir.enable = true;
@@ -128,8 +134,8 @@ in {
       serviceConfig = {
         WorkingDirectory = (builtins.getEnv "HOME");
         EnvironmentVariables = { };
-        KeepAlive = true;
-        RunAtLoad = true;
+        KeepAlive = false;
+        RunAtLoad = false;
         StandardOutPath = "/var/tmp/warpd.log";
         StandardErrorPath = "/var/tmp/warpd.log";
         ProgramArguments = [ "/Users/$USER/.bin/warpd" "-f" ];
@@ -158,18 +164,13 @@ in {
     }
     "git-ps-rs"
     "mermaid-cli"
+    "wordnet"
+    "sqlite"
     "spoof-mac"
     "wireguard-go"
     "wireguard-tools"
     "lima"
-    # {
-    #   name = "koekeishiya/formulae/yabai";
-    #   start_service = true;
-    # }
-    # {
-    #   name = "koekeishiya/formulae/skhd";
-    #   start_service = true;
-    # }
+    # "blackhole-2ch"
   ];
   casks = [
     "telegram"
@@ -203,6 +204,7 @@ in {
     "imhex"
     "rectangle"
     "warp"
+    "cutter"
   ];
   };
 

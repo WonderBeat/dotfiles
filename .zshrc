@@ -49,6 +49,11 @@ zplug "rupa/z", use:z.sh
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "djui/alias-tips"
+zplug "MichaelAquilina/zsh-auto-notify"
+
+export AUTO_NOTIFY_THRESHOLD=60
+export AUTO_NOTIFY_IGNORE=("docker" "man" "sleep" "emacs" "java" "k9s" "kubectl" "brew")
+ENHANCD_FILTER="fzf --preview 'exa -al --tree --level 1 --group-directories-first --git-ignore --header --git --no-user --no-time --no-filesize --no-permissions {}' --preview-window right,50% --height 35% --reverse --ansi:fzy:peco"
 
 if ! zplug check; then
    zplug install
