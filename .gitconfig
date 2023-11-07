@@ -1,6 +1,6 @@
 [user]
-	name = dgolovachev
-	email = denis@example.com
+	name = stoffel
+	email = nosuchmail.com
 [diff]
 	tool = vimdiff
 	algorithm = histogram
@@ -12,16 +12,18 @@
 [rerere]
 	enabled = 1
 [pull]
-	rebase = false
+	rebase = true
 	merge = true
-#[gpg]
-	#format = ssh
+[gpg]
+	format = ssh
 [merge]
 	log = true
 [includeIf "gitdir:/Users/denis.golovachev/"]
 	path = ~/.gitconfig-work
 [includeIf "gitdir:/Users/stoffel/"]
 	path = ~/.gitconfig-home
+[includeIf "gitdir:~/Documents/projects/santiment/"]
+	path = ~/.gitconfig-santiment
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process

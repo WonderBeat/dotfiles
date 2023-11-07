@@ -61,6 +61,8 @@ in {
       pkgs.rclone
       pkgs.syncthing
       pkgs.aws-sam-cli
+      pkgs.mtr
+      pkgs.spin
       tex
       unstable.micromamba
       unstable.devbox
@@ -71,7 +73,7 @@ in {
       unstable.earthly
       unstable.k9s
       unstable.fzy
-      unstable.exa
+      unstable.eza
       ];
 
   fonts.fontDir.enable = true;
@@ -91,7 +93,7 @@ in {
     proggyfonts
     fira-code
     fira-code-symbols
-    (nerdfonts.override { fonts = [ "SourceCodePro" "Monoid" "FiraCode" "DroidSansMono" "Meslo" "Overpass" "BigBlueTerminal" "Iosevka" "Gohu" ]; })
+    (nerdfonts.override { fonts = [ "CascadiaCode" "SourceCodePro" "Monoid" "FiraCode" "DroidSansMono" "Meslo" "Overpass" "BigBlueTerminal" "Iosevka" "Gohu" ]; })
   ];
 
   environment.variables = rec {
@@ -205,6 +207,7 @@ in {
     "rectangle"
     "warp"
     "cutter"
+    "microsoft-onenote"
   ];
   };
 
