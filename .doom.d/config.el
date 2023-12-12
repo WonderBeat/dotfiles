@@ -3,7 +3,7 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
-; Some functionality uses this to identify you, e.g. GPG configuration, email
+                                        ; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "wonderbeat"
       user-mail-address "wombat@gmail.com")
@@ -18,7 +18,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size 13 :weight 'normal)
+(setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size 13 :weight 'semi-bold)
       doom-variable-pitch-font (font-spec :family "MesloLGL Nerd Font" :size 14))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -156,7 +156,7 @@
                       (mu4e-sent-folder       . "/vk/Sent Items")
                       (mu4e-trash-folder      . "/vk/Deleted Items")
                       (mu4e-update-interval   . nil)
-                      ;(mu4e-sent-messages-behavior . 'delete)
+                                        ;(mu4e-sent-messages-behavior . 'delete)
                       )
                     nil)
 
@@ -184,10 +184,10 @@
 
 (global-subword-mode 1)
 
-;(with-eval-after-load 'geiser
-;  (setq-default geiser-chicken-binary "/usr/local/Cellar/chicken/5.3.0/bin/csi")
-;  (setq-default geiser-active-implementations
-;                '(chicken racket guile chez mit chibi)))
+                                        ;(with-eval-after-load 'geiser
+                                        ;  (setq-default geiser-chicken-binary "/usr/local/Cellar/chicken/5.3.0/bin/csi")
+                                        ;  (setq-default geiser-active-implementations
+                                        ;                '(chicken racket guile chez mit chibi)))
 
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
@@ -234,11 +234,11 @@
   (setq +lsp-company-backends '(company-tabnine :separate company-capf company-yasnippet))
   (setq company-show-numbers t)
   (setq company-idle-delay 0)
-)
+  )
 
 (after! tide
   (set-company-backend! 'tide-mode '(company-tide :with company-tabnine :separate))
-)
+  )
 
 (use-package! lsp
   :init
@@ -276,8 +276,8 @@
 ;; )
 
 (org-babel-do-load-languages
-    'org-babel-load-languages
-    '((mermaid . t)))
+ 'org-babel-load-languages
+ '((mermaid . t)))
 
 
 (custom-set-faces!
@@ -296,7 +296,7 @@
   :hook (yaml-mode . yaml-pro-mode)
   :config
   (map! :map yaml-pro-mode-map
-       [remap imenu] #'yaml-pro-jump
+        [remap imenu] #'yaml-pro-jump
         :n "zc" #'yaml-pro-fold-at-point
         :n "zo" #'yaml-pro-unfold-at-point
         :n "gk" #'yaml-pro-prev-subtree

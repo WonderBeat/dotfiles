@@ -25,6 +25,7 @@ let
 in {
   environment.systemPackages =
     [ lorri
+      pkgs.luarocks
       pkgs.cmake
       pkgs.clang-tools
       pkgs.ktlint
@@ -37,7 +38,7 @@ in {
       pkgs.fd
       pkgs.mosh
       pkgs.ncdu
-      pkgs.neovim
+      unstable.neovim
       pkgs.tree-sitter
       pkgs.ripgrep
       pkgs.age
@@ -45,12 +46,10 @@ in {
       pkgs.gnupg
       pkgs.yaml-language-server
       pkgs.nixFlakes
-      pkgs.direnv 
-      pkgs.rustup
+      pkgs.direnv
       pkgs.glances
       pkgs.pipenv
       pkgs.shellcheck
-      pkgs.mu
       pkgs.pandoc
       pkgs.rsync
       pkgs.shfmt
@@ -59,22 +58,23 @@ in {
       pkgs.git-crypt
       pkgs.git-lfs
       pkgs.rclone
-      pkgs.syncthing
+      # pkgs.syncthing
       pkgs.aws-sam-cli
       pkgs.mtr
       pkgs.spin
-      tex
-      unstable.micromamba
+      # tex
+      # unstable.micromamba
       unstable.devbox
-      unstable.nmap
-      unstable.jujutsu
-      unstable.git-branchless
-      unstable.stgit
-      unstable.earthly
+      # unstable.jujutsu
+      # unstable.earthly
       unstable.k9s
       unstable.fzy
       unstable.eza
       ];
+
+  documentation = {
+    enable = false;
+  };
 
   fonts.fontDir.enable = true;
 
@@ -137,11 +137,13 @@ in {
         WorkingDirectory = (builtins.getEnv "HOME");
         EnvironmentVariables = { };
         KeepAlive = false;
-        RunAtLoad = false;
-        StandardOutPath = "/var/tmp/warpd.log";
+        RunAtLoad = true;
+        # StandardOutPath = "/var/tmp/warpd.log";
         StandardErrorPath = "/var/tmp/warpd.log";
-        ProgramArguments = [ "/Users/$USER/.bin/warpd" "-f" ];
+        ProgramArguments = [ "/usr/local/bin/warpd" "-f" ];
+        # ProgramArguments = [ "/Users/$USER/.bin/warpd" "-f" ];
         ProcessType = "Interactive";
+        UserName = "$USER";
       };
       # command =  -f";
       # script = ''
@@ -158,6 +160,7 @@ in {
   taps = [
     "d12frosted/emacs-plus"
     "uptech/homebrew-oss"
+    "homebrew/cask-fonts"
   ];
   brews = [
     {
@@ -199,7 +202,6 @@ in {
     "cyberduck"
     "amethyst"
     "hyper"
-    "owasp-zap"
     "wireshark"
     # "soundflower"
     "openmtp"
@@ -208,8 +210,9 @@ in {
     "warp"
     "cutter"
     "microsoft-onenote"
+    "font-monaspace"
+    "raycast"
   ];
   };
 
 }
-

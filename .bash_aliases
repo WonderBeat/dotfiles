@@ -8,3 +8,4 @@ alias kp='(export KUBECONFIG=~/.kube/hetzner-prod.yaml && k9s)'
 alias ks='(export KUBECONFIG=~/.kube/hetzner-stage.yaml && k9s)'
 alias docker="lima nerdctl"
 alias k9s="XDG_CONFIG_HOME=$HOME/.config/ k9s"
+alias kubectl-list-all="kubectl api-resources --verbs=list -o name | xargs -n 1 kubectl get -o name"
