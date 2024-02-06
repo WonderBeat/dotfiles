@@ -9,5 +9,3 @@ verify_isolation = true
 prompt_for_reassurance = true
 pull_after_integrate = false
 
-[fetch]
-show_upstream_patches_after_fetch = true

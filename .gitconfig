@@ -1,6 +1,6 @@
 [user]
-	name = stoffel
-	email = nosuchmail.com
+	name = wonderbeat
+	email = borov.htid@gmail.com
 [diff]
 	tool = vimdiff
 	algorithm = histogram
@@ -22,6 +22,8 @@
 	path = ~/.gitconfig-work
 [includeIf "gitdir:/Users/stoffel/"]
 	path = ~/.gitconfig-home
+[includeIf "gitdir:/Users/gato/"]
+	path = ~/.gitconfig-home
 [includeIf "gitdir:~/Documents/projects/santiment/"]
 	path = ~/.gitconfig-santiment
 [filter "lfs"]
@@ -31,3 +33,9 @@
 	clean = git-lfs clean -- %f
 [github]
 	user = WonderBeat
+[init]
+	defaultBranch = main
+[alias]
+	change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch -f --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f"
+[advice]
+	skippedCherryPicks = false

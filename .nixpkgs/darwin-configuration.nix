@@ -134,6 +134,7 @@ in {
     # };
     "warpd" = {
       serviceConfig = {
+        Label = "com.warpd.warpd";
         WorkingDirectory = (builtins.getEnv "HOME");
         EnvironmentVariables = { };
         KeepAlive = false;
@@ -175,9 +176,11 @@ in {
     "wireguard-go"
     "wireguard-tools"
     "lima"
+    "exercism"
     # "blackhole-2ch"
   ];
   casks = [
+    "ocenaudio"
     "telegram"
     "discord"
     "iterm2"
@@ -188,7 +191,6 @@ in {
     "steam"
     "vlc"
     "fuse"
-    "tor-browser"
     "xnviewmp"
     "trezor-suite"
     "firefox"
@@ -200,11 +202,9 @@ in {
     "jetbrains-toolbox"
     "visual-studio-code"
     "cyberduck"
-    "amethyst"
     "hyper"
     "wireshark"
     # "soundflower"
-    "openmtp"
     "imhex"
     "rectangle"
     "warp"
@@ -212,6 +212,9 @@ in {
     "microsoft-onenote"
     "font-monaspace"
     "raycast"
+    "whisky"
+    "heroic"
+    "wine-stable"
   ];
   };
 
