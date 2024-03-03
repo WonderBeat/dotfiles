@@ -18,13 +18,15 @@
 	format = ssh
 [merge]
 	log = true
-[includeIf "gitdir:/Users/denis.golovachev/"]
+[includeIf "gitdir:/home/coder/"]
 	path = ~/.gitconfig-work
 [includeIf "gitdir:/Users/stoffel/"]
 	path = ~/.gitconfig-home
 [includeIf "gitdir:/Users/gato/"]
 	path = ~/.gitconfig-home
 [includeIf "gitdir:~/Documents/projects/santiment/"]
+	path = ~/.gitconfig-santiment
+[includeIf "gitdir:~/projects/santiment/"]
 	path = ~/.gitconfig-santiment
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f

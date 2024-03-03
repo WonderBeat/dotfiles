@@ -25,11 +25,9 @@ k9s:
         active: all
         lockFavorites: false
         favorites:
-        - all
-        - kube-system
         - default
       view:
-        active: pods
+        active: pod
       featureGates:
         nodeShell: false
       shellPod:
