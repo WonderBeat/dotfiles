@@ -6,4 +6,3 @@
 [ -d '/Users/$USERNAME/Library/' ] && source /Users/$USERNAME/Library/Preferences/org.dystroy.broot/launcher/bash/br
 [ -d "$HOME/.cargo" ] && . "$HOME/.cargo/env"
 
-source /Users/gato/.config/broot/launcher/bash/br
