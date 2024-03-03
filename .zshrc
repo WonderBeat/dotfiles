@@ -175,4 +175,3 @@ function em
 
 source ~/.bash_aliases
 
-source /Users/gato/.config/broot/launcher/bash/br

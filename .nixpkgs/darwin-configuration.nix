@@ -2,7 +2,7 @@
 
 let
   inherit (pkgs) lorri;
-  unstable = import <unstable> {};
+  unstable = import <unstable> { config.allowUnfree = true; };
   # unison-ucm = import (fetchTarball "https://github.com/ceedubs/unison-nix/archive/trunk.tar.gz") {};
   tex = (pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-medium sansmathfonts sansmath
@@ -24,7 +24,8 @@ let
   });
 in {
   environment.systemPackages =
-    [ lorri
+    [
+      pkgs.lnav
       pkgs.luarocks
       pkgs.cmake
       pkgs.clang-tools
@@ -166,7 +167,7 @@ in {
   brews = [
     {
       name = "emacs-plus@29";
-      args = ["with-modern-doom3-icon"];
+      args = ["with-modern-doom3-icon" "with-poll"];
     }
     "git-ps-rs"
     "mermaid-cli"
@@ -214,8 +215,9 @@ in {
     "raycast"
     "whisky"
     "heroic"
-    "wine-stable"
+    "xquartz"
   ];
   };
 
+  nixpkgs.config.allowUnfree = true;
 }
