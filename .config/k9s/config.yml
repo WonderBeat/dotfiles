@@ -17,10 +17,10 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: bladerunner
-  currentCluster: zap
+  currentContext: hetzner-prod
+  currentCluster: hetzner-prod
   clusters:
-    zap:
+    hetzner-prod:
       namespace:
         active: all
         lockFavorites: false
