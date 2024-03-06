@@ -173,7 +173,7 @@ function em
     fi
 }
 
-if [ "$(whoami)" == "coder" ]; then
+if [ "$(whoami)" = "coder" ]; then
     eval "$(devbox global shellenv)"
     . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 fi
