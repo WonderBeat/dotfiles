@@ -37,30 +37,25 @@ fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-if command -v fzf-share >/dev/null; then
-  source "$(fzf-share)/key-bindings.zsh"
-  source "$(fzf-share)/completion.zsh"
-fi
 
 export ZPLUG_HOME=${ZPLUG_HOME:-"$HOME/.zplug"}
 source $ZPLUG_HOME/init.zsh
+zplug "junegunn/fzf", use:"shell/*.zsh"
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "rupa/z", use:z.sh
 zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "djui/alias-tips"
-zplug "MichaelAquilina/zsh-auto-notify"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "MichaelAquilina/zsh-auto-notify", defer:3
 
 export AUTO_NOTIFY_THRESHOLD=60
 export AUTO_NOTIFY_IGNORE=("docker" "man" "sleep" "emacs" "java" "k9s" "kubectl" "brew")
 ENHANCD_FILTER="fzf --preview 'exa -al --tree --level 1 --group-directories-first --git-ignore --header --git --no-user --no-time --no-filesize --no-permissions {}' --preview-window right,50% --height 35% --reverse --ansi:fzy:peco"
 
-if ! zplug check; then
-   zplug install
-fi
-#zplug "changyuheng/fz", defer:1
 zplug load
-export PATH="$HOME/.fastlane/bin:$PATH"
+# export PATH="$HOME/.fastlane/bin:$PATH"
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
