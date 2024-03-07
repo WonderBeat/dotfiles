@@ -37,13 +37,13 @@ fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+if [ -n "${commands[fzf-share]}" ]; then
+  source "$(fzf-share)/key-bindings.zsh"
+  source "$(fzf-share)/completion.zsh"
+fi
+
 export ZPLUG_HOME=${ZPLUG_HOME:-"$HOME/.zplug"}
 source $ZPLUG_HOME/init.zsh
-zplug "junegunn/fzf", \
-    from:gh-r, \
-    as:command, \
-    use:"*darwin*amd64*"
-zplug "junegunn/fzf", use:"shell/*.zsh"
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "rupa/z", use:z.sh
 zplug "zsh-users/zsh-syntax-highlighting"
