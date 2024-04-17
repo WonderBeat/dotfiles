@@ -178,7 +178,7 @@ in {
     "wireguard-tools"
     "lima"
     "exercism"
-    # "blackhole-2ch"
+    "blackhole-2ch"
   ];
   casks = [
     "ocenaudio"

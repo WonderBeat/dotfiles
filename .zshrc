@@ -1,3 +1,6 @@
+
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
 case `uname` in
   Darwin)
     if [ "$TERM_PROGRAM" = "iTerm.app" ]
@@ -63,8 +66,6 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 [ -s "/Users/$USERNAME/.jabba/jabba.sh" ] && source "/Users/$USERNAME/.jabba/jabba.sh"
-
-[ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
 
 # encrypt using ssh key
 sage() {
@@ -142,9 +143,9 @@ if [[ -s "$HOME/.config/broot/launcher/bash/br" ]]; then
 fi
 
 test -e  "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br" && source "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br"
-export PATH="/usr/local/opt/python@3.10/bin:$PATH"
-export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
-export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
+# export PATH="/usr/local/opt/python@3.10/bin:$PATH"
+# export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
+# export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
