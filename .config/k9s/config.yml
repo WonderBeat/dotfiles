@@ -17,17 +17,20 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: bladerunner
-  currentCluster: zap
+  currentContext: aws-stage
+  currentCluster: aws-stage
   clusters:
-    zap:
+    aws-stage:
       namespace:
-        active: all
+        active: denisg
         lockFavorites: false
         favorites:
+        - denisg
+        - yordan-p
+        - airflow
         - default
       view:
-        active: po
+        active: pod
       featureGates:
         nodeShell: false
       shellPod:

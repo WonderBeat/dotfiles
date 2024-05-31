@@ -155,6 +155,12 @@ then
     source <(jj debug completion --zsh | sed '$d')
 fi
 
+if command -v carapace &> /dev/null
+then
+    zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+    source <(carapace _carapace)
+fi
+
 
 # An emacs 'alias' with the ability to read from stdin
 function em

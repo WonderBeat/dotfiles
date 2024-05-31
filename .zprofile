@@ -93,3 +93,5 @@ export PIPENV_VENV_IN_PROJECT=1
 # Added by Toolbox App
 export PATH="$PATH:/Users/gato/Library/Application Support/JetBrains/Toolbox/scripts"
 
+
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'

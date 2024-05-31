@@ -1,35 +1,35 @@
 { config, pkgs, stdenv, ... }:
 
 let
-  inherit (pkgs) lorri;
+  inherit (pkgs);
   unstable = import <unstable> { config.allowUnfree = true; };
   # unison-ucm = import (fetchTarball "https://github.com/ceedubs/unison-nix/archive/trunk.tar.gz") {};
-  tex = (pkgs.texlive.combine {
-    inherit (pkgs.texlive) scheme-medium sansmathfonts sansmath
-      fontspec
-      wrapfig amsmath ulem hyperref capt-of
-      collection-pstricks
-      collection-fontsrecommended
-      beamer
-      sourcecodepro
-      l3packages
-      mathastext
-      pgf
-      cancel
-      cprotect
-      bigfoot
-      environ
-      cbfonts-fd
-      xcolor;
-  });
+  # tex = (pkgs.texlive.combine {
+  #   inherit (pkgs.texlive) scheme-medium sansmathfonts sansmath
+  #     fontspec
+  #     wrapfig amsmath ulem hyperref capt-of
+  #     collection-pstricks
+  #     collection-fontsrecommended
+  #     beamer
+  #     sourcecodepro
+  #     l3packages
+  #     mathastext
+  #     pgf
+  #     cancel
+  #     cprotect
+  #     bigfoot
+  #     environ
+  #     cbfonts-fd
+  #     xcolor;
+  # });
 in {
   environment.systemPackages =
     [
+      pkgs.carapace
       pkgs.lnav
       pkgs.luarocks
       pkgs.cmake
       pkgs.clang-tools
-      pkgs.ktlint
       pkgs.gh
       pkgs.broot
       pkgs.s3cmd
@@ -50,7 +50,6 @@ in {
       pkgs.direnv
       pkgs.glances
       pkgs.pipenv
-      pkgs.shellcheck
       pkgs.pandoc
       pkgs.rsync
       pkgs.shfmt
@@ -59,22 +58,19 @@ in {
       pkgs.git-crypt
       pkgs.git-lfs
       pkgs.rclone
-      # pkgs.syncthing
       pkgs.aws-sam-cli
       pkgs.mtr
-      pkgs.spin
-      # tex
-      # unstable.micromamba
       unstable.devbox
-      # unstable.jujutsu
-      # unstable.earthly
       unstable.k9s
       unstable.fzy
       unstable.eza
       ];
 
   documentation = {
-    enable = false;
+    doc.enable = false;
+    man.enable = true;
+    info.enable = false;
+    enable = true;
   };
 
   fonts.fontDir.enable = true;
@@ -82,7 +78,7 @@ in {
   nix.extraOptions = ''
     auto-optimise-store = true
     extra-platforms = aarch64-darwin x86_64-darwin
-    experimental-features = nix-command flakes
+    # experimental-features = nix-command flakes
   '';
 
   system.keyboard.enableKeyMapping = true;
@@ -147,10 +143,6 @@ in {
         ProcessType = "Interactive";
         UserName = "$USER";
       };
-      # command =  -f";
-      # script = ''
-      #   source ${config.system.build.setEnvironment}
-      # '';
     };
   };
 
@@ -178,7 +170,6 @@ in {
     "wireguard-tools"
     "lima"
     "exercism"
-    "blackhole-2ch"
   ];
   casks = [
     "ocenaudio"
@@ -188,7 +179,6 @@ in {
     "little-snitch"
     "macfuse"
     "gimp"
-    "mat"
     "steam"
     "vlc"
     "fuse"
@@ -198,14 +188,12 @@ in {
     "cool-retro-term"
     "gimp"
     "veracrypt"
-    # "virtualbox"
     "plex"
     "jetbrains-toolbox"
     "visual-studio-code"
     "cyberduck"
     "hyper"
     "wireshark"
-    # "soundflower"
     "imhex"
     "rectangle"
     "warp"
@@ -215,7 +203,7 @@ in {
     "raycast"
     "whisky"
     "heroic"
-    "xquartz"
+    "blackhole-2ch"
   ];
   };
 
