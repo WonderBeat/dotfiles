@@ -159,8 +159,9 @@ in {
   brews = [
     {
       name = "emacs-plus@29";
-      args = ["with-modern-doom3-icon" "with-poll"];
+      args = ["--with-modern-doom3-icon" "--with-poll" "--with-native-comp"];
     }
+    "coder"
     "git-ps-rs"
     "mermaid-cli"
     "wordnet"
@@ -191,7 +192,6 @@ in {
     "plex"
     "jetbrains-toolbox"
     "visual-studio-code"
-    "cyberduck"
     "hyper"
     "wireshark"
     "imhex"
@@ -204,6 +204,7 @@ in {
     "whisky"
     "heroic"
     "blackhole-2ch"
+    "amneziavpn"
   ];
   };
 

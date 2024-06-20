@@ -22,12 +22,11 @@ k9s:
   clusters:
     aws-stage:
       namespace:
-        active: denisg
+        active: airflow
         lockFavorites: false
         favorites:
-        - denisg
-        - yordan-p
         - airflow
+        - all
         - default
       view:
         active: pod

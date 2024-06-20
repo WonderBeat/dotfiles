@@ -1,6 +1,6 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-browser {margin-right: -14px; margin-bottom: -14px;}
+/* browser {margin-right: -14px; margin-bottom: -14px;} */
 
 .tabbrowser-tab:not(:hover) .tab-close-button {
   visibility: collapse !important;
