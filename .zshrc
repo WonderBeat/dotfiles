@@ -1,4 +1,61 @@
 
+USERNAME=$(whoami)
+
+if [ "$USERNAME" = "coder" ]; then
+    . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+    eval "$(devbox global shellenv)"
+fi
+
+if [[ -s "$HOME/.config/broot/launcher/bash/br" ]]; then
+  source "$HOME/.config/broot/launcher/bash/br"
+fi
+
+source ~/.bash_aliases
+
+if [ -n "${commands[fzf-share]}" ]; then
+  source "$(fzf-share)/key-bindings.zsh"
+  source "$(fzf-share)/completion.zsh"
+fi
+
+# An emacs 'alias' with the ability to read from stdin
+function em
+{
+    # If the argument is - then write stdin to a tempfile and open the
+    # tempfile.
+    if [[ $# -ge 1 ]] && [[ "$1" == - ]]; then
+        tempfile="$(mktemp emacs-stdin-$USER.XXXXXXX --tmpdir)"
+        cat - >! "$tempfile"
+        emacsclient -n --eval "(find-file \"$tempfile\")" \
+            --eval '(set-visited-file-name nil)' \
+            --eval '(rename-buffer "*stdin*" t))'
+    else
+        emacsclient -n "$@"
+    fi
+}
+
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+export ZPLUG_HOME=${ZPLUG_HOME:-"$HOME/.zplug"}
+export AUTO_NOTIFY_THRESHOLD=60
+export AUTO_NOTIFY_IGNORE=("docker" "man" "sleep" "emacs" "java" "k9s" "kubectl" "brew")
+export ENHANCD_FILTER="fzf --preview 'exa -al --tree --level 1 --group-directories-first --git-ignore --header --git --no-user --no-time --no-filesize --no-permissions {}' --preview-window right,50% --height 35% --reverse --ansi:fzy:peco"
+
+if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
+    alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
+fi
+
+
+[ -s "/Users/$USERNAME/.jabba/jabba.sh" ] && source "/Users/$USERNAME/.jabba/jabba.sh"
+
+# encrypt using ssh key
+sage() {
+ age -a -R ~/.ssh/id_ed25519.pub <<< "$1"
+}
+# age decrypt using ssh key
+saged() {
+ age -d -i ~/.ssh/id_ed25519 <<< "$1"
+}
+
 [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
 case `uname` in
@@ -40,12 +97,6 @@ fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-if [ -n "${commands[fzf-share]}" ]; then
-  source "$(fzf-share)/key-bindings.zsh"
-  source "$(fzf-share)/completion.zsh"
-fi
-
-export ZPLUG_HOME=${ZPLUG_HOME:-"$HOME/.zplug"}
 source $ZPLUG_HOME/init.zsh
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "rupa/z", use:z.sh
@@ -56,40 +107,13 @@ zplug "djui/alias-tips"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "MichaelAquilina/zsh-auto-notify", defer:3
 
-export AUTO_NOTIFY_THRESHOLD=60
-export AUTO_NOTIFY_IGNORE=("docker" "man" "sleep" "emacs" "java" "k9s" "kubectl" "brew")
-ENHANCD_FILTER="fzf --preview 'exa -al --tree --level 1 --group-directories-first --git-ignore --header --git --no-user --no-time --no-filesize --no-permissions {}' --preview-window right,50% --height 35% --reverse --ansi:fzy:peco"
 
 zplug load
 # export PATH="$HOME/.fastlane/bin:$PATH"
-export VISUAL=nvim
-export EDITOR="$VISUAL"
-
-[ -s "/Users/$USERNAME/.jabba/jabba.sh" ] && source "/Users/$USERNAME/.jabba/jabba.sh"
-
-# encrypt using ssh key
-sage() {
- age -a -R ~/.ssh/id_ed25519.pub <<< "$1"
-}
-# age decrypt using ssh key
-saged() {
- age -d -i ~/.ssh/id_ed25519 <<< "$1"
-}
 
 #config clone --bare https://github.com/WonderBeat/dotfiles.git ~/.myconf
 # git@github.com:WonderBeat/dotfiles.git
 #config checkout
-alias config="$(which git) --git-dir=$HOME/.myconf/ --work-tree=$HOME"
-alias mvn=mvn -T4
-alias python=python3
-alias vim='nvim'
-alias make='make -s --no-print-directory'
-alias wakeup='ssh router ether-wake -i br0 -b 00:11:32:CA:FE:69'
-alias nix-shell="nix-shell --command zsh"
-alias update="sudo nixos-rebuild switch"
-alias update-home="home-manager switch"
-eval "$(direnv hook zsh)"
-
 
 if [[ ${INSIDE_EMACS:-no_emacs_here} != 'no_emacs_here' ]]; then
     export EDITOR=emacsclient
@@ -116,10 +140,6 @@ vterm_printf(){
 
 
 
-if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
-    alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
-fi
-
 #vterm directory tracking
 vterm_prompt_end() {
     vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
@@ -137,10 +157,6 @@ vterm_cmd() {
     done
     vterm_printf "51;E$vterm_elisp"
 }
-
-if [[ -s "$HOME/.config/broot/launcher/bash/br" ]]; then
-  source "$HOME/.config/broot/launcher/bash/br"
-fi
 
 test -e  "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br" && source "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br"
 # export PATH="/usr/local/opt/python@3.10/bin:$PATH"
@@ -161,27 +177,4 @@ then
     source <(carapace _carapace)
 fi
 
-
-# An emacs 'alias' with the ability to read from stdin
-function em
-{
-    # If the argument is - then write stdin to a tempfile and open the
-    # tempfile.
-    if [[ $# -ge 1 ]] && [[ "$1" == - ]]; then
-        tempfile="$(mktemp emacs-stdin-$USER.XXXXXXX --tmpdir)"
-        cat - >! "$tempfile"
-        emacsclient -n --eval "(find-file \"$tempfile\")" \
-            --eval '(set-visited-file-name nil)' \
-            --eval '(rename-buffer "*stdin*" t))'
-    else
-        emacsclient -n "$@"
-    fi
-}
-
-if [ "$(whoami)" = "coder" ]; then
-    eval "$(devbox global shellenv)"
-    . "$HOME/.nix-profile/etc/profile.d/nix.sh"
-fi
-
-source ~/.bash_aliases
 
