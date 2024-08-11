@@ -77,6 +77,7 @@
 (add-hook 'yaml-mode-hook #'eldoc-mode)
 (add-hook 'yaml-mode-hook #'yaml-pro-ts-mode)
 
+
 (use-package! zig-mode
   :hook ((zig-mode . lsp-deferred))
   :custom (zig-format-on-save nil)
@@ -260,8 +261,12 @@
   :commands vterm-mode
   :config
   (setq vterm-kill-buffer-on-exit t)
-  (setq vterm-max-scrollback 10000))
-
+  (setq vterm-max-scrollback 10000)
+  (setq vterm-tramp-shells '(("ssh" "/bin/zsh")
+                             ("podman" "/bin/sh")
+                             ("docker" "/bin/sh")
+                             ("coder" "/bin/zsh")
+                             )))
 
 ;; (use-package ispell
 ;;   :config
