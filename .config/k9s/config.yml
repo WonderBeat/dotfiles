@@ -17,18 +17,18 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: aws-stage
-  currentCluster: aws-stage
+  currentContext: aws-prod
+  currentCluster: aws-prod
   clusters:
-    aws-stage:
+    aws-prod:
       namespace:
-        active: denisg
+        active: all
         lockFavorites: false
         favorites:
-        - denisg
+        - all
         - default
       view:
-        active: pods
+        active: prometheusrule
       featureGates:
         nodeShell: false
       shellPod:
