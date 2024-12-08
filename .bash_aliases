@@ -17,4 +17,4 @@ alias wakeup='ssh router ether-wake -i br0 -b 00:11:32:CA:FE:69'
 alias nix-shell="nix-shell --command zsh"
 alias update="sudo nixos-rebuild switch"
 alias update-home="home-manager switch"
-eval "$(direnv hook zsh)"
+#eval "$(direnv hook zsh)"

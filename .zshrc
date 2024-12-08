@@ -12,11 +12,6 @@ fi
 
 source ~/.bash_aliases
 
-if [ -n "${commands[fzf-share]}" ]; then
-  source "$(fzf-share)/key-bindings.zsh"
-  source "$(fzf-share)/completion.zsh"
-fi
-
 # An emacs 'alias' with the ability to read from stdin
 function em
 {
@@ -177,4 +172,9 @@ then
     source <(carapace _carapace)
 fi
 
+if [ -n "${commands[fzf-share]}" ]; then
+  source "$(fzf-share)/key-bindings.zsh"
+  source "$(fzf-share)/completion.zsh"
+fi
 
+eval "$(direnv hook zsh)"

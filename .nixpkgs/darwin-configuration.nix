@@ -38,7 +38,7 @@ in {
       pkgs.up
       pkgs.fd
       pkgs.mosh
-      pkgs.ncdu
+      #pkgs.ncdu
       unstable.neovim
       pkgs.tree-sitter
       pkgs.ripgrep
@@ -73,8 +73,6 @@ in {
     enable = true;
   };
 
-  fonts.fontDir.enable = true;
-
   nix.extraOptions = ''
     auto-optimise-store = true
     extra-platforms = aarch64-darwin x86_64-darwin
@@ -86,7 +84,7 @@ in {
   security.pam.enableSudoTouchIdAuth = true;
   programs.nix-index.enable = true;
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     proggyfonts
     fira-code
     fira-code-symbols
@@ -204,7 +202,7 @@ in {
     "whisky"
     "heroic"
     "blackhole-2ch"
-    "amneziavpn"
+  # "amneziawg"
   ];
   };
 

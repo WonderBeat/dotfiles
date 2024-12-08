@@ -54,12 +54,12 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
-(pcre-mode +1)
+;;(pcre-mode +1)
 
 (setq confirm-kill-emacs nil)
 
-;; (setq tree-sitter-load-path `(
-;;                              ,"~/.bin"))
+(setq tree-sitter-load-path `(
+                              ,"~/.bin"))
 
 
 ;; (add-to-list 'tree-sitter-major-mode-language-alist '(csharp-tree-sitter-mode . c-sharp))

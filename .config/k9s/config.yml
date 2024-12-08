@@ -28,7 +28,7 @@ k9s:
         - all
         - default
       view:
-        active: prometheusrule
+        active: po
       featureGates:
         nodeShell: false
       shellPod:
