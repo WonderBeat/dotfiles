@@ -133,7 +133,7 @@ in {
         WorkingDirectory = (builtins.getEnv "HOME");
         EnvironmentVariables = { };
         KeepAlive = false;
-        RunAtLoad = true;
+        RunAtLoad = false;
         # StandardOutPath = "/var/tmp/warpd.log";
         StandardErrorPath = "/var/tmp/warpd.log";
         ProgramArguments = [ "/usr/local/bin/warpd" "-f" ];
@@ -168,9 +168,10 @@ in {
     "wireguard-go"
     "wireguard-tools"
     "lima"
-    "exercism"
   ];
   casks = [
+    "shortcat"
+    "mouseless"
     "ocenaudio"
     "telegram"
     "discord"

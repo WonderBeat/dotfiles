@@ -14,7 +14,7 @@
   visibility: collapse;
 }
 
-#navigator-toolbox[inFullscreen="true"] #titlebar {
+#navigator-toolbox[inFullscreen="true"] {
   visibility: collapse;
 }
 
@@ -27,7 +27,6 @@
 /* realign elements */
 #nav-bar {
   margin-top: calc(-1 * var(--tab-min-height));
-
   box-shadow: none !important;
 }
 
@@ -41,7 +40,7 @@
   background-image: var(--toolbar-bgimage);
   background-clip: padding-box;
   color: var(--toolbar-color);
-  
+
   -moz-window-dragging: drag;
 
 }
@@ -50,26 +49,28 @@
 #TabsToolbar > .toolbar-items,
 #TabsToolbar > .titlebar-spacer{ visibility: hidden }
 
-#nav-bar{
-  --navbar-margin: -36px;
-  margin-top: var(--navbar-margin);
-  margin-bottom: 0;
-  transition: all 0.3s ease !important;
-  transition-delay: 100ms;
-  padding: 0px 15px 0px 75px !important;
-  z-index: -100;
-  opacity: 0
-}
+/* #nav-bar{ */
+  /* --navbar-margin: -36px; */
+/*   margin-top: var(--navbar-margin); */
+/*   margin-bottom: 0; */
+/*   /\* transition: all 0.3s ease !important; *\/ */
+/*   /\* transition-delay: 100ms; *\/ */
+/*   padding: 0px 15px 0px 75px !important; */
+/*   z-index: -100; */
+/*   opacity: 0 */
+/* } */
 
 #navigator-toolbox:focus-within > #nav-bar,
 #navigator-toolbox:hover > #nav-bar
 {
-  margin-top: 0;
-  margin-bottom: var(--navbar-margin);
-  transition: all 0.4s ease !important;
+  margin-top: 0px;
+  /* margin-bottom: var(--navbar-margin); */
+  /* transition: all 0.4s ease !important; */
   z-index: 100;
   opacity: 1;
 }
+
 #TabsToolbar > .toolbar-items,
-#TabsToolbar > .titlebar-spacer{ visibility: hidden }
+#TabsToolbar > .titlebar-spacer
+{ visibility: hidden }
 /* #nav-bar{ margin-top: -32px; padding: 0px 15px 0px 75px !important; } */
