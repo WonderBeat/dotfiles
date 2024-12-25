@@ -8,6 +8,7 @@ fi
 
 if [[ -s "$HOME/.config/broot/launcher/bash/br" ]]; then
   source "$HOME/.config/broot/launcher/bash/br"
+  # test -e  "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br" && source "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br"
 fi
 
 source ~/.bash_aliases
@@ -39,8 +40,6 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
     alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
 fi
 
-
-[ -s "/Users/$USERNAME/.jabba/jabba.sh" ] && source "/Users/$USERNAME/.jabba/jabba.sh"
 
 # encrypt using ssh key
 sage() {
@@ -100,9 +99,8 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "djui/alias-tips"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "MichaelAquilina/zsh-auto-notify", defer:3
-
-
+zplug romkatv/powerlevel10k, as:theme, depth:1
+# zplug "MichaelAquilina/zsh-auto-notify", defer:3
 zplug load
 # export PATH="$HOME/.fastlane/bin:$PATH"
 
@@ -134,7 +132,6 @@ vterm_printf(){
 }
 
 
-
 #vterm directory tracking
 vterm_prompt_end() {
     vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
@@ -153,18 +150,14 @@ vterm_cmd() {
     vterm_printf "51;E$vterm_elisp"
 }
 
-test -e  "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br" && source "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br"
-# export PATH="/usr/local/opt/python@3.10/bin:$PATH"
-# export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
-# export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-if command -v jj &> /dev/null
-then
-    source <(jj debug completion --zsh | sed '$d')
-fi
+# if command -v jj &> /dev/null
+# then
+#     source <(jj debug completion --zsh | sed '$d')
+# fi
 
 if command -v carapace &> /dev/null
 then
