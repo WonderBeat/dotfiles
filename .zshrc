@@ -77,12 +77,6 @@ case `uname` in
   ;;
 esac
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -90,6 +84,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 source $ZPLUG_HOME/init.zsh
 zplug "b4b4r07/enhancd", use:init.sh
@@ -99,7 +95,7 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "djui/alias-tips"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug romkatv/powerlevel10k, as:theme, depth:1
+zplug "romkatv/powerlevel10k", as:theme, depth:1
 # zplug "MichaelAquilina/zsh-auto-notify", defer:3
 zplug load
 # export PATH="$HOME/.fastlane/bin:$PATH"
@@ -107,6 +103,13 @@ zplug load
 #config clone --bare https://github.com/WonderBeat/dotfiles.git ~/.myconf
 # git@github.com:WonderBeat/dotfiles.git
 #config checkout
+#
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 if [[ ${INSIDE_EMACS:-no_emacs_here} != 'no_emacs_here' ]]; then
     export EDITOR=emacsclient
@@ -152,7 +155,6 @@ vterm_cmd() {
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # if command -v jj &> /dev/null
 # then
