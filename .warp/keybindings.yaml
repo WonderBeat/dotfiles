@@ -1,0 +1,14 @@
+---
+"pane_group:navigate_prev": none
+"terminal:executing_command_move_cursor_end": none
+"pane_group:navigate_next": none
+"editor_view:end": none
+"terminal:copy": none
+"workspace:activate_prev_tab": cmd-left
+"terminal:executing_command_move_cursor_home": none
+"workspace:reset_font_size": none
+"editor_view:home": none
+"workspace:activate_next_tab": cmd-right
+"workspace:toggle_keybindings_page": none
+"terminal:ask_ai_assistant": none
+"notebookview:reset_font_size": none

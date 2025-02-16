@@ -38,6 +38,7 @@ in {
       pkgs.up
       pkgs.fd
       pkgs.mosh
+      pkgs.yazi
       #pkgs.ncdu
       unstable.neovim
       pkgs.tree-sitter
@@ -133,7 +134,7 @@ in {
         WorkingDirectory = (builtins.getEnv "HOME");
         EnvironmentVariables = { };
         KeepAlive = false;
-        RunAtLoad = false;
+        RunAtLoad = true;
         # StandardOutPath = "/var/tmp/warpd.log";
         StandardErrorPath = "/var/tmp/warpd.log";
         ProgramArguments = [ "/usr/local/bin/warpd" "-f" ];
@@ -168,6 +169,8 @@ in {
     "wireguard-go"
     "wireguard-tools"
     "lima"
+    "aider"
+    "background-music"
   ];
   casks = [
     "shortcat"

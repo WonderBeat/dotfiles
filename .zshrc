@@ -52,29 +52,34 @@ saged() {
 
 [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
-case `uname` in
-  Darwin)
-    if [ "$TERM_PROGRAM" = "iTerm.app" ]
-    then
-        images=()
-        while IFS=  read -r -d $'\0'; do
-            images+=("$REPLY")
-        done < <(find ~/Dropbox/Pokemon-Terminal/pokemonterminal/Images/ -name "*.jpg" -print0)
-        num_images=${#images[*]}
-        myfilename="`echo ${images[$((RANDOM%$num_images + 1))]}`"
-        rand_img="/tmp/wppr$(($RANDOM%10)).jpg"
-        rm -f "$rand_img" &> /dev/null
-        ln -s "$myfilename" "$rand_img"
-        base64filename=`echo "$rand_img"| base64`;
-        echo "\033]1337;SetBackgroundImageFile=${base64filename}\a";
-    fi
-  ;;
-  Linux)
-    # commands for Linux go here
-  ;;
-  FreeBSD)
-    # commands for FreeBSD go here
-  ;;
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+case "$(uname)" in
+    Darwin)
+        if [ "$TERM_PROGRAM" = "iTerm.app" ]; then
+          images=()
+          while IFS=  read -r -d $'\0'; do
+              images+=("$REPLY")
+          done < <(find ~/Dropbox/Pokemon-Terminal/pokemonterminal/Images/ -name "*.jpg" -print0)
+          num_images=${#images[*]}
+          myfilename="`echo ${images[$((RANDOM%$num_images + 1))]}`"
+          rand_img="/tmp/wppr$(($RANDOM%10)).jpg"
+          rm -f "$rand_img" &> /dev/null
+          ln -s "$myfilename" "$rand_img"
+          base64filename=`echo "$rand_img"| base64`;
+          echo "\033]1337;SetBackgroundImageFile=${base64filename}\a";
+        fi
+        ;;
+    Linux|FreeBSD)
+        # Add platform-specific configurations here
+        ;;
 esac
 
 
@@ -88,15 +93,15 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 source $ZPLUG_HOME/init.zsh
+
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "rupa/z", use:z.sh
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "djui/alias-tips"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "romkatv/powerlevel10k", as:theme, depth:1
-# zplug "MichaelAquilina/zsh-auto-notify", defer:3
+
 zplug load
 # export PATH="$HOME/.fastlane/bin:$PATH"
 
