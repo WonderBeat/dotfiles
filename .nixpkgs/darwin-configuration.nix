@@ -47,7 +47,6 @@ in {
       pkgs.git
       pkgs.gnupg
       pkgs.yaml-language-server
-      pkgs.nixFlakes
       pkgs.direnv
       pkgs.glances
       pkgs.pipenv
@@ -82,14 +81,27 @@ in {
 
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = true;
-  security.pam.enableSudoTouchIdAuth = true;
   programs.nix-index.enable = true;
 
   fonts.packages = with pkgs; [
     proggyfonts
     fira-code
     fira-code-symbols
-    (nerdfonts.override { fonts = [ "CascadiaCode" "SourceCodePro" "Monoid" "FiraCode" "DroidSansMono" "Meslo" "Overpass" "BigBlueTerminal" "Iosevka" "Gohu" ]; })
+    nerd-fonts._0xproto
+    nerd-fonts.caskaydia-cove
+    nerd-fonts.caskaydia-mono
+    nerd-fonts.sauce-code-pro
+    nerd-fonts.monoid
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
+    nerd-fonts.meslo-lg
+    nerd-fonts.overpass
+    nerd-fonts.bigblue-terminal
+    nerd-fonts.iosevka
+    nerd-fonts.gohufont
+    nerd-fonts.hack
+    nerd-fonts.monaspace
+    nerd-fonts.agave
   ];
 
   environment.variables = rec {
@@ -100,8 +112,6 @@ in {
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
   # nix.package = pkgs.nix;
 
   # Create /etc/bashrc that loads the nix-darwin environment.
@@ -111,6 +121,7 @@ in {
   #programs.zsh.zplug.enable = true;
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
+  ids.gids.nixbld = 350;
   system.stateVersion = 4;
   nix.package = pkgs.nix;
   launchd.user.agents = {
@@ -170,7 +181,6 @@ in {
     "wireguard-tools"
     "lima"
     "aider"
-    "background-music"
   ];
   casks = [
     "shortcat"

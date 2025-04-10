@@ -187,37 +187,37 @@ return {
     },
   },
 
-  {
-    "olimorris/codecompanion.nvim",
-    cmd = { "CodeCompanion", "CodeCompanionActions", "CodeCompanionToggle", "CodeCompanionAdd", "CodeCompanionChat" },
-
-    opts = function()
-      local options = require("codecompanion.config")
-      local user = vim.env.USER or "User"
-
-      options.strategies.chat.roles = {
-        llm = "  CodeCompanion",
-        user = "  " .. user,
-      }
-
-      options.strategies.chat.keymaps.close.modes = {
-        n = "q",
-        i = "<Esc>",
-      }
-      options.strategies.chat.keymaps.stop.modes.n = "<Esc>"
-      options.strategies.chat.keymaps.send.modes.n = "<CR>"
-
-      return options
-    end,
-
-    keys = {
-      { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
-      { "<leader>ap", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" }, desc = "Prompt Actions (CodeCompanion)" },
-      { "<leader>aa", "<cmd>CodeCompanionToggle<cr>", mode = { "n", "v" }, desc = "Toggle (CodeCompanion)" },
-      { "<leader>ac", "<cmd>CodeCompanionAdd<cr>", mode = "v", desc = "Add code to CodeCompanion" },
-      { "<leader>ai", "<cmd>CodeCompanion<cr>", mode = "n", desc = "Inline prompt (CodeCompanion)" },
-    },
-  },
+  -- {
+  --   "olimorris/codecompanion.nvim",
+  --   cmd = { "CodeCompanion", "CodeCompanionActions", "CodeCompanionToggle", "CodeCompanionAdd", "CodeCompanionChat" },
+  --
+  --   opts = function()
+  --     local options = require("codecompanion.config")
+  --     local user = vim.env.USER or "User"
+  --
+  --     options.strategies.chat.roles = {
+  --       llm = "  CodeCompanion",
+  --       user = "  " .. user,
+  --     }
+  --
+  --     options.strategies.chat.keymaps.close.modes = {
+  --       n = "q",
+  --       i = "<Esc>",
+  --     }
+  --     options.strategies.chat.keymaps.stop.modes.n = "<Esc>"
+  --     options.strategies.chat.keymaps.send.modes.n = "<CR>"
+  --
+  --     return options
+  --   end,
+  --
+  --   keys = {
+  --     { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
+  --     { "<leader>ap", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" }, desc = "Prompt Actions (CodeCompanion)" },
+  --     { "<leader>aa", "<cmd>CodeCompanionToggle<cr>", mode = { "n", "v" }, desc = "Toggle (CodeCompanion)" },
+  --     { "<leader>ac", "<cmd>CodeCompanionAdd<cr>", mode = "v", desc = "Add code to CodeCompanion" },
+  --     { "<leader>ai", "<cmd>CodeCompanion<cr>", mode = "n", desc = "Inline prompt (CodeCompanion)" },
+  --   },
+  -- },
   { "ellisonleao/gruvbox.nvim" },
   {
     "NeogitOrg/neogit",
@@ -279,10 +279,6 @@ return {
         require("telescope").load_extension("projects")
       end)
     end,
-  },
-
-  {
-    "brianhuster/dirvish-git.nvim",
   },
   {
     "jay-babu/mason-nvim-dap.nvim",
@@ -392,67 +388,207 @@ return {
     config = function() end,
   },
   {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    lazy = false,
-    version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
-    opts = {
-      provider = "openrouter_gemini",
-      vendors = {
-        openrouter_sonnet = {
-          __inherited_from = "openai",
-          endpoint = "https://openrouter.ai/api/v1",
-          api_key_name = "OPENROUTER_API_KEY",
-          model = "anthropic/claude-3.7-sonnet",
-        },
-        openrouter_gemini = {
-          __inherited_from = "openai",
-          endpoint = "https://openrouter.ai/api/v1",
-          api_key_name = "OPENROUTER_API_KEY",
-          model = "google/gemini-2.0-flash-001",
-        },
-      },
-    },
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = "make",
-    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      --- The below dependencies are optional,
-      "echasnovski/mini.pick", -- for file_selector provider mini.pick
-      "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-      "ibhagwan/fzf-lua", -- for file_selector provider fzf
-      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua", -- for providers='copilot'
-      {
-        -- support for image pasting
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
-        opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            -- required for Windows users
-            use_absolute_path = true,
+    "olimorris/codecompanion.nvim",
+    cmd = { "CodeCompanion", "CodeCompanionActions", "CodeCompanionToggle", "CodeCompanionAdd", "CodeCompanionChat" },
+
+    opts = function()
+      local options = {
+        show_default_actions = true, -- Show the default actions in the action palette?
+        show_default_prompt_library = true, -- Show the default prompt library in the action palette?
+      }
+      local user = vim.env.USER or "User"
+
+      options.strategies = {
+        chat = {
+          keymaps = {
+            -- stop = {
+            --   modes = {
+            --     n = "<Esc>",
+            --   },
+            -- },
+            -- send = {
+            --   modes = {
+            --     n = "<CR>",
+            --   },
+            -- },
+            -- close = {
+            --   modes = {
+            --     n = "q",
+            --     i = "<Esc>",
+            --   },
+            -- },
+          },
+          adapter = "openrouter",
+          roles = {
+            llm = "  CodeCompanion",
+            user = "  " .. user,
           },
         },
+        inline = {
+          adapter = "openrouter",
+        },
+        cmd = {
+          adapter = "openrouter",
+        },
+      }
+      options.adapters = {
+        openrouter_claude = function()
+          return require("codecompanion.adapters").extend("openai_compatible", {
+            env = {
+              url = "https://openrouter.ai/api",
+              api_key = "OPENROUTER_API_KEY",
+              chat_url = "/v1/chat/completions",
+            },
+            schema = {
+              model = {
+                default = "anthropic/claude-3.7-sonnet",
+              },
+            },
+          })
+        end,
+        openrouter = function()
+          return require("codecompanion.adapters").extend("openai_compatible", {
+            env = {
+              url = "https://openrouter.ai/api",
+              api_key = "OPENROUTER_API_KEY",
+              chat_url = "/v1/chat/completions",
+            },
+            schema = {
+              model = {
+                default = "google/gemini-2.0-flash-001",
+              },
+            },
+          })
+        end,
+      }
+
+      return options
+    end,
+
+    keys = {
+      { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
+      { "<leader>ap", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" }, desc = "Prompt Actions (CodeCompanion)" },
+      { "<leader>aa", "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v" }, desc = "Toggle (CodeCompanion)" },
+      { "<leader>ac", "<cmd>CodeCompanionChat Add<cr>", mode = "v", desc = "Add code to CodeCompanion" },
+      { "<leader>ai", "<cmd>CodeCompanion<cr>", mode = "n", desc = "Inline prompt (CodeCompanion)" },
+    },
+  },
+
+  {
+    "folke/edgy.nvim",
+    optional = true,
+    opts = function(_, opts)
+      opts.right = opts.right or {}
+      table.insert(opts.right, {
+        ft = "codecompanion",
+        title = "CodeCompanion Chat",
+        size = { width = 50 },
+      })
+    end,
+  },
+
+  -- {
+  --   "yetone/avante.nvim",
+  --   event = "VeryLazy",
+  --   lazy = false,
+  --   version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
+  --   opts = {
+  --     provider = "openrouter_gemini",
+  --     vendors = {
+  --       openrouter_sonnet = {
+  --         __inherited_from = "openai",
+  --         endpoint = "https://openrouter.ai/api/v1",
+  --         api_key_name = "OPENROUTER_API_KEY",
+  --         model = "anthropic/claude-3.7-sonnet",
+  --       },
+  --       openrouter_gemini = {
+  --         __inherited_from = "openai",
+  --         endpoint = "https://openrouter.ai/api/v1",
+  --         api_key_name = "OPENROUTER_API_KEY",
+  --         model = "google/gemini-2.0-flash-001",
+  --       },
+  --     },
+  --   },
+  --   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+  --   build = "make",
+  --   -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+  --   dependencies = {
+  --     "nvim-treesitter/nvim-treesitter",
+  --     "stevearc/dressing.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --     --- The below dependencies are optional,
+  --     "echasnovski/mini.pick", -- for file_selector provider mini.pick
+  --     "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+  --     "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+  --     "ibhagwan/fzf-lua", -- for file_selector provider fzf
+  --     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+  --     "zbirenbaum/copilot.lua", -- for providers='copilot'
+  --     {
+  --       -- support for image pasting
+  --       "HakonHarnes/img-clip.nvim",
+  --       event = "VeryLazy",
+  --       opts = {
+  --         -- recommended settings
+  --         default = {
+  --           embed_image_as_base64 = false,
+  --           prompt_for_file_name = false,
+  --           drag_and_drop = {
+  --             insert_mode = true,
+  --           },
+  --           -- required for Windows users
+  --           use_absolute_path = true,
+  --         },
+  --       },
+  --     },
+  --     {
+  --       -- Make sure to set this up properly if you have lazy=true
+  --       "MeanderingProgrammer/render-markdown.nvim",
+  --       opts = {
+  --         file_types = { "markdown", "Avante" },
+  --       },
+  --       ft = { "markdown", "Avante" },
+  --     },
+  --   },
+  -- },
+
+  {
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    dependencies = { "folke/snacks.nvim", lazy = true },
+    keys = {
+      -- 👇 in this section, choose your own keymappings!
+      {
+        "<leader>-",
+        mode = { "n", "v" },
+        "<cmd>Yazi<cr>",
+        desc = "Open yazi at the current file",
       },
       {
-        -- Make sure to set this up properly if you have lazy=true
-        "MeanderingProgrammer/render-markdown.nvim",
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
+        -- Open in the current working directory
+        "<leader>cw",
+        "<cmd>Yazi cwd<cr>",
+        desc = "Open the file manager in nvim's working directory",
+      },
+      {
+        "<c-up>",
+        "<cmd>Yazi toggle<cr>",
+        desc = "Resume the last yazi session",
       },
     },
+    ---@type YaziConfig | {}
+    opts = {
+      -- if you want to open yazi instead of netrw, see below for more info
+      open_for_directories = true,
+      keymaps = {
+        show_help = "<f1>",
+      },
+    },
+    -- 👇 if you use `open_for_directories=true`, this is recommended
+    init = function()
+      -- More details: https://github.com/mikavilpas/yazi.nvim/issues/802
+      -- vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
+    end,
   },
 }

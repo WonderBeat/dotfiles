@@ -10608,6 +10608,6 @@
   ],
   "editor.codeActionsOnSave": {},
   "zig.zls.enabled": "on",
-  "editor.renderWhitespace": "all",
+  "editor.renderWhitespace": "none",
   "editor.multiCursorModifier": "ctrlCmd"
 }
