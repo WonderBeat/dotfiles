@@ -3,7 +3,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "gruvbox",
+      colorscheme = "kanagawa-wave",
     },
   },
 
@@ -187,38 +187,8 @@ return {
     },
   },
 
-  -- {
-  --   "olimorris/codecompanion.nvim",
-  --   cmd = { "CodeCompanion", "CodeCompanionActions", "CodeCompanionToggle", "CodeCompanionAdd", "CodeCompanionChat" },
-  --
-  --   opts = function()
-  --     local options = require("codecompanion.config")
-  --     local user = vim.env.USER or "User"
-  --
-  --     options.strategies.chat.roles = {
-  --       llm = "  CodeCompanion",
-  --       user = "  " .. user,
-  --     }
-  --
-  --     options.strategies.chat.keymaps.close.modes = {
-  --       n = "q",
-  --       i = "<Esc>",
-  --     }
-  --     options.strategies.chat.keymaps.stop.modes.n = "<Esc>"
-  --     options.strategies.chat.keymaps.send.modes.n = "<CR>"
-  --
-  --     return options
-  --   end,
-  --
-  --   keys = {
-  --     { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
-  --     { "<leader>ap", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" }, desc = "Prompt Actions (CodeCompanion)" },
-  --     { "<leader>aa", "<cmd>CodeCompanionToggle<cr>", mode = { "n", "v" }, desc = "Toggle (CodeCompanion)" },
-  --     { "<leader>ac", "<cmd>CodeCompanionAdd<cr>", mode = "v", desc = "Add code to CodeCompanion" },
-  --     { "<leader>ai", "<cmd>CodeCompanion<cr>", mode = "n", desc = "Inline prompt (CodeCompanion)" },
-  --   },
-  -- },
   { "ellisonleao/gruvbox.nvim" },
+  { "rebelot/kanagawa.nvim" },
   {
     "NeogitOrg/neogit",
     dependencies = {
@@ -425,14 +395,14 @@ return {
           },
         },
         inline = {
-          adapter = "openrouter",
+          adapter = "Gemini",
         },
         cmd = {
-          adapter = "openrouter",
+          adapter = "Gemini",
         },
       }
       options.adapters = {
-        openrouter_claude = function()
+        Claude = function()
           return require("codecompanion.adapters").extend("openai_compatible", {
             env = {
               url = "https://openrouter.ai/api",
@@ -446,7 +416,21 @@ return {
             },
           })
         end,
-        openrouter = function()
+        Gemini = function()
+          return require("codecompanion.adapters").extend("openai_compatible", {
+            env = {
+              url = "https://openrouter.ai/api",
+              api_key = "OPENROUTER_API_KEY",
+              chat_url = "/v1/chat/completions",
+            },
+            schema = {
+              model = {
+                default = "google/gemini-2.5-pro-exp-03-25:free",
+              },
+            },
+          })
+        end,
+        Flash = function()
           return require("codecompanion.adapters").extend("openai_compatible", {
             env = {
               url = "https://openrouter.ai/api",
