@@ -27,7 +27,6 @@ in {
     [
       pkgs.carapace
       pkgs.lnav
-      pkgs.luarocks
       pkgs.cmake
       pkgs.clang-tools
       pkgs.gh
@@ -50,7 +49,6 @@ in {
       pkgs.direnv
       pkgs.glances
       pkgs.pipenv
-      pkgs.pandoc
       pkgs.rsync
       pkgs.shfmt
       pkgs.hunspell
@@ -72,11 +70,12 @@ in {
     info.enable = false;
     enable = true;
   };
+  system.primaryUser="gato";
 
   nix.extraOptions = ''
     auto-optimise-store = true
     extra-platforms = aarch64-darwin x86_64-darwin
-    # experimental-features = nix-command flakes
+    experimental-features = nix-command flakes
   '';
 
   system.keyboard.enableKeyMapping = true;
@@ -139,21 +138,21 @@ in {
     #     exec ${lorri}/bin/lorri daemon
     #   '';
     # };
-    "warpd" = {
-      serviceConfig = {
-        Label = "com.warpd.warpd";
-        WorkingDirectory = (builtins.getEnv "HOME");
-        EnvironmentVariables = { };
-        KeepAlive = false;
-        RunAtLoad = true;
-        # StandardOutPath = "/var/tmp/warpd.log";
-        StandardErrorPath = "/var/tmp/warpd.log";
-        ProgramArguments = [ "/usr/local/bin/warpd" "-f" ];
-        # ProgramArguments = [ "/Users/$USER/.bin/warpd" "-f" ];
-        ProcessType = "Interactive";
-        UserName = "$USER";
-      };
-    };
+    # "warpd" = {
+    #   serviceConfig = {
+    #     Label = "com.warpd.warpd";
+    #     WorkingDirectory = (builtins.getEnv "HOME");
+    #     EnvironmentVariables = { };
+    #     KeepAlive = false;
+    #     RunAtLoad =false;
+    #     # StandardOutPath = "/var/tmp/warpd.log";
+    #     StandardErrorPath = "/var/tmp/warpd.log";
+    #     ProgramArguments = [ "/usr/local/bin/warpd" "-f" ];
+    #     # ProgramArguments = [ "/Users/$USER/.bin/warpd" "-f" ];
+    #     ProcessType = "Interactive";
+    #     UserName = "$USER";
+    #   };
+    # };
   };
 
   homebrew = {
@@ -174,13 +173,11 @@ in {
     "coder"
     "git-ps-rs"
     "mermaid-cli"
-    "wordnet"
     "sqlite"
     "spoof-mac"
     "wireguard-go"
     "wireguard-tools"
     "lima"
-    "aider"
   ];
   casks = [
     "shortcat"
@@ -201,7 +198,6 @@ in {
     "cool-retro-term"
     "gimp"
     "veracrypt"
-    "plex"
     "jetbrains-toolbox"
     "visual-studio-code"
     "hyper"
@@ -210,7 +206,6 @@ in {
     "rectangle"
     "warp"
     "cutter"
-    "microsoft-onenote"
     "font-monaspace"
     "raycast"
     "whisky"

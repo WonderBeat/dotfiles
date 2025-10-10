@@ -1,11 +1,18 @@
+-- lua/plugins/rose-pine.lua
 return {
-  -- Configure LazyVim to load gruvbox
   {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "kanagawa-wave",
-    },
+    "rose-pine/neovim",
+    name = "rose-pine",
+    config = function()
+      vim.cmd("colorscheme rose-pine")
+    end,
   },
+  -- {
+  --   "LazyVim/LazyVim",
+  --   opts = {
+  --     colorscheme = "kanagawa-wave",
+  --   },
+  -- },
 
   -- change trouble config
   -- {
@@ -30,22 +37,17 @@ return {
   -- change some telescope options and a keymap to browse plugin files
   {
     "nvim-telescope/telescope.nvim",
-    -- keys = {
-    --    -- add a keymap to browse plugin files
-    --    -- stylua: ignore
-    --    {
-    --      "<leader>fp",
-    --      function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
-    --      desc = "Find Plugin File",
-    --    },
-    --   {
-    --     "<leader>bb",
-    --     function()
-    --       require("telescope.builtin").buffers()
-    --     end,
-    --     desc = "Telescope Buffers",
-    --   },
-    -- },
+    keys = {
+      { "<leader><space>", "<cmd>Telescope frecency workspace=CWD<cr>", mode = "n", desc = "Recent (cwd)" },
+      { "<leader>fr", "<cmd>Telescope frecency<cr>", mode = "n", desc = "Recent" },
+      {
+        "<leader>bb",
+        function()
+          require("telescope.builtin").buffers()
+        end,
+        desc = "Telescope Buffers",
+      },
+    },
     -- change some options
     opts = {
       defaults = {
@@ -149,13 +151,13 @@ return {
   },
 
   -- the opts function can also be used to change the default opts:
-  {
-    "nvim-lualine/lualine.nvim",
-    event = "VeryLazy",
-    opts = function(_, opts)
-      table.insert(opts.sections.lualine_x, "😄")
-    end,
-  },
+  -- {
+  --   "nvim-lualine/lualine.nvim",
+  --   event = "VeryLazy",
+  --   opts = function(_, opts)
+  --     table.insert(opts.sections.lualine_x, "😄")
+  --   end,
+  -- },
 
   -- or you can return new options to override all the defaults
   {
@@ -176,7 +178,7 @@ return {
   --
   -- add any tools you want to have installed below
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         "stylua",
@@ -200,7 +202,12 @@ return {
       -- "ibhagwan/fzf-lua", -- optional
       -- "echasnovski/mini.pick", -- optional
     },
-    config = true,
+
+    config = function()
+      require("neogit").setup({
+        process_spinner = true,
+      })
+    end,
     keys = {
       {
         "<leader>gg",
@@ -370,38 +377,57 @@ return {
 
       options.strategies = {
         chat = {
-          keymaps = {
-            -- stop = {
-            --   modes = {
-            --     n = "<Esc>",
-            --   },
-            -- },
-            -- send = {
-            --   modes = {
-            --     n = "<CR>",
-            --   },
-            -- },
-            -- close = {
-            --   modes = {
-            --     n = "q",
-            --     i = "<Esc>",
-            --   },
-            -- },
-          },
-          adapter = "openrouter",
+          adapter = "QWEN",
           roles = {
             llm = "  CodeCompanion",
             user = "  " .. user,
           },
         },
         inline = {
-          adapter = "Gemini",
+          adapter = "QWEN",
         },
         cmd = {
-          adapter = "Gemini",
+          adapter = "QWEN",
         },
       }
       options.adapters = {
+        acp = {
+          gemini_cli = function()
+            return require("codecompanion.adapters").extend("gemini_cli", {
+              commands = {
+                devbox = {
+                  "devbox",
+                  "run",
+                  "gemini",
+                },
+                flash = {
+                  "geminiz",
+                  "--experimental-acp",
+                  "-m",
+                  "gemini-2.5-flash",
+                },
+                pro = {
+                  "geminiz",
+                  "--experimental-acp",
+                  "-m",
+                  "gemini-2.5-pro",
+                },
+                qwen_devbox = {
+                  "devbox",
+                  "run",
+                  "qwen-acp",
+                },
+              },
+              defaults = {
+                auth_method = "gemini-api-key",
+                -- auth_method = "gemini-api-key", -- "oauth-personal" | "gemini-api-key" | "vertex-ai"
+                -- auth_method = "oauth-personal",
+                -- auth_method = "vertex-ai",
+              },
+            })
+          end,
+        },
+
         Claude = function()
           return require("codecompanion.adapters").extend("openai_compatible", {
             env = {
@@ -425,12 +451,12 @@ return {
             },
             schema = {
               model = {
-                default = "google/gemini-2.5-pro-exp-03-25:free",
+                default = "google/gemini-2.0-flash-001",
               },
             },
           })
         end,
-        Flash = function()
+        QWEN = function()
           return require("codecompanion.adapters").extend("openai_compatible", {
             env = {
               url = "https://openrouter.ai/api",
@@ -439,7 +465,7 @@ return {
             },
             schema = {
               model = {
-                default = "google/gemini-2.0-flash-001",
+                default = "qwen/qwen3-coder:free",
               },
             },
           })
@@ -573,6 +599,14 @@ return {
       -- More details: https://github.com/mikavilpas/yazi.nvim/issues/802
       -- vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1
+    end,
+  },
+  {
+    "nvim-telescope/telescope-frecency.nvim",
+    -- install the latest stable version
+    version = "*",
+    config = function()
+      require("telescope").load_extension("frecency")
     end,
   },
 }
