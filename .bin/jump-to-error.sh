@@ -84,4 +84,4 @@ selected=$(printf '%s\n' "$file_refs" | fzf \
 
 [ -z "$selected" ] && exit 0
 
-zed "$selected"
+$EDITOR "$selected"
