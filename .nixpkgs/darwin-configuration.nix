@@ -163,7 +163,6 @@ in {
   taps = [
     "d12frosted/emacs-plus"
     "uptech/homebrew-oss"
-    "homebrew/cask-fonts"
   ];
   brews = [
     {
@@ -173,16 +172,13 @@ in {
     "coder"
     "git-ps-rs"
     "mermaid-cli"
-    "sqlite"
     "spoof-mac"
-    "wireguard-go"
-    "wireguard-tools"
-    "lima"
+    "zellij"
+    "colima"
   ];
   casks = [
     "shortcat"
     "mouseless"
-    "ocenaudio"
     "telegram"
     "discord"
     "iterm2"
@@ -198,7 +194,6 @@ in {
     "cool-retro-term"
     "gimp"
     "veracrypt"
-    "jetbrains-toolbox"
     "visual-studio-code"
     "hyper"
     "wireshark"
@@ -211,7 +206,6 @@ in {
     "whisky"
     "heroic"
     "blackhole-2ch"
-  # "amneziawg"
   ];
   };
 

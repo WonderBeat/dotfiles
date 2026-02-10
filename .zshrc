@@ -1,6 +1,8 @@
 
 USERNAME=$(whoami)
 
+eval $(/opt/homebrew/bin/brew shellenv)
+
 if [ "$USERNAME" = "coder" ]; then
     . "$HOME/.nix-profile/etc/profile.d/nix.sh"
     eval "$(devbox global shellenv)"
@@ -98,13 +100,13 @@ fi
 
 source $ZPLUG_HOME/init.zsh
 
+zplug "romkatv/powerlevel10k", as:theme, depth:1
 zplug "b4b4r07/enhancd", use:init.sh
-zplug "rupa/z", use:z.sh
+#zplug "rupa/z", use:z.sh
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "djui/alias-tips"
-zplug "romkatv/powerlevel10k", as:theme, depth:1
 
 zplug load
 # export PATH="$HOME/.fastlane/bin:$PATH"
@@ -131,36 +133,36 @@ if [[ ${INSIDE_EMACS:-no_emacs_here} != 'no_emacs_here' ]]; then
 fi
 
 # vterm function required to integrate zsh and vterm-emacs
-vterm_printf(){
-    if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
-        # Tell tmux to pass the escape sequences through
-        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-    elif [ "${TERM%%-*}" = "screen" ]; then
-        # GNU screen (screen, screen-256color, screen-256color-bce)
-        printf "\eP\e]%s\007\e\\" "$1"
-    else
-        printf "\e]%s\e\\" "$1"
-    fi
-}
+# vterm_printf(){
+#     if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
+#         # Tell tmux to pass the escape sequences through
+#         printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+#     elif [ "${TERM%%-*}" = "screen" ]; then
+#         # GNU screen (screen, screen-256color, screen-256color-bce)
+#         printf "\eP\e]%s\007\e\\" "$1"
+#     else
+#         printf "\e]%s\e\\" "$1"
+#     fi
+# }
 
 
-#vterm directory tracking
-vterm_prompt_end() {
-    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
-}
-setopt PROMPT_SUBST
-PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
+# #vterm directory tracking
+# vterm_prompt_end() {
+#     vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
+# }
+# setopt PROMPT_SUBST
+# PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
 
 #vterm command passing
-vterm_cmd() {
-    local vterm_elisp
-    vterm_elisp=""
-    while [ $# -gt 0 ]; do
-        vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
-        shift
-    done
-    vterm_printf "51;E$vterm_elisp"
-}
+# vterm_cmd() {
+#     local vterm_elisp
+#     vterm_elisp=""
+#     while [ $# -gt 0 ]; do
+#         vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
+#         shift
+#     done
+#     vterm_printf "51;E$vterm_elisp"
+# }
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -241,48 +243,50 @@ Put appropriate emoji at the end of the title at the first line
       fi
       ;;
     e | E)
-      # Create a temporary file and pre-fill with the AI message
-      local tmpfile
-      tmpfile="$(mktemp "${TMPDIR:-/tmp}/aicm.XXXXXXX")"
-
-      # Write the message exactly as generated
-      printf '%s\n' "$commit_message" >! "$tmpfile"
-
-      # Use Git's editor precedence: GIT_EDITOR → VISUAL → EDITOR → vim
+        local tmpfile
+        tmpfile="$(mktemp "${TMPDIR:-/tmp}/aicm-rewrite.XXXXXXX")"
+        printf '%s\n' "$commit_message" >! "$tmpfile"
       local editor
+      local wait_for_close=false
       if [[ "$TERM_PROGRAM" = 'zed' ]]; then
-          editor=zed
+          editor='zed'
+          wait_for_close=true
       else
           editor=$(git var GIT_EDITOR 2>/dev/null) || editor=${VISUAL:-${EDITOR:-vim}}
       fi
 
-
-      # Open editor
-      if "$editor" "$tmpfile"; then
-        # Read the edited content
-        edited_message=$(cat "$tmpfile")
-
-        # Check if message is non-empty (after trimming whitespace)
-        if [ -n "$(printf '%s' "$edited_message" | tr -d ' \t\n\r')" ]; then
-          if git commit -m "$edited_message"; then
-            echo "Changes committed successfully with your edited message!"
-            rm -f "$tmpfile"
-            return 0
-          else
-            echo "Commit failed. Please check your changes and try again."
-            rm -f "$tmpfile"
-            return 1
+      if [[ "$wait_for_close" == true ]]; then
+          if zed -w "$tmpfile"; then
+              # Read the edited content
+              edited_message=$(cat "$tmpfile")
           fi
-        else
-          echo "Edit cancelled: empty or whitespace-only message."
-          rm -f "$tmpfile"
-          # Return to menu loop
-        fi
       else
-        echo "Editor exited with error. Edit cancelled."
+          if $editor "$tmpfile"; then
+              # Read the edited content
+              edited_message=$(cat "$tmpfile")
+          fi
+      fi
+      read_input "$edited_message\n Do you want to commit this edited message? (y/n): "
+      if [[ "$REPLY" != [yY] ]]; then
+          echo "Commit cancelled."
+          rm -f "$tmpfile"
+          return 1
+      fi
+    if [ -n "$(printf '%s' "$edited_message" | tr -d ' \t\n\r')" ]; then
+        if git commit -m "$edited_message"; then
+        echo "Changes committed successfully with your edited message!"
+        rm -f "$tmpfile"
+        return 0
+        else
+        echo "Commit failed. Please check your changes and try again."
+        rm -f "$tmpfile"
+        return 1
+        fi
+    else
+        echo "Edit cancelled: empty or whitespace-only message."
         rm -f "$tmpfile"
         # Return to menu loop
-      fi
+    fi
       ;;
     r | R)
       echo "Regenerating commit message..."
@@ -417,6 +421,49 @@ Please generate a revised, improved commit message for this commit.
 }
 
 
-alias sandbox-no-network='sandbox-exec -p "(version 1)(allow default)(deny network*)"'
+alias sandbox-localhost='sandbox-exec -f ~/.sandbox-localhost.profile -D TARGET_DIR="$(pwd)" -D HOME_DIR="$HOME"'
+alias sandbox='sandbox-exec -f ~/.sandbox.profile -D TARGET_DIR="$(pwd)" -D HOME_DIR="$HOME"'
 
 eval "$(direnv hook zsh)"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:$HOME/.lmstudio/bin"
+# End of LM Studio CLI section
+
+if [[ -z "$ZELLIJ" ]] && [[ -n "$KITTY_PID" ]] && [[ -z "$TMUX" ]]; then
+    if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+        zellij attach -c
+    else
+        zellij
+    fi
+
+    if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+        exit
+    fi
+fi
+
+eval "$(zoxide init zsh)"
+
+DISABLE_AUTO_TITLE="true"
+
+zstyle ':prezto:module:terminal:window-title' format '%6>>%n/%7>>%m%<<:%35<..<%s'
+zstyle ':prezto:module:terminal:tab-title' format '%6>>%n/%4>>%m%<<:%30<..<%s'
+
+zstyle ':prezto:module:syntax-highlighting' highlighters \
+  'main' \
+  'brackets' \
+  'pattern' \
+  'line' \
+  'cursor' \
+  'root'
+
+source ~/.zsh/completions/_git-gtr
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+

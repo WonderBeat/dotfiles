@@ -34,7 +34,7 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
-  'prompt' 'git' 'python' 'ssh' \
+  'prompt' 'python' 'ssh' \
   'autosuggestions'
 
 #
@@ -168,4 +168,4 @@ zstyle ':prezto:module:syntax-highlighting' styles \
 # zstyle ':prezto:module:tmux:auto-start' remote 'yes'
 
 # Integrate with iTerm2.
-zstyle ':prezto:module:tmux:iterm' integrate 'yes'
+#zstyle ':prezto:module:tmux:iterm' integrate 'yes'

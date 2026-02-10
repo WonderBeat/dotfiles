@@ -7,6 +7,12 @@ return {
       vim.cmd("colorscheme rose-pine")
     end,
   },
+
+  {
+    "stevearc/overseer.nvim",
+    tag = "v1.6.0",
+  },
+
   -- {
   --   "LazyVim/LazyVim",
   --   opts = {
@@ -35,30 +41,30 @@ return {
   },
 
   -- change some telescope options and a keymap to browse plugin files
-  {
-    "nvim-telescope/telescope.nvim",
-    keys = {
-      { "<leader><space>", "<cmd>Telescope frecency workspace=CWD<cr>", mode = "n", desc = "Recent (cwd)" },
-      { "<leader>fr", "<cmd>Telescope frecency<cr>", mode = "n", desc = "Recent" },
-      {
-        "<leader>bb",
-        function()
-          require("telescope.builtin").buffers()
-        end,
-        desc = "Telescope Buffers",
-      },
-    },
-    -- change some options
-    opts = {
-      defaults = {
-        file_ignore_patterns = { "^./.git/", "^node_modules/", "^vendor/", "^.devbox", "^.cache", "^zig-cache" },
-        layout_strategy = "horizontal",
-        layout_config = { prompt_position = "top" },
-        sorting_strategy = "ascending",
-        winblend = 0,
-      },
-    },
-  },
+  -- {
+  --   "nvim-telescope/telescope.nvim",
+  --   keys = {
+  --     { "<leader><space>", "<cmd>Telescope frecency workspace=CWD<cr>", mode = "n", desc = "Recent (cwd)" },
+  --     { "<leader>fr", "<cmd>Telescope frecency<cr>", mode = "n", desc = "Recent" },
+  --     -- {
+  --     --   "<leader>bb",
+  --     --   function()
+  --     --     require("telescope.builtin").buffers()
+  --     --   end,
+  --     --   desc = "Telescope Buffers",
+  --     -- },
+  --   },
+  --   -- change some options
+  --   opts = {
+  --     defaults = {
+  --       file_ignore_patterns = { "^./.git/", "^node_modules/", "^vendor/", "^.devbox", "^.cache", "^zig-cache" },
+  --       layout_strategy = "horizontal",
+  --       layout_config = { prompt_position = "top" },
+  --       sorting_strategy = "ascending",
+  --       winblend = 0,
+  --     },
+  --   },
+  -- },
   --
   -- -- add pyright to lspconfig
   {
@@ -81,11 +87,11 @@ return {
     dependencies = {
       "jose-elias-alvarez/typescript.nvim",
       init = function()
-        require("lazyvim.util").lsp.on_attach(function(_, buffer)
-           -- stylua: ignore
-           vim.keymap.set( "n", "<leader>co", "TypescriptOrganizeImports", { buffer = buffer, desc = "Organize Imports" })
-          vim.keymap.set("n", "<leader>cR", "TypescriptRenameFile", { desc = "Rename File", buffer = buffer })
-        end)
+        -- require("snacks").util.lsp.on(function(_, buffer)
+        --    -- stylua: ignore
+        --    vim.keymap.set( "n", "<leader>co", "TypescriptOrganizeImports", { buffer = buffer, desc = "Organize Imports" })
+        --   vim.keymap.set("n", "<leader>cR", "TypescriptRenameFile", { desc = "Rename File", buffer = buffer })
+        -- end)
       end,
     },
     ---@class PluginLspOpts
@@ -165,7 +171,9 @@ return {
     event = "VeryLazy",
     opts = function()
       return {
-        --[[add your custom lualine config here]]
+        sections = {
+          lualine_x = { "overseer" },
+        },
       }
     end,
   },
@@ -188,6 +196,28 @@ return {
       },
     },
   },
+
+  -- {
+  --   "copilotlsp-nvim/copilot-lsp",
+  --   init = function()
+  --     vim.g.copilot_nes_debounce = 100
+  --     vim.lsp.enable("copilot_ls")
+  --     vim.keymap.set({ "n", "i" }, "<S-tab>", function()
+  --       local bufnr = vim.api.nvim_get_current_buf()
+  --       local state = vim.b[bufnr].nes_state
+  --       if state then
+  --         -- Try to jump to the start of the suggestion edit.
+  --         -- If already at the start, then apply the pending suggestion and jump to the end of the edit.
+  --         local _ = require("copilot-lsp.nes").walk_cursor_start_edit()
+  --           or (require("copilot-lsp.nes").apply_pending_nes() and require("copilot-lsp.nes").walk_cursor_end_edit())
+  --         return nil
+  --       else
+  --         -- Resolving the terminal's inability to distinguish between `TAB` and `<C-i>` in normal mode
+  --         return "<C-i>"
+  --       end
+  --     end, { desc = "Accept Copilot NES suggestion", expr = true })
+  --   end,
+  -- },
 
   { "ellisonleao/gruvbox.nvim" },
   { "rebelot/kanagawa.nvim" },
@@ -372,26 +402,49 @@ return {
       local options = {
         show_default_actions = true, -- Show the default actions in the action palette?
         show_default_prompt_library = true, -- Show the default prompt library in the action palette?
+        log_level = "ERROR", -- TRACE|DEBUG|ERROR|INFO
+        memory = {
+          claude = {
+            description = "Memory files for Claude Code users",
+            files = {
+              "~/.claude/CLAUDE.md",
+              "CLAUDE.md",
+              "CLAUDE.local.md",
+            },
+          },
+          opts = {
+            chat = {
+              enabled = true,
+              default_memory = { "claude" },
+            },
+          },
+        },
       }
       local user = vim.env.USER or "User"
 
       options.strategies = {
         chat = {
-          adapter = "QWEN",
+          -- adapter = "GLM_ACP",
+          adapter = "opencode",
           roles = {
             llm = "  CodeCompanion",
             user = "  " .. user,
           },
         },
         inline = {
-          adapter = "QWEN",
+          adapter = "GLM",
         },
         cmd = {
-          adapter = "QWEN",
+          adapter = "GLM",
         },
       }
       options.adapters = {
         acp = {
+          GLM_ACP = function()
+            return require("codecompanion.adapters").extend("claude_code", {
+              env = {},
+            })
+          end,
           gemini_cli = function()
             return require("codecompanion.adapters").extend("gemini_cli", {
               commands = {
@@ -412,10 +465,10 @@ return {
                   "-m",
                   "gemini-2.5-pro",
                 },
-                qwen_devbox = {
+                glm = {
                   "devbox",
                   "run",
-                  "qwen-acp",
+                  "glm-acp",
                 },
               },
               defaults = {
@@ -470,6 +523,24 @@ return {
             },
           })
         end,
+        GLM = function()
+          return require("codecompanion.adapters.http").extend("openai_compatible", {
+            env = {
+              --url = "https://api.z.ai/api/anthropic",
+              url = "https://api.z.ai/api/coding/paas/v4",
+              api_key = "GLM_API_KEY",
+              chat_url = "/chat/completions",
+            },
+            opts = {
+              show_model_choices = false,
+            },
+            schema = {
+              model = {
+                default = "GLM-4.7",
+              },
+            },
+          })
+        end,
       }
 
       return options
@@ -485,87 +556,54 @@ return {
   },
 
   {
-    "folke/edgy.nvim",
-    optional = true,
-    opts = function(_, opts)
-      opts.right = opts.right or {}
-      table.insert(opts.right, {
-        ft = "codecompanion",
-        title = "CodeCompanion Chat",
-        size = { width = 50 },
+    "nvim-neotest/neotest",
+    dependencies = {
+      "lawrence-laz/neotest-zig", -- Installation
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+    },
+    config = function()
+      require("neotest").setup({
+        adapters = {
+          require("neotest-zig")({
+            dap = {
+              adapter = "lldb",
+            },
+          }),
+        },
       })
     end,
   },
 
-  -- {
-  --   "yetone/avante.nvim",
-  --   event = "VeryLazy",
-  --   lazy = false,
-  --   version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
-  --   opts = {
-  --     provider = "openrouter_gemini",
-  --     vendors = {
-  --       openrouter_sonnet = {
-  --         __inherited_from = "openai",
-  --         endpoint = "https://openrouter.ai/api/v1",
-  --         api_key_name = "OPENROUTER_API_KEY",
-  --         model = "anthropic/claude-3.7-sonnet",
-  --       },
-  --       openrouter_gemini = {
-  --         __inherited_from = "openai",
-  --         endpoint = "https://openrouter.ai/api/v1",
-  --         api_key_name = "OPENROUTER_API_KEY",
-  --         model = "google/gemini-2.0-flash-001",
-  --       },
-  --     },
-  --   },
-  --   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-  --   build = "make",
-  --   -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-  --   dependencies = {
-  --     "nvim-treesitter/nvim-treesitter",
-  --     "stevearc/dressing.nvim",
-  --     "nvim-lua/plenary.nvim",
-  --     "MunifTanjim/nui.nvim",
-  --     --- The below dependencies are optional,
-  --     "echasnovski/mini.pick", -- for file_selector provider mini.pick
-  --     "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-  --     "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-  --     "ibhagwan/fzf-lua", -- for file_selector provider fzf
-  --     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-  --     "zbirenbaum/copilot.lua", -- for providers='copilot'
-  --     {
-  --       -- support for image pasting
-  --       "HakonHarnes/img-clip.nvim",
-  --       event = "VeryLazy",
-  --       opts = {
-  --         -- recommended settings
-  --         default = {
-  --           embed_image_as_base64 = false,
-  --           prompt_for_file_name = false,
-  --           drag_and_drop = {
-  --             insert_mode = true,
-  --           },
-  --           -- required for Windows users
-  --           use_absolute_path = true,
-  --         },
-  --       },
-  --     },
-  --     {
-  --       -- Make sure to set this up properly if you have lazy=true
-  --       "MeanderingProgrammer/render-markdown.nvim",
-  --       opts = {
-  --         file_types = { "markdown", "Avante" },
-  --       },
-  --       ft = { "markdown", "Avante" },
-  --     },
-  --   },
-  -- },
+  {
+    "folke/snacks.nvim",
+    keys = {
+      { "<leader>fR", LazyVim.pick("oldfiles"), desc = "Recent" },
+      {
+        "<leader>fr",
+        function()
+          Snacks.picker.recent({ filter = { cwd = true } })
+        end,
+        desc = "Recent (cwd)",
+      },
+      {
+        "<leader>/",
+        function()
+          Snacks.picker.grep({
+            cwd = vim.fn.expand("%:p:h"),
+            desc = "Grep in Current File Directory",
+          })
+        end,
+        desc = "Grep (Current Dir)",
+      },
+    },
+  },
 
   {
     "mikavilpas/yazi.nvim",
     event = "VeryLazy",
-    dependencies = { "folke/snacks.nvim", lazy = true },
+    dependencies = { "folke/snacks.nvim" },
     keys = {
       -- 👇 in this section, choose your own keymappings!
       {
@@ -602,11 +640,62 @@ return {
     end,
   },
   {
-    "nvim-telescope/telescope-frecency.nvim",
-    -- install the latest stable version
-    version = "*",
+    "nvim-mini/mini.move",
+    event = "VeryLazy",
+    opts = {
+      mappings = {
+        left = "<M-Left>",
+        right = "<M-Right>",
+        down = "<M-Down>",
+        up = "<M-Up>",
+      },
+    },
+  },
+  {
+    "NickvanDyke/opencode.nvim",
+    dependencies = {
+      -- Recommended for `ask()` and `select()`.
+      -- Required for `snacks` provider.
+      ---@module 'snacks' <- Loads `snacks.nvim` types for configuration intellisense.
+      { "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = {} } },
+    },
     config = function()
-      require("telescope").load_extension("frecency")
+      ---@type opencode.Opts
+      vim.g.opencode_opts = {
+        -- Your configuration, if any — see `lua/opencode/config.lua`, or "goto definition".
+      }
+
+      -- Required for `opts.events.reload`.
+      vim.o.autoread = true
+
+      -- Recommended/example keymaps.
+      vim.keymap.set({ "n", "x" }, "<leader>aA", function()
+        require("opencode").ask("@this: ", { submit = true })
+      end, { desc = "Ask opencode" })
+      vim.keymap.set({ "n", "x" }, "<leader>ax", function()
+        require("opencode").select()
+      end, { desc = "Execute opencode action…" })
+      vim.keymap.set({ "n", "x" }, "<leader>ao", function()
+        require("opencode").prompt("@this")
+      end, { desc = "Add to opencode" })
+      vim.keymap.set({ "n", "t" }, "<leader>at", function()
+        require("opencode").toggle()
+      end, { desc = "Toggle opencode" })
+      vim.keymap.set("n", "<S-C-u>", function()
+        require("opencode").command("session.half.page.up")
+      end, { desc = "opencode half page up" })
+      vim.keymap.set("n", "<S-C-d>", function()
+        require("opencode").command("session.half.page.down")
+      end, { desc = "opencode half page down" })
+      vim.keymap.set("n", "+", "<C-a>", { desc = "Increment", noremap = true })
+      vim.keymap.set("n", "-", "<C-x>", { desc = "Decrement", noremap = true })
     end,
   },
+  -- {
+  --   "nvim-telescope/telescope-frecency.nvim",
+  --   version = "*",
+  --   config = function()
+  --     require("telescope").load_extension("frecency")
+  --   end,
+  -- },
 }

@@ -1,11 +1,10 @@
-
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 [ -d "$HOME/.cargo" ] && . "$HOME/.cargo/env"
 
 export VISUAL=nvim
 if [[ "$TERM_PROGRAM" = 'zed' ]]; then
-    export VISUAL=zed
+  export VISUAL=zed
 fi
 
 export EDITOR="$VISUAL"
@@ -26,10 +25,10 @@ function zed_file_search() {
   FILE=$(
     rg --files --hidden --color=always \
       --glob '!**/.git/' \
-      --glob '!**/node_modules' \
-    | fzf --ansi --preview 'bat --decorations=always --color=always {} --style=full --line-range :50' \
-          --preview-window 'up:60%:wrap' \
-          --layout=reverse
+      --glob '!**/node_modules' |
+      fzf --ansi --preview 'bat --decorations=always --color=always {} --style=full --line-range :50' \
+        --preview-window 'up:60%:wrap' \
+        --layout=reverse
   )
 
   if [ -n "$FILE" ]; then
@@ -70,7 +69,7 @@ function zed_search() {
   FINAL_QUERY=$(echo "$OUT" | head -n1)
 
   if [ -n "$FINAL_QUERY" ]; then
-    echo "$FINAL_QUERY" >> ~/.zed_search_history
+    echo "$FINAL_QUERY" >>~/.zed_search_history
   fi
 
   # Now extract the selected file lines (everything after the first line)
@@ -89,9 +88,13 @@ function zed_search() {
 
 function zed_search_history() {
   # FZF to choose a past query
-  local HIST_QUERY=$(fzf --prompt="History> " < ~/.zed_search_history)
+  local HIST_QUERY=$(fzf --prompt="History> " <~/.zed_search_history)
   if [ -n "$HIST_QUERY" ]; then
     # Run zed_search again with the chosen query
     zed_search "$HIST_QUERY"
   fi
 }
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:$HOME/.lmstudio/bin"
+# End of LM Studio CLI section
