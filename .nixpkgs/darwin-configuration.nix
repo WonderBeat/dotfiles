@@ -1,27 +1,7 @@
-{ config, pkgs, stdenv, ... }:
+{ config, pkgs, inputs, stdenv, ... }:
 
 let
-  inherit (pkgs);
-  unstable = import <unstable> { config.allowUnfree = true; };
-  # unison-ucm = import (fetchTarball "https://github.com/ceedubs/unison-nix/archive/trunk.tar.gz") {};
-  # tex = (pkgs.texlive.combine {
-  #   inherit (pkgs.texlive) scheme-medium sansmathfonts sansmath
-  #     fontspec
-  #     wrapfig amsmath ulem hyperref capt-of
-  #     collection-pstricks
-  #     collection-fontsrecommended
-  #     beamer
-  #     sourcecodepro
-  #     l3packages
-  #     mathastext
-  #     pgf
-  #     cancel
-  #     cprotect
-  #     bigfoot
-  #     environ
-  #     cbfonts-fd
-  #     xcolor;
-  # });
+  unstable = import inputs.nixpkgs-unstable { system = pkgs.stdenv.hostPlatform.system; config = { allowUnfree = true; }; };
 in {
   environment.systemPackages =
     [
@@ -38,7 +18,7 @@ in {
       pkgs.fd
       pkgs.mosh
       pkgs.yazi
-      #pkgs.ncdu
+      pkgs.ncdu
       unstable.neovim
       pkgs.tree-sitter
       pkgs.ripgrep
@@ -56,7 +36,6 @@ in {
       pkgs.git-crypt
       pkgs.git-lfs
       pkgs.rclone
-      pkgs.aws-sam-cli
       pkgs.mtr
       unstable.devbox
       unstable.k9s
@@ -123,36 +102,39 @@ in {
   ids.gids.nixbld = 350;
   system.stateVersion = 4;
   nix.package = pkgs.nix;
-  launchd.user.agents = {
-    # "lorri" = {
-    #   serviceConfig = {
-    #     WorkingDirectory = (builtins.getEnv "HOME");
-    #     EnvironmentVariables = { };
-    #     KeepAlive = true;
-    #     RunAtLoad = true;
-    #     StandardOutPath = "/var/tmp/lorri.log";
-    #     StandardErrorPath = "/var/tmp/lorri.log";
-    #   };
-    #   script = ''
-    #     source ${config.system.build.setEnvironment}
-    #     exec ${lorri}/bin/lorri daemon
-    #   '';
-    # };
-    # "warpd" = {
-    #   serviceConfig = {
-    #     Label = "com.warpd.warpd";
-    #     WorkingDirectory = (builtins.getEnv "HOME");
-    #     EnvironmentVariables = { };
-    #     KeepAlive = false;
-    #     RunAtLoad =false;
-    #     # StandardOutPath = "/var/tmp/warpd.log";
-    #     StandardErrorPath = "/var/tmp/warpd.log";
-    #     ProgramArguments = [ "/usr/local/bin/warpd" "-f" ];
-    #     # ProgramArguments = [ "/Users/$USER/.bin/warpd" "-f" ];
-    #     ProcessType = "Interactive";
-    #     UserName = "$USER";
-    #   };
-    # };
+  launchd = {
+    daemons.nix-daemon.serviceConfig.RunAtLoad = true; 
+    user.agents = {
+      # "lorri" = {
+      #   serviceConfig = {
+      #     WorkingDirectory = (builtins.getEnv "HOME");
+      #     EnvironmentVariables = { };
+      #     KeepAlive = true;
+      #     RunAtLoad = true;
+      #     StandardOutPath = "/var/tmp/lorri.log";
+      #     StandardErrorPath = "/var/tmp/lorri.log";
+      #   };
+      #   script = ''
+      #     source ${config.system.build.setEnvironment}
+      #     exec ${lorri}/bin/lorri daemon
+      #   '';
+      # };
+      # "warpd" = {
+      #   serviceConfig = {
+      #     Label = "com.warpd.warpd";
+      #     WorkingDirectory = (builtins.getEnv "HOME");
+      #     EnvironmentVariables = { };
+      #     KeepAlive = false;
+      #     RunAtLoad =false;
+      #     # StandardOutPath = "/var/tmp/warpd.log";
+      #     StandardErrorPath = "/var/tmp/warpd.log";
+      #     ProgramArguments = [ "/usr/local/bin/warpd" "-f" ];
+      #     # ProgramArguments = [ "/Users/$USER/.bin/warpd" "-f" ];
+      #     ProcessType = "Interactive";
+      #     UserName = "$USER";
+      #   };
+      # };
+    };
   };
 
   homebrew = {

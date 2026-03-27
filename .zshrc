@@ -1,16 +1,19 @@
+(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
 
-USERNAME=$(whoami)
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
+
+USERNAME=$USER
 
 eval $(/opt/homebrew/bin/brew shellenv)
 
 if [ "$USERNAME" = "coder" ]; then
     . "$HOME/.nix-profile/etc/profile.d/nix.sh"
     eval "$(devbox global shellenv)"
-fi
-
-if [[ -s "$HOME/.config/broot/launcher/bash/br" ]]; then
-  source "$HOME/.config/broot/launcher/bash/br"
-  # test -e  "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br" && source "${HOME}/Library/Application Support/org.dystroy.broot/launcher/bash/br"
 fi
 
 source ~/.bash_aliases
@@ -37,10 +40,9 @@ if [[ "$TERM_PROGRAM" = 'zed' ]]; then
 fi
 
 export EDITOR="$VISUAL"
-export ZPLUG_HOME=${ZPLUG_HOME:-"$HOME/.zplug"}
 export AUTO_NOTIFY_THRESHOLD=60
 export AUTO_NOTIFY_IGNORE=("docker" "man" "sleep" "emacs" "java" "k9s" "kubectl" "brew")
-export ENHANCD_FILTER="fzf --preview 'exa -al --tree --level 1 --group-directories-first --git-ignore --header --git --no-user --no-time --no-filesize --no-permissions {}' --preview-window right,50% --height 35% --reverse --ansi:fzy:peco"
+export ENHANCD_FILTER="fzf --preview 'exa -al --tree --level 1 --group-directories-first --git-ignore --header --git --no-user --no-time --no-filesize --no-permissions {}' --preview-window right,20% --height 35% --reverse --ansi:fzy:peco"
 
 if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
     alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
@@ -98,29 +100,25 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-source $ZPLUG_HOME/init.zsh
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
 
-zplug "romkatv/powerlevel10k", as:theme, depth:1
-zplug "b4b4r07/enhancd", use:init.sh
-#zplug "rupa/z", use:z.sh
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "djui/alias-tips"
+zinit light b4b4r07/enhancd
+zinit light djui/alias-tips
 
-zplug load
-# export PATH="$HOME/.fastlane/bin:$PATH"
+# turbo mode: load after prompt appears
+zinit wait lucid for \
+  atinit"zicompinit; zicdreplay" \
+    zsh-users/zsh-completions \
+  atload"_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions \
+  zsh-users/zsh-syntax-highlighting
 
 #config clone --bare https://github.com/WonderBeat/dotfiles.git ~/.myconf
 # git@github.com:WonderBeat/dotfiles.git
 #config checkout
-#
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
 if [[ ${INSIDE_EMACS:-no_emacs_here} != 'no_emacs_here' ]]; then
     export EDITOR=emacsclient
@@ -424,30 +422,35 @@ Please generate a revised, improved commit message for this commit.
 alias sandbox-localhost='sandbox-exec -f ~/.sandbox-localhost.profile -D TARGET_DIR="$(pwd)" -D HOME_DIR="$HOME"'
 alias sandbox='sandbox-exec -f ~/.sandbox.profile -D TARGET_DIR="$(pwd)" -D HOME_DIR="$HOME"'
 
-eval "$(direnv hook zsh)"
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:$HOME/.lmstudio/bin"
 # End of LM Studio CLI section
 
-if [[ -z "$ZELLIJ" ]] && [[ -n "$KITTY_PID" ]] && [[ -z "$TMUX" ]]; then
-    if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-        zellij attach -c
-    else
-        zellij
-    fi
-
-    if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
-        exit
-    fi
-fi
+# if [[ -z "$ZELLIJ" ]] && [[ -n "$KITTY_PID" ]] && [[ -z "$TMUX" ]]; then
+#     if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+#         zellij attach -c
+#     else
+#         zellij
+#     fi
+#
+#     if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+#         exit
+#     fi
+# fi
 
 eval "$(zoxide init zsh)"
 
 DISABLE_AUTO_TITLE="true"
 
-zstyle ':prezto:module:terminal:window-title' format '%6>>%n/%7>>%m%<<:%35<..<%s'
-zstyle ':prezto:module:terminal:tab-title' format '%6>>%n/%4>>%m%<<:%30<..<%s'
+if [[ -n "$SSH_TTY" ]]; then
+  zstyle ':prezto:module:terminal:window-title' format '%3>>%n%<</%3>>%m%<<:%10<..<%1d'
+  zstyle ':prezto:module:terminal:tab-title' format '%3>>%n%<</%3>>%m%<<:%10<..<%1d'
+else
+  zstyle ':prezto:module:terminal:window-title' format '%2>>%n%<<:%13<⊱<%1d' # without hostname
+  zstyle ':prezto:module:terminal:tab-title' format '%2>>%n%<<:%10<..<%1d'
+fi
+#zstyle ':prezto:module:terminal:tab-title' format '%3>>%n/%4>>%m%<<:%30<..<%s'
 
 zstyle ':prezto:module:syntax-highlighting' highlighters \
   'main' \
@@ -456,6 +459,8 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
   'line' \
   'cursor' \
   'root'
+
+
 
 source ~/.zsh/completions/_git-gtr
 

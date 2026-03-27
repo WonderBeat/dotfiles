@@ -43,6 +43,7 @@
 	skippedCherryPicks = false
 [gitbutler]
 	aiOpenAIKeyOption = bringYourOwn
-	aiModelProvider = anthropic
-	aiLMStudioModelName = ibm/granite-4-h-tiny
+	aiModelProvider = lmstudio
+	aiLMStudioModelName = essentialai/rnj-1
 	aiAnthropicKeyOption = bringYourOwn
+	diffLengthLimit = 50000

@@ -1,10 +1,12 @@
 -- lua/plugins/rose-pine.lua
 return {
   {
-    "rose-pine/neovim",
-    name = "rose-pine",
+    "mikesmithgh/gruvsquirrel.nvim",
+    lazy = false,
+    opts = {},
     config = function()
-      vim.cmd("colorscheme rose-pine")
+      vim.cmd("colorscheme gruvsquirrel")
+      --vim.cmd("colorscheme boxsquirrel")
     end,
   },
 
@@ -432,10 +434,10 @@ return {
           },
         },
         inline = {
-          adapter = "GLM",
+          adapter = "CODE",
         },
         cmd = {
-          adapter = "GLM",
+          adapter = "CODE",
         },
       }
       options.adapters = {
@@ -480,67 +482,86 @@ return {
             })
           end,
         },
+        http = {
 
-        Claude = function()
-          return require("codecompanion.adapters").extend("openai_compatible", {
-            env = {
-              url = "https://openrouter.ai/api",
-              api_key = "OPENROUTER_API_KEY",
-              chat_url = "/v1/chat/completions",
-            },
-            schema = {
-              model = {
-                default = "anthropic/claude-3.7-sonnet",
+          Claude = function()
+            return require("codecompanion.adapters").extend("openai_compatible", {
+              env = {
+                url = "https://openrouter.ai/api",
+                api_key = "OPENROUTER_API_KEY",
+                chat_url = "/v1/chat/completions",
               },
-            },
-          })
-        end,
-        Gemini = function()
-          return require("codecompanion.adapters").extend("openai_compatible", {
-            env = {
-              url = "https://openrouter.ai/api",
-              api_key = "OPENROUTER_API_KEY",
-              chat_url = "/v1/chat/completions",
-            },
-            schema = {
-              model = {
-                default = "google/gemini-2.0-flash-001",
+              schema = {
+                model = {
+                  default = "anthropic/claude-3.7-sonnet",
+                },
               },
-            },
-          })
-        end,
-        QWEN = function()
-          return require("codecompanion.adapters").extend("openai_compatible", {
-            env = {
-              url = "https://openrouter.ai/api",
-              api_key = "OPENROUTER_API_KEY",
-              chat_url = "/v1/chat/completions",
-            },
-            schema = {
-              model = {
-                default = "qwen/qwen3-coder:free",
+            })
+          end,
+          Gemini = function()
+            return require("codecompanion.adapters").extend("openai_compatible", {
+              env = {
+                url = "https://openrouter.ai/api",
+                api_key = "OPENROUTER_API_KEY",
+                chat_url = "/v1/chat/completions",
               },
-            },
-          })
-        end,
-        GLM = function()
-          return require("codecompanion.adapters.http").extend("openai_compatible", {
-            env = {
-              --url = "https://api.z.ai/api/anthropic",
-              url = "https://api.z.ai/api/coding/paas/v4",
-              api_key = "GLM_API_KEY",
-              chat_url = "/chat/completions",
-            },
-            opts = {
-              show_model_choices = false,
-            },
-            schema = {
-              model = {
-                default = "GLM-4.7",
+              schema = {
+                model = {
+                  default = "google/gemini-2.0-flash-001",
+                },
               },
-            },
-          })
-        end,
+            })
+          end,
+          QWEN = function()
+            return require("codecompanion.adapters").extend("openai_compatible", {
+              env = {
+                url = "https://openrouter.ai/api",
+                api_key = "OPENROUTER_API_KEY",
+                chat_url = "/v1/chat/completions",
+              },
+              schema = {
+                model = {
+                  default = "qwen/qwen3-coder:free",
+                },
+              },
+            })
+          end,
+          CODE = function()
+            return require("codecompanion.adapters.http").extend("openai_compatible", {
+              env = {
+                url = "http://127.0.0.1:4000",
+                api_key = "sk-6969",
+                chat_url = "/chat/completions",
+              },
+              opts = {
+                show_model_choices = true,
+              },
+              schema = {
+                model = {
+                  default = "zai",
+                },
+              },
+            })
+          end,
+          GLM = function()
+            return require("codecompanion.adapters.http").extend("openai_compatible", {
+              env = {
+                --url = "https://api.z.ai/api/anthropic",
+                url = "https://api.z.ai/api/coding/paas/v4",
+                api_key = "GLM_API_KEY",
+                chat_url = "/chat/completions",
+              },
+              opts = {
+                show_model_choices = false,
+              },
+              schema = {
+                model = {
+                  default = "GLM-4.7",
+                },
+              },
+            })
+          end,
+        },
       }
 
       return options
@@ -587,15 +608,55 @@ return {
         end,
         desc = "Recent (cwd)",
       },
+      -- {
+      --   "<leader>/",
+      --   function()
+      --     Snacks.picker.grep({
+      --       cwd = vim.fn.expand("%:p:h"),
+      --       desc = "Grep in Current File Directory",
+      --     })
+      --   end,
+      --   desc = "Grep (Current Dir)",
+      -- },
+    },
+  },
+  {
+    "dmtrKovalenko/fff.nvim",
+    build = function()
+      require("fff.download").download_or_build_binary()
+    end,
+    opts = { -- (optional)
+      debug = {
+        enabled = false,
+        show_scores = false,
+      },
+    },
+    lazy = false,
+    keys = {
+      {
+        "<leader><leader>", -- try it if you didn't it is a banger keybinding for a picker
+        function()
+          require("fff").find_files()
+        end,
+        desc = "FFFind files",
+      },
       {
         "<leader>/",
         function()
-          Snacks.picker.grep({
-            cwd = vim.fn.expand("%:p:h"),
-            desc = "Grep in Current File Directory",
+          require("fff").live_grep()
+        end,
+        desc = "LiFFFe grep",
+      },
+      {
+        "<leader>fz",
+        function()
+          require("fff").live_grep({
+            grep = {
+              modes = { "fuzzy", "plain" },
+            },
           })
         end,
-        desc = "Grep (Current Dir)",
+        desc = "Live fffuzy grep",
       },
     },
   },
@@ -691,11 +752,58 @@ return {
       vim.keymap.set("n", "-", "<C-x>", { desc = "Decrement", noremap = true })
     end,
   },
+  {
+    "MunsMan/kitty-navigator.nvim",
+    keys = {
+      {
+        "<C-h>",
+        function()
+          require("kitty-navigator").navigateLeft()
+        end,
+        desc = "Move left a Split",
+        mode = { "n" },
+      },
+      {
+        "<C-j>",
+        function()
+          require("kitty-navigator").navigateDown()
+        end,
+        desc = "Move down a Split",
+        mode = { "n" },
+      },
+      {
+        "<C-k>",
+        function()
+          require("kitty-navigator").navigateUp()
+        end,
+        desc = "Move up a Split",
+        mode = { "n" },
+      },
+      {
+        "<C-l>",
+        function()
+          require("kitty-navigator").navigateRight()
+        end,
+        desc = "Move right a Split",
+        mode = { "n" },
+      },
+    },
+  },
+  -- {
+  --   "LazyVim/LazyVim",
+  --   config = function()
+  --     -- Window Navigation with Alt + Arrows
+  --     vim.keymap.set("n", "<M-D-Left>", "<C-w>h", { desc = "Window: Left" })
+  --     vim.keymap.set("n", "<M-D-Right>", "<C-w>l", { desc = "Window: Right" })
+  --     vim.keymap.set("n", "<M-D-Up>", "<C-w>k", { desc = "Window: Up" })
+  --     vim.keymap.set("n", "<M-D-Down>", "<C-w>j", { desc = "Window: Down" })
+  --   end,
+  -- },
   -- {
   --   "nvim-telescope/telescope-frecency.nvim",
   --   version = "*",
+  --   end,
   --   config = function()
   --     require("telescope").load_extension("frecency")
-  --   end,
   -- },
 }
