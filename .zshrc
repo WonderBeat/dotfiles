@@ -5,15 +5,16 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
 
 USERNAME=$USER
 
-eval $(/opt/homebrew/bin/brew shellenv)
-
 if [ "$USERNAME" = "coder" ]; then
     . "$HOME/.nix-profile/etc/profile.d/nix.sh"
     eval "$(devbox global shellenv)"
+else
+    eval $(/opt/homebrew/bin/brew shellenv)
 fi
 
 source ~/.bash_aliases
@@ -459,10 +460,6 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
   'line' \
   'cursor' \
   'root'
-
-
-
-source ~/.zsh/completions/_git-gtr
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
