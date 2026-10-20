@@ -1,6 +1,6 @@
 k9s:
-  liveViewAutoRefresh: false
-  refreshRate: 6
+  liveViewAutoRefresh: true
+  refreshRate: 4
   maxConnRetry: 5
   readOnly: false
   noExitOnCtrlC: false
@@ -19,15 +19,15 @@ k9s:
     image: busybox:1.35.0
     namespace: default
     limits:
-      cpu: 100m
-      memory: 100Mi
+      cpu: 1000m
+      memory: 1000Mi
   imageScans:
     enable: false
     exclusions:
       namespaces: []
       labels: {}
   logger:
-    tail: 100
+    tail: 1000
     buffer: 5000
     sinceSeconds: -1
     textWrap: false

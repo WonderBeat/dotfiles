@@ -25,7 +25,7 @@ function em
     # If the argument is - then write stdin to a tempfile and open the
     # tempfile.
     if [[ $# -ge 1 ]] && [[ "$1" == - ]]; then
-        tempfile="$(mktemp emacs-stdin-$USER.XXXXXXX --tmpdir)"
+        tempfile="$(mktemp "${TMPDIR:-/tmp}/emacs-stdin-$USER.XXXXXXX")"
         cat - >! "$tempfile"
         emacsclient -n --eval "(find-file \"$tempfile\")" \
             --eval '(set-visited-file-name nil)' \
@@ -110,6 +110,7 @@ zinit light b4b4r07/enhancd
 zinit light djui/alias-tips
 
 # turbo mode: load after prompt appears
+# zhist inline suggestions need zsh-autosuggestions backed by its store
 zinit wait lucid for \
   atinit"zicompinit; zicdreplay" \
     zsh-users/zsh-completions \
@@ -181,6 +182,27 @@ if [ -n "${commands[fzf-share]}" ]; then
   source "$(fzf-share)/key-bindings.zsh"
   source "$(fzf-share)/completion.zsh"
 fi
+
+# kitty.conf sets shell_integration no-rc, so load it by hand
+if [[ -n $KITTY_INSTALLATION_DIR && -r $KITTY_INSTALLATION_DIR/shell-integration/zsh/kitty-integration ]]; then
+  export KITTY_SHELL_INTEGRATION="no-title"
+  autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+  kitty-integration
+  unfunction kitty-integration
+fi
+
+# zhist replaces the zsh history file as the persistent store
+unset HISTFILE  # macOS /etc/zshrc sets it; zhist owns persistence now
+HISTSIZE=100000 # in-memory events for up-arrow and ! expansion
+SAVEHIST=0      # never write a history file
+
+eval "$(zhist init)"
+
+# Fish-style ghost text backed by the zhist store instead of the history file
+_zsh_autosuggest_strategy_zhist() {
+	suggestion=$(zhist search -limit 1 -- "$1")
+}
+ZSH_AUTOSUGGEST_STRATEGY=(zhist)
 
 aicm() {
   # Function to generate commit message from staged changes
@@ -469,3 +491,48 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+ket() {                                                               
+    local KITTY_ID COLORS_FILE                                             
+    KITTY_ID=$(kitty @ ls | jq -r '                                        
+        .[].tabs[].windows[]                                                         
+        | select(.is_self == true)                                      
+        | .id' 2>/dev/null)                                                
+
+    [ -z "$KITTY_ID" ] && { et "$@"; return; }                             
+
+    # Set up cleanup trap to reset colors on exit/interrupt/kill
+    local reset_colors() {
+        kitten @ set-colors -m "id:$KITTY_ID" --reset 2>/dev/null
+    }
+    trap reset_colors EXIT INT TERM
+
+    kitten @ set-colors -m "id:$KITTY_ID" ~/.config/kitty/Flat.conf
+    reset_colors
+                                                                          
+    et "$@"                                                                
+}
+
+k99s() {                                                               
+    local KITTY_ID COLORS_FILE                                             
+    KITTY_ID=$(kitty @ ls | jq -r '                                        
+        .[].tabs[].windows[]                                                         
+        | select(.is_self == true)                                      
+        | .id' 2>/dev/null)                                                
+                                                                          
+    [ -z "$KITTY_ID" ] && { k9s "$@"; return; }                             
+                                                                          
+    # Set up cleanup trap to reset colors on exit/interrupt/kill
+    local reset_colors() {
+        kitten @ set-colors -m id:$KITTY_ID --reset 2>/dev/null
+    }
+    trap reset_colors EXIT INT TERM
+
+    kitten @ set-colors -m id:$KITTY_ID ~/.config/kitty/Borland.conf
+                                                                          
+    k9s "$@"                                                                
+    reset_colors
+}
+alias k9s='k99s'
+
+# Added by MTPLX.app — terminal command
+export PATH="$HOME/.mtplx/bin:$PATH"

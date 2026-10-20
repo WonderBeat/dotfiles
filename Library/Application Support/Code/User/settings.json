@@ -10466,7 +10466,7 @@
   },
   "window.zoomLevel": 1,
   "docker.commands.attach": "${containerCommand} exec -it ${containerId} ${shellCommand}",
-  "remote.SSH.remotePlatform": {"coder-vscode--denis--clickhouse-tables":"linux","coder-vscode--denis--santiment":"linux","coder-vscode.coder.gladiators.dev--denis--lambda--main":"linux","coder-vscode.coder.gladiators.dev--denis--lambda":"linux","coder-vscode.coder.gladiators.dev--denis--santiment":"linux","coder-vscode.coder.gladiators.dev--denis--santiment--main":"linux","coder-vscode.coder.gladiators.dev--denis--lambda.main":"linux"},
+  "remote.SSH.remotePlatform": {"coder-vscode--denis--clickhouse-tables":"linux","coder-vscode--denis--santiment":"linux","coder-vscode.coder.gladiators.dev--denis--lambda--main":"linux","coder-vscode.coder.gladiators.dev--denis--lambda":"linux","coder-vscode.coder.gladiators.dev--denis--santiment":"linux","coder-vscode.coder.gladiators.dev--denis--santiment--main":"linux","coder-vscode.coder.gladiators.dev--denis--lambda.main":"linux","coder-vscode.coder.gladiators.dev--denis--humanoid.main":"linux"},
   "remote.SSH.connectTimeout": 1800,
   "Key Promoter.ignoredCommands": [
     "type",
@@ -10609,5 +10609,17 @@
   "editor.codeActionsOnSave": {},
   "zig.zls.enabled": "on",
   "editor.renderWhitespace": "none",
-  "editor.multiCursorModifier": "ctrlCmd"
+  "editor.multiCursorModifier": "ctrlCmd",
+  "docker.extension.enableComposeLanguageServer": false,
+  "containers.commands.attach": "${containerCommand} exec -it ${containerId} ${shellCommand}",
+  "containers.containers.groupBy": "ContainerName",
+  "remote.SSH.serverShutdownTimeout": 28800,
+  "yaml.disableSchemaDetection": [
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml"
+  ]
 }

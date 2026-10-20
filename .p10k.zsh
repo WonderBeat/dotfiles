@@ -59,12 +59,19 @@
     prompt_char               # prompt symbol
   )
 
+  function prompt_my_zmx_session() {
+    if [[ -n $ZMX_SESSION ]]; then
+      p10k segment -b '%k' -f '%f' -t "[$ZMX_SESSION]"
+    fi
+  }
+
   # Right prompt segments.
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
     command_execution_time    # previous command duration
     virtualenv                # python virtual environment
     context                   # user@host
+    my_zmx_session
     time                      # current time
     # =========================[ Line #2 ]=========================
     newline                   # \n
@@ -129,6 +136,9 @@
   # Don't wait for Git status even for a millisecond, so that prompt always updates
   # asynchronously when Git state changes.
   typeset -g POWERLEVEL9K_VCS_MAX_SYNC_LATENCY_SECONDS=0
+
+  # No vcs segment in hmnd: gitstatusd's index refresh races jj's colocated .git/index writes.
+  typeset -g POWERLEVEL9K_VCS_DISABLED_WORKDIR_PATTERN='~/Documents/projects/humanoid/hmnd(|/*)'
 
   # Cyan ahead/behind arrows.
   typeset -g POWERLEVEL9K_VCS_{INCOMING,OUTGOING}_CHANGESFORMAT_FOREGROUND=$cyan

@@ -86,7 +86,7 @@ fi
 export GOPATH=$HOME/golang
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
-export PATH=$PATH:$HOME/.bin
+export PATH=$PATH:$HOME/.local/bin
 export PIPENV_VENV_IN_PROJECT=1
 
 # Added by Toolbox App

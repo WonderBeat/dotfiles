@@ -17,7 +17,7 @@ in {
       pkgs.up
       pkgs.fd
       pkgs.mosh
-      pkgs.yazi
+      unstable.yazi
       pkgs.ncdu
       unstable.neovim
       pkgs.tree-sitter
@@ -26,7 +26,7 @@ in {
       pkgs.git
       pkgs.gnupg
       pkgs.yaml-language-server
-      pkgs.direnv
+      unstable.direnv
       pkgs.glances
       pkgs.pipenv
       pkgs.rsync
@@ -143,16 +143,9 @@ in {
   # updates homebrew packages on activation,
   # can make darwin-rebuild much slower (otherwise i'd forget to do it ever though)
   taps = [
-    "d12frosted/emacs-plus"
-    "uptech/homebrew-oss"
   ];
   brews = [
-    {
-      name = "emacs-plus@29";
-      args = ["--with-modern-doom3-icon" "--with-poll" "--with-native-comp"];
-    }
     "coder"
-    "git-ps-rs"
     "mermaid-cli"
     "spoof-mac"
     "zellij"
@@ -178,7 +171,7 @@ in {
     "veracrypt"
     "visual-studio-code"
     "hyper"
-    "wireshark"
+    "wireshark-app"
     "imhex"
     "rectangle"
     "warp"

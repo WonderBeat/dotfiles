@@ -1,297 +1,49 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-                                        ; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
 (setq user-full-name "wonderbeat"
       user-mail-address "wombat@gmail.com")
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size 13 :weight 'semi-bold)
-;;       doom-variable-pitch-font (font-spec :family "MesloLGL Nerd Font" :size 14))
-
 (setq doom-font (font-spec :family "Monaspace Neon" :size 13 :weight 'semi-bold)
-      doom-variable-pitch-font (font-spec :family "MesloLGL Nerd Font" :size 14))
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-;; (setq doom-theme 'doom-horizon)
-(setq doom-theme 'doom-pine)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
-
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
-;;(pcre-mode +1)
-
-(setq confirm-kill-emacs nil)
-
-(setq tree-sitter-load-path `(
-                              ,"~/.bin"))
-
-
-;; (add-to-list 'tree-sitter-major-mode-language-alist '(csharp-tree-sitter-mode . c-sharp))
-;; (add-to-list 'tree-sitter-major-mode-language-alist '(zig-mode . (tree-sitter-require 'zig)))
-;; (tree-sitter-require 'zig)
-
-
-;; (use-package! tree-sitter
-;;   :config
-;;   (require 'tree-sitter-langs)
-;;   (global-tree-sitter-mode)
-;;   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-;;   (pushnew! tree-sitter-major-mode-language-alist '(zig-mode . zig) '(yaml-mode . yaml)))
-
-(add-hook 'yaml-mode-hook #'eldoc-mode)
-(add-hook 'yaml-mode-hook #'yaml-pro-ts-mode)
-
-
-(use-package! zig-mode
-  :hook ((zig-mode . lsp-deferred))
-  :custom (zig-format-on-save nil)
-  :config
-  (after! lsp-mode
-    (add-to-list 'lsp-language-id-configuration '(zig-mode . "zig"))
-    (lsp-register-client
-     (make-lsp-client :new-connection (lsp-tramp-connection "zls")
-                      :major-modes '(zig-mode)
-                      :remote? t
-                      :server-id 'zls-remote))
-    (lsp-register-client
-     (make-lsp-client
-      :new-connection (lsp-stdio-connection "zls")
-      :major-modes '(zig-mode)
-      :server-id 'zls))))
-
-(use-package elpy
-  :ensure t
-  :defer t
-  :init
-  (advice-add 'python-mode :before 'elpy-enable))
-
-(evil-snipe-mode +1)
-
-(use-package mu4e
-  :if (and (memq window-system '(mac ns)) (file-directory-p "~/.mail"))
-  :ensure t
-  :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e/"
-  :init
-  (setq! mu4e-maildir (expand-file-name "~/.mail/vk") ; the rest of the mu4e folders are RELATIVE to this one
-         mu4e-view-prefer-html t
-         mu4e-get-mail-command "mbsync -a"
-         mu4e-index-update-in-background t
-         shr-color-visible-luminance-min 60
-         shr-color-visible-distance-min 5
-         shr-use-colors nil
-         mu4e-compose-signature-auto-include t
-         mu4e-use-fancy-chars t
-         mu4e-update-interval nil
-         mu4e-view-show-addresses t
-         mu4e-view-show-images t
-         mu4e-compose-format-flowed t
-         mu4e-change-filenames-when-moving t ;; http://pragmaticemacs.com/emacs/fixing-duplicate-uid-errors-when-using-mbsync-and-mu4e/
-         mu4e-maildir-shortcuts
-         '( ("/vk/Inbox" . ?i)
-            ("/vk/monitoring/Hashek Log" . ?l)
-            ("/vk/huntflow" . ?h)
-            ("/vk/Deleted Items" . ?t)
-            ("/vk/Sent Items" . ?s))
-         ;; Message Formatting and sending
-         message-send-mail-function 'smtpmail-send-it
-         ;; message-signature-file "~/Documents/dotfiles/Emacs/.doom.d/.mailsignature"
-         message-citation-line-format "On %a %d %b %Y at %R, %f wrote:\n"
-         message-citation-line-function 'message-insert-formatted-citation-line
-         message-kill-buffer-on-exit t
-         ;; Org mu4e
-         org-mu4e-convert-to-html t
-         ))
-
-(add-hook 'mu4e-update-pre-hook 'etc/imapfilter)
-(defun etc/imapfilter ()
-  (message "Running imapfilter...")
-  (with-current-buffer (get-buffer-create " *imapfilter*")
-    (goto-char (point-max))
-    (insert "---\n")
-    (call-process "/usr/local/bin/imapfilter" nil (current-buffer) nil "-c"
-                  (format  "/Users/%s/.imapfilter.lua" user-login-name) "-v"))
-  (message "Running imapfilter...done"))
-
-(set-email-account! "denis.golovachev@vk.team"
-                    '((user-mail-address      . "denis.golovachev@vk.team")
-                      (user-full-name         . "Denis Golovachev")
-                      (smtpmail-smtp-server   . "es.vkcorporate.com")
-                      (smtpmail-smtp-service  . 587)
-                      (smtpmail-stream-type   . starttls)
-                      (smtpmail-debug-info    . t)
-                      (mu4e-drafts-folder     . "/vk/Drafts")
-                      (mu4e-refile-folder     . "/vk/Archive")
-                      (mu4e-sent-folder       . "/vk/Sent Items")
-                      (mu4e-trash-folder      . "/vk/Deleted Items")
-                      (mu4e-update-interval   . nil)
-                                        ;(mu4e-sent-messages-behavior . 'delete)
-                      )
-                    nil)
-
-(setenv "TZ" "Europe/Moscow")
-(setq datetime-timezone 'Europe/Moscow)
-
+      doom-variable-pitch-font (font-spec :family "MesloLGL Nerd Font" :size 14)
+      doom-theme 'doom-pine
+      org-directory "~/org/"
+      display-line-numbers-type t
+      confirm-kill-emacs nil)
 
 (setq-default
- delete-by-moving-to-trash t                      ; Delete files to trash
- window-combination-resize t                      ; take new window space from all other windows (not just current)
- x-stretch-cursor t)                              ; Stretch cursor to the glyph width
+ delete-by-moving-to-trash t
+ window-combination-resize t   ; new windows take space from all siblings
+ x-stretch-cursor t)
 
-(setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
-      evil-want-fine-undo t                       ; By default while in insert all changes are one big blob. Be more granular
-      auto-save-default t                         ; Nobody likes to loose work, I certainly don't
-      truncate-string-ellipsis "…"                ; Unicode ellispis are nicer than "...", and also save /precious/ space
-      password-cache-expiry nil                   ; I can trust my computers ... can't I?
-      ;; scroll-preserve-screen-position 'always     ; Don't have `point' jump around
-      scroll-margin 2)                            ; It's nice to maintain a little margin
+(setq undo-limit 80000000
+      evil-want-fine-undo t
+      auto-save-default t
+      truncate-string-ellipsis "…"
+      password-cache-expiry nil
+      scroll-margin 2)
 
-(display-time-mode 1)                             ; Enable time in the mode-line
-
-;; (unless (string-match-p "^Power N/A" (battery))   ; On laptops...
-;;   (display-battery-mode 1))                       ; it's nice to know how much power you have
-
+(display-time-mode 1)
+(windmove-default-keybindings 'meta)  ; Opt+arrows move between windows
 (global-subword-mode 1)
 
-;;(with-eval-after-load 'geiser
-;;  (setq-default geiser-chicken-binary "/usr/local/Cellar/chicken/5.3.0/bin/csi")
-;;  (setq-default geiser-active-implementations
-;;               '(chicken racket guile chez mit chibi)))
+(after! lsp-mode
+  (dolist (dir '("[/\\\\]build\\'" "[/\\\\]gradle\\'" "[/\\\\]target\\'" "[/\\\\]tmp\\'"))
+    (add-to-list 'lsp-file-watch-ignored-directories dir)))
 
-(with-eval-after-load 'lsp-mode
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]gradle\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]tmp\\'"))
-
-
-(use-package languagetool
-  :ensure t
-  :defer t
-  :commands (languagetool-check
-             languagetool-clear-suggestions
-             languagetool-correct-at-point
-             languagetool-correct-buffer
-             languagetool-set-language
-             languagetool-server-mode
-             languagetool-server-start
-             languagetool-server-stop)
-  :config
-  (setq languagetool-java-arguments '("-Dfile.encoding=UTF-8")
-        languagetool-console-command "~/.bin/langtool/languagetool-commandline.jar"
-        languagetool-server-command "~/.bin/langtool/languagetool-server.jar"))
-
-;; (use-package kubernetes
-;;   :ensure t
-;;   :commands (kubernetes-overview)
-;;   :config
-;;   (setq kubernetes-poll-frequency 17000
-;;         kubernetes-redraw-frequency 17000))
-
-;; (use-package kubernetes-evil
-;;   :ensure t
-;;   :after kubernetes)
-
-(add-to-list 'company-backends #'company-tabnine)
-(use-package! company-tabnine
-  :ensure t
-  :after company
-  :config
-  (cl-pushnew 'company-tabnine (default-value 'company-backends)))
-
-(after! company
-  (setq +lsp-company-backends '(company-tabnine :separate company-capf company-yasnippet))
-  (setq company-show-numbers t)
-  (setq company-idle-delay 0)
-  )
-
-(after! tide
-  (set-company-backend! 'tide-mode '(company-tide :with company-tabnine :separate))
-  )
-
-(use-package! lsp
-  :init
-  (setq lsp-pyls-plugins-pylint-enabled t
-        lsp-pyls-plugins-autopep8-enabled nil
-        lsp-pyls-plugins-pyflakes-enabled t
-        lsp-pyls-plugins-pycodestyle-enabled nil
-        lsp-pyls-plugins-jedi-completion-enabled t
-        lsp-pyls-plugins-jedi-completion-include-params t
-        lsp-pyls-plugins-yapf-enabled t)
-  )
-
-(setq code-review-auth-login-marker 'forge)
-
-(use-package vterm
-  :commands vterm-mode
-  :config
-  (setq vterm-kill-buffer-on-exit t)
-  (setq vterm-max-scrollback 10000)
-  (setq vterm-tramp-shells '(("ssh" "/bin/zsh")
+(after! vterm
+  (setq vterm-kill-buffer-on-exit t
+        vterm-max-scrollback 10000
+        vterm-tramp-shells '(("ssh" "/bin/zsh")
                              ("podman" "/bin/sh")
                              ("docker" "/bin/sh")
-                             ("coder" "/bin/zsh")
-                             )))
+                             ("coder" "/bin/zsh"))))
 
-;; (use-package ispell
-;;   :config
-;;   (setq ispell-dictoinary "en")
-;;   (setq ispell-personal-dictionary "~/.config/dictionaries"))
-
-;; (use-package spell-fu
-;;   :defer t
-;;   :config
-;;   (setq spell-fu-directory "~/Library/Spelling/")
-;;     (add-hook 'spell-fu-mode-hook
-;;             (lambda ()
-;;                 (spell-fu-dictionary-add (spell-fu-g"en_US"))
-;;                 (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "russian"))))
-;; )
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((mermaid . t)))
-
+(after! org
+  (add-to-list 'org-babel-load-languages '(mermaid . t)))
 
 (custom-set-faces!
   `(org-date :foreground ,(doom-color 'violet))
   '(org-document-title :height 1.75 :weight bold)
-  ;; `(org-level-1 :foreground ,(doom-color 'blue) :height 1.4 :weight bold :background ,(doom-color 'grey))
   `(org-level-1 :foreground ,(doom-color 'blue) :height 1.5 :weight bold)
   `(org-level-2 :foreground ,(doom-color 'magenta) :height 1.3 :weight bold)
   `(org-level-3 :foreground ,(doom-color 'violet) :height 1.1 :weight normal)
@@ -300,15 +52,66 @@
   `(org-level-6 :foreground ,(doom-color 'blue) :weight normal))
 
 (use-package! yaml-pro
-  :after yaml-mode
-  :hook (yaml-mode . yaml-pro-mode)
+  :hook (yaml-ts-mode . yaml-pro-ts-mode)
   :config
-  (map! :map yaml-pro-mode-map
-        [remap imenu] #'yaml-pro-jump
-        :n "zc" #'yaml-pro-fold-at-point
-        :n "zo" #'yaml-pro-unfold-at-point
-        :n "gk" #'yaml-pro-prev-subtree
-        :n "gj" #'yaml-pro-next-subtree
-        :n "gK" #'yaml-pro-up-level
-        :n "M-k" #'yaml-pro-move-subtree-up
-        :n "M-j" #'yaml-pro-move-subtree-down))
+  (map! :map yaml-pro-ts-mode-map
+        :n "gk" #'yaml-pro-ts-prev-subtree
+        :n "gj" #'yaml-pro-ts-next-subtree
+        :n "gK" #'yaml-pro-ts-up-level
+        :n "M-k" #'yaml-pro-ts-move-subtree-up
+        :n "M-j" #'yaml-pro-ts-move-subtree-down))
+
+(use-package! majutsu
+  :commands (majutsu majutsu-log)
+  :init (map! :leader :desc "Majutsu (jj)" "g j" #'majutsu)
+  :config
+  (after! forge
+    (require 'majutsu-forge)
+    (majutsu-forge-mode 1)))
+
+(use-package! vc-jj :after vc)
+
+(after! lsp-pyright
+  (setq lsp-pyright-langserver-command "basedpyright"))
+
+(setq display-time-default-load-average nil)
+
+(defface +diff-hl-line-insert '((t :extend t)) "Background of added lines.")
+(defface +diff-hl-line-change '((t :extend t)) "Background of changed lines.")
+(custom-set-faces!
+  `(+diff-hl-line-insert :background ,(doom-blend 'green 'bg 0.1))
+  `(+diff-hl-line-change :background ,(doom-blend 'blue 'bg 0.1)))
+
+(defun +diff-hl-fringe-and-line (ovl type shape)
+  "Fringe mark plus a faint background over the whole changed line."
+  (diff-hl-highlight-on-fringe ovl type shape)
+  (unless (eq type 'delete)
+    (move-overlay ovl (overlay-start ovl)
+                  (save-excursion (goto-char (overlay-start ovl)) (line-beginning-position 2)))
+    (overlay-put ovl 'face (if (eq type 'insert) '+diff-hl-line-insert '+diff-hl-line-change))))
+
+(after! diff-hl
+  (setq diff-hl-highlight-function #'+diff-hl-fringe-and-line))
+
+(defun +gladiators-key ()
+  (string-trim (shell-command-to-string
+                "security find-generic-password -a gptel -s ai.gladiators.dev -w")))
+
+(after! gptel
+  (setq gptel-model 'code-local
+        gptel-backend (gptel-make-openai "gladiators"
+                        :host "ai.gladiators.dev"
+                        :stream t
+                        :key #'+gladiators-key
+                        :models '(code-local fast fable))))
+
+(defun +lookup/file-other-window ()
+  "Like `gf', but open in the next existing window (splits if there is only one)."
+  (interactive)
+  (let ((buf (current-buffer)) (pos (point)))
+    (select-window (or (next-window) (split-window-right)))
+    (switch-to-buffer buf)
+    (goto-char pos)
+    (+lookup/file)))
+
+(map! :n "gO" #'+lookup/file-other-window)

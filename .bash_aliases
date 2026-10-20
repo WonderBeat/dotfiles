@@ -19,5 +19,7 @@ alias update-home="home-manager switch"
 alias g="git gtr"
 #eval "$(direnv hook zsh)"
 alias ,,='noglob aichat -r shell-no-think -e'
+#alias ,,='noglob aichat -e'
 alias s='kitten ssh'
+alias mosh='mosh --no-init'
 alias cg='cd "$(git rev-parse --show-toplevel)"'

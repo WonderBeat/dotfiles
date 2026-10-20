@@ -28,6 +28,8 @@
 	path = ~/.gitconfig-santiment
 [includeIf "gitdir:~/projects/santiment/"]
 	path = ~/.gitconfig-santiment
+[includeIf "gitdir:~/projects/hmnd/"]
+	path = ~/.gitconfig-humanoid
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
@@ -44,6 +46,8 @@
 [gitbutler]
 	aiOpenAIKeyOption = bringYourOwn
 	aiModelProvider = lmstudio
-	aiLMStudioModelName = essentialai/rnj-1
 	aiAnthropicKeyOption = bringYourOwn
 	diffLengthLimit = 50000
+	aiLMStudioModelName = lfm2.5-350m
+[branchless]
+	forge = github

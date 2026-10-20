@@ -1,3 +1,77 @@
 [user]
-name = "Denis Golovachev"
-email = "denisg@santiment.net"
+	name = "Denis Golovachev"
+	email = "dego@thehumanoid.ai"
+
+[ui]
+#diff.tool = "difft"
+#diff.tool = ["nvim", "-c", "DiffEditor $left $right $output"]
+diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
+#diff-editor = "vscode"
+diff-formatter = ["difft", "--color=always", "$left", "$right"]
+#diff-formatter = "vscode"
+#merge-editor = "vscode"
+graph.style = "square"
+
+[remotes.origin]
+auto-track-bookmarks = "no"
+
+[colors]
+"diff removed token" = { fg = "bright red", bg = "#400000", underline = false }
+"diff added token" = { fg = "bright green", bg = "#003000", underline = false }
+
+[git]
+push-bookmark-prefix = "dego--"
+subprocess = true
+
+[git.test]
+job = true
+
+[merge-tools.vscode]
+merge-args = ["$left", "$base", "$right", "-o", "$output", "-w"]
+
+[merge-tools.difft]
+program = "difft"
+diff-args = ["--color=always", "$left", "$right"]
+
+[merge-tools.mergiraf]
+program = "mergiraf"
+merge-args = ["merge", "$base", "$left", "$right", "-o", "$output", "--fast"]
+merge-conflict-exit-codes = [1]
+conflict-marker-style = "git"
+
+[merge-tools.vimdiff]
+diff-invocation-mode = "file-by-file"
+
+[revset-aliases]
+"closest_merge(to)" = "heads(::to & merges())"
+
+[aliases]
+# `jj stack <revset>` to include specific revs
+stack = ["rebase", "--after", "trunk()", "--before", "closest_merge(@)", "--revision"]
+
+# `jj stage` to include the whole stack after the megamerge
+stage = ["stack", "closest_merge(@)+:: ~ empty()"]
+
+# `jj restack` to rebase your CURRENT stack onto `trunk()`.
+# Scoped to `..@` so it only rebases the stack you're working on, not every
+# stale anonymous head in the repo (which was rebasing ~2500 commits/run).
+restack-cur = ["rebase", "--onto", "trunk()", "--source", "roots(trunk()..@) & mutable()", "--simplify-parents"]
+
+# `jj restack-all` keeps the old behavior: rebase EVERY mutable stack onto trunk.
+restack = ["rebase", "--onto", "trunk()", "--source", "roots(trunk()..) & mutable()", "--simplify-parents"]
+
+# `jj deorphan` abandons orphaned commits fetched from the remote: mutable commits
+# that are NOT in your current stack (::@) and NOT reachable from any bookmark.
+# These are merged/deleted team branches left behind by non-pruning fetch.
+# Local-only and safe: never touches the remote or your bookmarked/working commits.
+deorphan = ["abandon", "-r", "(mutable() ~ ::@) ~ ::(bookmarks() | remote_bookmarks())"]
+
+[gg.ui]
+recent-workspaces = ["/Users/gato/Documents/projects/humanoid/hmnd", "/Users/gato/Documents/projects/humanoid/jjworkspaces/charly", "/Users/gato/Documents/projects/humanoid/jjworkspaces/nil"]
+
+
+[templates]
+git_push_bookmark = '"dego--" ++ change_id.short()'
+
+[snapshot]
+max-new-file-size = "20MiB"
