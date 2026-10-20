@@ -22,6 +22,7 @@ auto-track-bookmarks = "no"
 [git]
 push-bookmark-prefix = "dego--"
 subprocess = true
+clean-filters = ["enc"]
 
 [git.test]
 job = true

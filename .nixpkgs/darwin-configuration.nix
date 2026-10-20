@@ -160,14 +160,11 @@ in {
     "little-snitch"
     "macfuse"
     "gimp"
-    "steam"
     "vlc"
     "fuse"
     "xnviewmp"
-    "trezor-suite"
     "firefox"
     "cool-retro-term"
-    "gimp"
     "veracrypt"
     "visual-studio-code"
     "hyper"
@@ -178,8 +175,6 @@ in {
     "cutter"
     "font-monaspace"
     "raycast"
-    "whisky"
-    "heroic"
     "blackhole-2ch"
   ];
   };

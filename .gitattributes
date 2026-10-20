@@ -5,3 +5,4 @@ secret/**       filter=sops
 *id_ed25519*    filter=sops
 *id_rsa*        filter=sops
 *.key           filter=sops
+.config/nvim/lua/plugins/wonderbeat.lua  filter=sops

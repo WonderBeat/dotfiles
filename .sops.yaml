@@ -12,3 +12,6 @@ creation_rules:
 
   - path_regex: (.*ed25519.*|update\.sh)$
     key_groups: *default_keys
+
+  - path_regex: .*wonderbeat\.lua$
+    key_groups: *default_keys
