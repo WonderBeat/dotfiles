@@ -1,0 +1,71 @@
+# ~/.kopiaignore — kopia backup exclusions (~/.kopiaignore syntax: gitignore-style)
+# Home summary: 766G total — excluding ~390G of re-creatable caches/models
+
+# === AI model runtimes & stores (~190G, re-downloadable) ===
+.colima/
+.lmstudio/
+.lmstudio-home-pointer
+.unsloth/
+ComfyUI-Installs/
+ComfyUI-Shared/
+.qwen/
+src/llama.cpp-*/
+.local/share/mlx-drafters/
+
+# === JVM toolchains: Maven / Gradle / sbt / Ivy / build caches ===
+.m2/
+.gradle/
+.ivy2/
+.sbt/
+.java-caller/
+.eclipse/
+.redhat/
+.solidity-ide/
+.web3j/
+
+# === Node / JS toolchains & caches ===
+.npm/
+.yarn/
+.bun/
+.pnpm-store/
+node_modules/
+.cache_remix_ide/
+.vscode/
+.warp/
+.TabNine/
+
+# === Python environments & caches ===
+.rye/
+micromamba/
+.conda/
+.virtualenvs/
+.pyenv/
+.venv/
+__pycache__/
+.ipython/
+.local/share/uv/
+
+# === Generic tool / editor caches (11G+8.5G+2.6G) ===
+.cache/
+.local/share/opencode/
+.local/share/nvim/
+
+# === Apple / system noise ===
+.Trash/
+.DS_Store
+Library/Caches/
+Library/Logs/
+Library/Containers/
+Library/Group Containers/
+Library/Application Support/
+Library/WebKit/
+Library/HTTPStorages/
+Library/pnpm/
+Library/Developer/
+
+Steam/
+
+# === Judgment calls — uncomment to exclude (re-check before large backups) ===
+# Downloads/                    # 153G installers/archives, often NAS-backed already
+# Movies/                       # 87G media, often NAS-backed already
+# Library/Application Support/  # 51G app data; keep if you want app settings restored
