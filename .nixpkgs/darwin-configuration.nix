@@ -143,6 +143,7 @@ in {
   # updates homebrew packages on activation,
   # can make darwin-rebuild much slower (otherwise i'd forget to do it ever though)
   taps = [
+    "d12frosted/emacs-plus"
   ];
   brews = [
     "coder"
@@ -156,7 +157,6 @@ in {
     "mouseless"
     "telegram"
     "discord"
-    "iterm2"
     "little-snitch"
     "macfuse"
     "gimp"
@@ -164,18 +164,14 @@ in {
     "fuse"
     "xnviewmp"
     "firefox"
-    "cool-retro-term"
     "veracrypt"
     "visual-studio-code"
     "hyper"
     "wireshark-app"
-    "imhex"
     "rectangle"
     "warp"
-    "cutter"
     "font-monaspace"
     "raycast"
-    "blackhole-2ch"
   ];
   };
 
