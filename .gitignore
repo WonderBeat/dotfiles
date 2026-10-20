@@ -44,3 +44,5 @@ hs_err_pid*
 # SOPS age identity — must never leave this machine
 .key
 .sops-recipients
+
+.nixpkgs/flake.lock
