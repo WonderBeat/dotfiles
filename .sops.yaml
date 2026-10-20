@@ -4,6 +4,7 @@ keys: &default_keys
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKg7/kBmHlOYb4UHYGqcY/yYHR02x3dridkBa6pc/flR # WonderBeat
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFOf+OD/2a3/uj/QKcWHILt6gzQUjtnSVwubNPPMcXEW # WonderBeat
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJE7AlB4XNgssbrBxRcrUUdWbRsVdCiblz3XTXu1s9iC # WonderBeat
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMXMrTqyy6vQbpHzEexjukJSY4I7RY4P8wWI6xgWOecy # hmnd
 
 creation_rules:
   - path_regex: \.(ya?ml|json|sh|key|conf)$
