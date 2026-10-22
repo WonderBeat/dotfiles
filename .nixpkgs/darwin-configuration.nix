@@ -5,8 +5,13 @@ let
 in {
   environment.systemPackages =
     [
+      unstable.jujutsu
+      unstable.rustc
+      unstable.cargo
+      unstable.uv
       pkgs.carapace
       pkgs.lnav
+      pkgs.nixfmt
       pkgs.cmake
       pkgs.clang-tools
       pkgs.gh
